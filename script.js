@@ -98,34 +98,47 @@
       });
   });
 
-  /* Slow auto-sliding certificate row, paused while the user drags */
+  /* Slow auto-sliding certificate row; drag/swipe is 1:1 with the pointer. */
   const slider = document.querySelector(".cert-slider");
   if (slider) {
+    const track = slider.querySelector(".cert-track");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const SPEED = 16;
     const RESUME_DELAY = 2000;
+    let offset = 0;
     let paused = reduceMotion;
     let dragging = false;
     let axis = null;
     let startX = 0;
     let startY = 0;
-    let startScroll = 0;
+    let startOffset = 0;
     let lastTime = 0;
     let resumeTimer = null;
-    let pointerId = null;
+    let active = false;
 
     function loopWidth() {
-      return slider.scrollWidth / 2;
+      const list = slider.querySelector(".cert-list");
+      if (!list) return 0;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      return list.offsetWidth + gap;
     }
 
-    function wrapScroll() {
+    function wrapOffset() {
       const half = loopWidth();
       if (!half) return;
-      if (slider.scrollLeft >= half) {
-        slider.scrollLeft -= half;
-      } else if (slider.scrollLeft < 0) {
-        slider.scrollLeft += half;
+      while (offset >= half) {
+        offset -= half;
+        startOffset -= half;
       }
+      while (offset < 0) {
+        offset += half;
+        startOffset += half;
+      }
+    }
+
+    function apply() {
+      wrapOffset();
+      track.style.transform = "translate3d(" + -offset + "px, 0, 0)";
     }
 
     function pauseAuto() {
@@ -145,12 +158,60 @@
       }, RESUME_DELAY);
     }
 
+    function beginGesture(clientX, clientY) {
+      pauseAuto();
+      active = true;
+      dragging = false;
+      axis = null;
+      startX = clientX;
+      startY = clientY;
+      startOffset = offset;
+    }
+
+    function moveGesture(clientX, clientY, event) {
+      if (!active) return;
+
+      const dx = clientX - startX;
+      const dy = clientY - startY;
+
+      if (!axis) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+        if (axis === "x") {
+          dragging = true;
+          slider.classList.add("is-dragging");
+          if (event && event.pointerType === "mouse" && event.pointerId != null) {
+            try {
+              slider.setPointerCapture(event.pointerId);
+            } catch (err) {
+              /* ignore */
+            }
+          }
+        }
+      }
+
+      if (axis === "x") {
+        if (event && event.cancelable) event.preventDefault();
+        offset = startOffset - dx;
+        apply();
+      }
+    }
+
+    function endGesture() {
+      if (!active) return;
+      active = false;
+      slider.classList.remove("is-dragging");
+      dragging = false;
+      axis = null;
+      scheduleResume();
+    }
+
     function tick(now) {
-      if (!paused && !dragging) {
+      if (!paused && !active) {
         if (lastTime) {
           const delta = Math.min((now - lastTime) / 1000, 0.05);
-          slider.scrollLeft += SPEED * delta;
-          wrapScroll();
+          offset += SPEED * delta;
+          apply();
         }
       }
       lastTime = now;
@@ -159,71 +220,62 @@
 
     slider.addEventListener("pointerdown", function (event) {
       if (event.pointerType === "mouse" && event.button !== 0) return;
-      pauseAuto();
-      dragging = false;
-      axis = null;
-      startX = event.clientX;
-      startY = event.clientY;
-      startScroll = slider.scrollLeft;
-      pointerId = event.pointerId;
+      beginGesture(event.clientX, event.clientY);
     });
 
-    slider.addEventListener("pointermove", function (event) {
-      if (pointerId !== event.pointerId) return;
+    slider.addEventListener(
+      "pointermove",
+      function (event) {
+        moveGesture(event.clientX, event.clientY, event);
+      },
+      { passive: false }
+    );
 
-      const dx = event.clientX - startX;
-      const dy = event.clientY - startY;
-
-      if (!axis) {
-        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-        axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-        if (axis === "x") {
-          dragging = true;
-          slider.classList.add("is-dragging");
-          slider.setPointerCapture(event.pointerId);
-        }
-      }
-
-      if (axis === "x") {
-        event.preventDefault();
-        slider.scrollLeft = startScroll - dx;
-        wrapScroll();
-      }
-    }, { passive: false });
-
-    function endDrag(event) {
-      if (pointerId !== null && event && event.pointerId !== pointerId) return;
-      if (dragging) {
-        slider.classList.remove("is-dragging");
-      }
-      dragging = false;
-      axis = null;
-      pointerId = null;
-      scheduleResume();
-    }
-
-    slider.addEventListener("pointerup", endDrag);
-    slider.addEventListener("pointercancel", endDrag);
-    slider.addEventListener("lostpointercapture", function () {
-      if (dragging) {
-        slider.classList.remove("is-dragging");
-        dragging = false;
-        axis = null;
-        pointerId = null;
-        scheduleResume();
-      }
+    slider.addEventListener("pointerup", endGesture);
+    slider.addEventListener("pointercancel", endGesture);
+    slider.addEventListener("pointerleave", function (event) {
+      if (event.pointerType === "mouse" && active) endGesture();
     });
+
+    /* iOS often withholds pointermove during a touch pan unless touchmove is non-passive
+       and preventDefault runs after we lock to the horizontal axis. */
+    slider.addEventListener(
+      "touchstart",
+      function (event) {
+        const touch = event.touches[0];
+        if (!touch) return;
+        beginGesture(touch.clientX, touch.clientY);
+      },
+      { passive: true }
+    );
+
+    slider.addEventListener(
+      "touchmove",
+      function (event) {
+        const touch = event.touches[0];
+        if (!touch) return;
+        moveGesture(touch.clientX, touch.clientY, event);
+      },
+      { passive: false }
+    );
+
+    slider.addEventListener("touchend", endGesture);
+    slider.addEventListener("touchcancel", endGesture);
 
     slider.addEventListener(
       "wheel",
       function (event) {
         if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
           pauseAuto();
+          offset += event.deltaX;
+          apply();
           scheduleResume();
         }
       },
       { passive: true }
     );
+
+    apply();
 
     if (!reduceMotion) {
       requestAnimationFrame(tick);
