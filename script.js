@@ -281,4 +281,72 @@
       requestAnimationFrame(tick);
     }
   }
+
+  /* Origin story timeline: fill the line and reveal entries on scroll. */
+  const timelineBox = document.querySelector(".origin-timeline-box");
+  const timeline = document.querySelector(".origin-timeline");
+  const timelineFill = document.querySelector(".origin-track-fill");
+  if (timelineBox && timeline && timelineFill) {
+    const items = Array.from(timeline.querySelectorAll(".origin-item"));
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function setProgress(value) {
+      const progress = Math.max(0, Math.min(1, value));
+      timelineFill.style.transform = "scaleY(" + progress + ")";
+    }
+
+    function updateLineFill() {
+      const rect = timelineBox.getBoundingClientRect();
+      const anchor = window.innerHeight * 0.42;
+      const progress = (anchor - rect.top) / Math.max(rect.height, 1);
+      setProgress(progress);
+    }
+
+    if (reduceMotion) {
+      items.forEach(function (item) {
+        item.classList.add("is-inview");
+      });
+      setProgress(1);
+    } else {
+      const itemObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-inview");
+            itemObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.28, rootMargin: "0px 0px -8% 0px" }
+      );
+
+      items.forEach(function (item) {
+        itemObserver.observe(item);
+      });
+
+      let ticking = false;
+      function onScrollOrResize() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          updateLineFill();
+          ticking = false;
+        });
+      }
+
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+
+      requestAnimationFrame(function () {
+        items.forEach(function (item) {
+          const rect = item.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.78 && rect.bottom > 0) {
+            item.classList.add("is-inview");
+            itemObserver.unobserve(item);
+          }
+        });
+        timeline.classList.add("is-ready");
+        updateLineFill();
+      });
+    }
+  }
 })();
