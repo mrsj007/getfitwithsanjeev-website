@@ -541,6 +541,63 @@ section[id],
   color: var(--cream);
 }
 
+/* Testimonials */
+.testimonials {
+  background:
+    radial-gradient(1200px 420px at 12% -10%, rgba(244, 239, 230, 0.1), transparent 55%),
+    var(--green);
+}
+
+.testimonials-intro h2 {
+  font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+}
+
+.testimonials-grid {
+  display: grid;
+  gap: 1.15rem;
+  grid-template-columns: 1fr;
+}
+
+.quote-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.35rem 1.35rem;
+  box-shadow: 0 14px 36px rgba(10, 18, 14, 0.22);
+  border: 1px solid rgba(244, 239, 230, 0.12);
+}
+
+.quote-mark {
+  display: block;
+  font-family: var(--serif);
+  font-size: 3.4rem;
+  line-height: 0.65;
+  color: var(--green);
+  opacity: 0.45;
+}
+
+.quote-card blockquote {
+  margin: 0.7rem 0 1.15rem;
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  opacity: 1;
+}
+
+.quote-card figcaption {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(31, 58, 46, 0.16);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--green);
+}
+
 /* Credentials slider */
 .cert-slider {
   overflow: hidden;
@@ -882,6 +939,14 @@ section[id],
     grid-template-columns: 1fr 1fr;
   }
 
+  .testimonials-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .quote-card:last-child {
+    grid-column: 1 / -1;
+  }
+
   .about-grid {
     grid-template-columns: 0.9fr 1.1fr;
     align-items: center;
@@ -1007,6 +1072,27 @@ section[id],
 
   .feature-row {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .testimonials-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.25rem;
+  }
+
+  .quote-card {
+    grid-column: span 2;
+  }
+
+  .quote-card:last-child {
+    grid-column: auto;
+  }
+
+  .quote-card:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+
+  .quote-card:nth-child(5) {
+    grid-column: 4 / span 2;
   }
 
   .cert-card {
