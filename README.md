@@ -48,7 +48,6 @@ Serve the site over HTTP (for example `npx serve` or `python3 -m http.server`) r
 ## Contact details
 
 - Email: `getfitwithsk007@gmail.com`
-- Phone: `+1 (778) 637-3926`
 - LinkedIn: [sanjeev-kumar-0387b6207](https://www.linkedin.com/in/sanjeev-kumar-0387b6207)
 - Address: 2566 148st, South Surrey
 

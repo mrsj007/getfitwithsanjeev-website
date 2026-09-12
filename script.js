@@ -98,13 +98,42 @@
       });
   });
 
-  /* Slow auto-sliding certificate row; drag/swipe is 1:1 with the pointer. */
-  const slider = document.querySelector(".cert-slider");
-  if (slider) {
-    const track = slider.querySelector(".cert-track");
+  const marqueeItems = [];
+  let tickerOn = false;
+  let tickerLast = 0;
+
+  function startMarqueeTicker() {
+    if (tickerOn) return;
+    tickerOn = true;
+    tickerLast = 0;
+    requestAnimationFrame(runMarquees);
+  }
+
+  function runMarquees(now) {
+    const delta = tickerLast ? Math.min((now - tickerLast) / 1000, 0.05) : 0;
+    tickerLast = now;
+    let moving = false;
+    marqueeItems.forEach(function (item) {
+      if (item.step(delta)) moving = true;
+    });
+    if (moving) {
+      requestAnimationFrame(runMarquees);
+    } else {
+      tickerOn = false;
+    }
+  }
+
+  function bindMarquee(slider, options) {
+    options = options || {};
+    const track = slider.querySelector(options.trackSelector);
+    const listSelector = options.listSelector;
+    if (!track) return null;
+
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const SPEED = 16;
+    const SPEED = options.speed != null ? options.speed : 16;
+    const DIR = options.direction != null ? options.direction : 1;
     const RESUME_DELAY = 2000;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     let offset = 0;
     let paused = reduceMotion;
     let dragging = false;
@@ -112,37 +141,65 @@
     let startX = 0;
     let startY = 0;
     let startOffset = 0;
-    let lastTime = 0;
     let resumeTimer = null;
     let active = false;
+    let suppressClick = false;
+    let holdPause = false;
+    let cachedHalf = 0;
+    let visible = true;
 
-    function loopWidth() {
-      const list = slider.querySelector(".cert-list");
-      if (!list) return 0;
+    if (options.duplicate && !reduceMotion) {
+      const original = track.querySelector(listSelector);
+      if (original && track.querySelectorAll(listSelector).length < 2) {
+        const clone = original.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        clone.querySelectorAll("[tabindex]").forEach(function (el) {
+          el.removeAttribute("tabindex");
+        });
+        clone.querySelectorAll('[role="button"]').forEach(function (el) {
+          el.removeAttribute("role");
+          el.removeAttribute("aria-expanded");
+        });
+        track.appendChild(clone);
+      }
+    }
+
+    function measure() {
+      const list = track.querySelector(listSelector);
+      if (!list) {
+        cachedHalf = 0;
+        return;
+      }
       const gap = parseFloat(getComputedStyle(track).gap) || 0;
-      return list.offsetWidth + gap;
+      cachedHalf = list.offsetWidth + gap;
     }
 
     function wrapOffset() {
-      const half = loopWidth();
-      if (!half) return;
-      while (offset >= half) {
-        offset -= half;
-        startOffset -= half;
+      if (!cachedHalf) return;
+      while (offset >= cachedHalf) {
+        offset -= cachedHalf;
+        startOffset -= cachedHalf;
       }
       while (offset < 0) {
-        offset += half;
-        startOffset += half;
+        offset += cachedHalf;
+        startOffset += cachedHalf;
       }
     }
 
     function apply() {
+      if (reduceMotion) return;
       wrapOffset();
       track.style.transform = "translate3d(" + -offset + "px, 0, 0)";
     }
 
+    function setMovingClass() {
+      const moving = !reduceMotion && visible && !paused && !active && !holdPause;
+      track.classList.toggle("is-moving", moving);
+    }
+
     function pauseAuto() {
       paused = true;
+      setMovingClass();
       if (resumeTimer) {
         clearTimeout(resumeTimer);
         resumeTimer = null;
@@ -150,15 +207,18 @@
     }
 
     function scheduleResume() {
-      if (reduceMotion) return;
+      if (reduceMotion || holdPause) return;
       if (resumeTimer) clearTimeout(resumeTimer);
       resumeTimer = setTimeout(function () {
+        if (holdPause) return;
         paused = false;
-        lastTime = 0;
+        setMovingClass();
+        startMarqueeTicker();
       }, RESUME_DELAY);
     }
 
     function beginGesture(clientX, clientY) {
+      if (active) return;
       pauseAuto();
       active = true;
       dragging = false;
@@ -166,6 +226,7 @@
       startX = clientX;
       startY = clientY;
       startOffset = offset;
+      setMovingClass();
     }
 
     function moveGesture(clientX, clientY, event) {
@@ -180,6 +241,7 @@
         if (axis === "x") {
           dragging = true;
           slider.classList.add("is-dragging");
+          if (typeof options.onDragStart === "function") options.onDragStart();
           if (event && event.pointerType === "mouse" && event.pointerId != null) {
             try {
               slider.setPointerCapture(event.pointerId);
@@ -203,19 +265,26 @@
       slider.classList.remove("is-dragging");
       dragging = false;
       axis = null;
+      setMovingClass();
       scheduleResume();
     }
 
-    function tick(now) {
-      if (!paused && !active) {
-        if (lastTime) {
-          const delta = Math.min((now - lastTime) / 1000, 0.05);
-          offset += SPEED * delta;
-          apply();
-        }
+    function finishGesture() {
+      if (dragging) suppressClick = true;
+      endGesture();
+    }
+
+    function step(delta) {
+      if (reduceMotion || !visible || paused || active || holdPause) {
+        setMovingClass();
+        return false;
       }
-      lastTime = now;
-      requestAnimationFrame(tick);
+      if (delta) {
+        offset += DIR * SPEED * delta;
+        apply();
+      }
+      setMovingClass();
+      return true;
     }
 
     slider.addEventListener("pointerdown", function (event) {
@@ -231,19 +300,17 @@
       { passive: false }
     );
 
-    slider.addEventListener("pointerup", endGesture);
-    slider.addEventListener("pointercancel", endGesture);
+    slider.addEventListener("pointerup", finishGesture);
+    slider.addEventListener("pointercancel", finishGesture);
     slider.addEventListener("pointerleave", function (event) {
-      if (event.pointerType === "mouse" && active) endGesture();
+      if (event.pointerType === "mouse" && active) finishGesture();
     });
 
-    /* iOS often withholds pointermove during a touch pan unless touchmove is non-passive
-       and preventDefault runs after we lock to the horizontal axis. */
     slider.addEventListener(
       "touchstart",
       function (event) {
         const touch = event.touches[0];
-        if (!touch) return;
+        if (!touch || active) return;
         beginGesture(touch.clientX, touch.clientY);
       },
       { passive: true }
@@ -259,8 +326,8 @@
       { passive: false }
     );
 
-    slider.addEventListener("touchend", endGesture);
-    slider.addEventListener("touchcancel", endGesture);
+    slider.addEventListener("touchend", finishGesture);
+    slider.addEventListener("touchcancel", finishGesture);
 
     slider.addEventListener(
       "wheel",
@@ -275,11 +342,111 @@
       { passive: true }
     );
 
-    apply();
-
-    if (!reduceMotion) {
-      requestAnimationFrame(tick);
+    if (options.pauseOnHover && canHover) {
+      slider.addEventListener("mouseenter", pauseAuto);
+      slider.addEventListener("mouseleave", function () {
+        if (!holdPause) scheduleResume();
+      });
     }
+
+    window.addEventListener("resize", function () {
+      measure();
+      apply();
+    });
+
+    window.addEventListener("load", function () {
+      measure();
+      apply();
+    });
+
+    if ("IntersectionObserver" in window && !reduceMotion) {
+      const vis = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            visible = entry.isIntersecting;
+            setMovingClass();
+            if (visible) startMarqueeTicker();
+          });
+        },
+        { rootMargin: "80px 0px" }
+      );
+      vis.observe(slider);
+    }
+
+    measure();
+    apply();
+    marqueeItems.push({ step: step });
+    if (!reduceMotion) startMarqueeTicker();
+
+    return {
+      consumeClick: function () {
+        if (suppressClick) {
+          suppressClick = false;
+          return true;
+        }
+        return false;
+      },
+      setHoldPause: function (value) {
+        holdPause = value;
+        if (value) {
+          pauseAuto();
+        } else {
+          scheduleResume();
+        }
+      },
+      pauseAuto: pauseAuto,
+      canHover: canHover,
+      reduceMotion: reduceMotion,
+    };
+  }
+
+  /* Slow auto-sliding certificate row; drag/swipe is 1:1 with the pointer. */
+  const slider = document.querySelector(".cert-slider");
+  if (slider) {
+    const certCtrl = bindMarquee(slider, {
+      trackSelector: ".cert-track",
+      listSelector: ".cert-list",
+      speed: 16,
+      direction: 1,
+      pauseOnHover: true,
+    });
+
+    function closeCertCards() {
+      slider.querySelectorAll(".cert-card.is-open").forEach(function (card) {
+        card.classList.remove("is-open");
+        if (card.hasAttribute("aria-expanded")) {
+          card.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    function toggleCertCard(card) {
+      if (!card) return;
+      const willOpen = !card.classList.contains("is-open");
+      closeCertCards();
+      if (willOpen) {
+        card.classList.add("is-open");
+        if (card.hasAttribute("aria-expanded")) {
+          card.setAttribute("aria-expanded", "true");
+        }
+      }
+    }
+
+    slider.addEventListener("click", function (event) {
+      if (certCtrl && certCtrl.consumeClick()) return;
+      const card = event.target.closest(".cert-card");
+      if (!card || !slider.contains(card)) return;
+      toggleCertCard(card);
+    });
+
+    slider.addEventListener("keydown", function (event) {
+      const card = event.target.closest(".cert-card");
+      if (!card || card.closest("[aria-hidden='true']")) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleCertCard(card);
+      }
+    });
   }
 
   /* Origin story timeline: fill the line and reveal entries on scroll. */
@@ -349,4 +516,246 @@
       });
     }
   }
+
+  /* Wall of Love: auto-scrolling rows; full quote in a popover so cards stay fixed-size. */
+  const loveWall = document.querySelector(".love-wall");
+  const popover = loveWall ? loveWall.querySelector(".love-popover") : null;
+  const loveCtrls = [];
+  let openCard = null;
+
+  function hidePopover() {
+    if (!popover) return;
+    popover.classList.remove("is-visible", "is-scrollable", "is-scrolled-end");
+    popover.hidden = true;
+    popover.style.width = "";
+    popover.style.left = "";
+    popover.style.top = "";
+    popover.style.maxHeight = "";
+  }
+
+  function closeAllLoveCards() {
+    document.querySelectorAll(".love-row").forEach(function (row) {
+      row.classList.remove("is-focused");
+    });
+    document.querySelectorAll(".love-card.is-open").forEach(function (card) {
+      card.classList.remove("is-open");
+      if (card.hasAttribute("aria-expanded")) {
+        card.setAttribute("aria-expanded", "false");
+      }
+    });
+    loveCtrls.forEach(function (item) {
+      item.ctrl.setHoldPause(false);
+    });
+    openCard = null;
+    hidePopover();
+  }
+
+  function placePopover(card) {
+    if (!popover || !loveWall) return;
+    const quote = card.querySelector("blockquote");
+    const name = card.querySelector("figcaption");
+    const quoteBox = popover.querySelector("blockquote");
+    const nameBox = popover.querySelector(".love-popover-name");
+    const body = popover.querySelector(".love-popover-body");
+    if (quoteBox) quoteBox.textContent = quote ? quote.textContent.replace(/\s+/g, " ").trim() : "";
+    if (nameBox) nameBox.textContent = name ? name.textContent.trim() : "";
+    popover.hidden = false;
+    popover.style.width = "";
+    popover.style.maxHeight = "";
+    const cardRect = card.getBoundingClientRect();
+    const gutter = 12;
+    const header = document.querySelector(".site-header");
+    const minTop = Math.max(gutter, (header ? header.getBoundingClientRect().bottom : 0) + 8);
+    const maxHeight = Math.max(160, window.innerHeight - minTop - gutter);
+    popover.style.maxHeight = Math.min(window.innerHeight * 0.8, maxHeight) + "px";
+    const width = Math.min(
+      window.innerWidth - gutter * 2,
+      Math.max(popover.offsetWidth, cardRect.width)
+    );
+    popover.style.width = width + "px";
+    if (body) {
+      body.scrollTop = 0;
+      popover.classList.remove("is-scrollable", "is-scrolled-end");
+      const capped = popover.scrollHeight > popover.clientHeight + 1;
+      popover.classList.toggle("is-scrollable", capped);
+      popover.classList.toggle("is-scrolled-end", !capped);
+    }
+    const popH = popover.offsetHeight;
+    const popW = popover.offsetWidth;
+    let left = cardRect.left;
+    left = Math.max(gutter, Math.min(left, window.innerWidth - popW - gutter));
+    let top = cardRect.top;
+    if (top + popH > window.innerHeight - gutter) {
+      top = window.innerHeight - popH - gutter;
+    }
+    if (top < minTop) top = minTop;
+    popover.style.left = left + "px";
+    popover.style.top = top + "px";
+    popover.classList.add("is-visible");
+  }
+
+  function openLoveCard(card, row, ctrl) {
+    if (!card) return;
+    if (openCard === card) return;
+
+    document.querySelectorAll(".love-card.is-open").forEach(function (el) {
+      el.classList.remove("is-open");
+      if (el.hasAttribute("aria-expanded")) {
+        el.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.querySelectorAll(".love-row").forEach(function (el) {
+      el.classList.remove("is-focused");
+    });
+
+    card.classList.add("is-open");
+    if (card.hasAttribute("aria-expanded")) {
+      card.setAttribute("aria-expanded", "true");
+    }
+    row.classList.add("is-focused");
+    loveCtrls.forEach(function (item) {
+      item.ctrl.setHoldPause(item.row === row);
+    });
+    openCard = card;
+    placePopover(card);
+  }
+
+  document.querySelectorAll(".love-row").forEach(function (row) {
+    const speed = parseFloat(row.getAttribute("data-speed")) || 16;
+    const direction = parseFloat(row.getAttribute("data-direction")) || 1;
+    const ctrl = bindMarquee(row, {
+      trackSelector: ".love-track",
+      listSelector: ".love-set",
+      speed: speed,
+      direction: direction,
+      duplicate: true,
+      pauseOnHover: true,
+      onDragStart: closeAllLoveCards,
+    });
+    if (!ctrl) return;
+    loveCtrls.push({ row: row, ctrl: ctrl });
+
+    if (ctrl.canHover) {
+      row.addEventListener("mouseover", function (event) {
+        const card = event.target.closest(".love-card");
+        if (!card) return;
+        const from = event.relatedTarget && event.relatedTarget.closest
+          ? event.relatedTarget.closest(".love-card")
+          : null;
+        if (from === card) return;
+        openLoveCard(card, row, ctrl);
+      });
+      function closeRowIfLeft(event) {
+        if (event.relatedTarget && popover && popover.contains(event.relatedTarget)) return;
+        closeAllLoveCards();
+      }
+      row.addEventListener("mouseleave", closeRowIfLeft);
+      row.addEventListener("pointerleave", closeRowIfLeft);
+    }
+
+    row.addEventListener("click", function (event) {
+      if (ctrl.consumeClick()) return;
+      if (ctrl.canHover) return;
+      const card = event.target.closest(".love-card");
+      if (!card || !row.contains(card)) return;
+      if (openCard === card) {
+        closeAllLoveCards();
+      } else {
+        openLoveCard(card, row, ctrl);
+      }
+    });
+
+    row.addEventListener("keydown", function (event) {
+      const card = event.target.closest(".love-card");
+      if (!card || card.closest("[aria-hidden='true']")) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        if (openCard === card) closeAllLoveCards();
+        else openLoveCard(card, row, ctrl);
+      }
+    });
+  });
+
+  if (popover) {
+    const popoverBody = popover.querySelector(".love-popover-body");
+    if (popoverBody) {
+      popoverBody.addEventListener("scroll", function () {
+        const atEnd =
+          popoverBody.scrollTop + popoverBody.clientHeight >= popoverBody.scrollHeight - 2;
+        popover.classList.toggle("is-scrolled-end", atEnd);
+      });
+    }
+    function closePopoverIfLeft(event) {
+      if (event.relatedTarget && event.relatedTarget.closest && event.relatedTarget.closest(".love-row")) {
+        return;
+      }
+      closeAllLoveCards();
+    }
+    popover.addEventListener("mouseleave", closePopoverIfLeft);
+    popover.addEventListener("pointerleave", closePopoverIfLeft);
+  }
+
+  function nodeInside(container, node) {
+    try {
+      return !!(container && node && node.nodeType && container.contains(node));
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function closeLoveOnPageScroll(event) {
+    if (!openCard) return;
+    if (nodeInside(popover, event && event.target)) return;
+    closeAllLoveCards();
+  }
+
+  window.addEventListener("scroll", closeLoveOnPageScroll, { passive: true, capture: true });
+  document.addEventListener("scroll", closeLoveOnPageScroll, { passive: true, capture: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("scroll", closeLoveOnPageScroll, { passive: true });
+  }
+  window.addEventListener(
+    "wheel",
+    function (event) {
+      if (!openCard) return;
+      const body = popover ? popover.querySelector(".love-popover-body") : null;
+      const scrollingQuote =
+        body &&
+        popover.classList.contains("is-scrollable") &&
+        nodeInside(body, event.target);
+      if (scrollingQuote) return;
+      closeAllLoveCards();
+    },
+    { passive: true, capture: true }
+  );
+
+  document.addEventListener("focusout", function (event) {
+    if (!openCard) return;
+    if (!loveWall || !nodeInside(loveWall, event.target)) return;
+    if (nodeInside(loveWall, event.relatedTarget)) return;
+    closeAllLoveCards();
+  });
+
+  document.addEventListener("click", function (event) {
+    if (event.target.closest(".love-wall")) return;
+    closeAllLoveCards();
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closeAllLoveCards();
+  });
+
+  function updateLoveMores() {
+    document.querySelectorAll(".love-card").forEach(function (card) {
+      const quote = card.querySelector("blockquote");
+      const more = card.querySelector(".love-more");
+      if (!quote || !more) return;
+      const clipped = quote.scrollHeight > quote.clientHeight + 2;
+      more.hidden = !clipped;
+      quote.classList.toggle("is-clipped", clipped);
+    });
+  }
+
+  requestAnimationFrame(updateLoveMores);
+  window.addEventListener("resize", updateLoveMores);
 })();
