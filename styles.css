@@ -15,7 +15,8 @@
   --sans: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
   --radius: 14px;
   --shadow: 0 8px 24px rgba(31, 58, 46, 0.08);
-  --header-h: 4.5rem;
+  --header-pad-top: 0.75rem;
+  --header-h: 5.25rem;
   --max: 72rem;
   --gutter: 1rem;
   --space: clamp(1rem, 4vw, 2rem);
@@ -194,6 +195,7 @@ ul {
 .nav-toggle:focus-visible,
 .accordion-trigger:focus-visible,
 .primary-nav a:focus-visible,
+.page-nav a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
   outline: 2px solid #c4a574;
@@ -225,13 +227,14 @@ textarea:focus-visible {
   position: sticky;
   top: 0;
   z-index: 50;
+  padding-top: var(--header-pad-top);
   background: rgba(244, 239, 230, 0.94);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(31, 58, 46, 0.08);
 }
 
 .header-inner {
-  min-height: var(--header-h);
+  min-height: calc(var(--header-h) - var(--header-pad-top));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -321,6 +324,33 @@ textarea:focus-visible {
 .header-cta {
   margin-top: 0.5rem;
   width: 100%;
+}
+
+.page-nav-label {
+  margin: 0.85rem 0 0.2rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.page-nav-track a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.page-nav-track a.is-active {
+  color: var(--green);
+  font-weight: 700;
 }
 
 body.menu-open {
@@ -582,6 +612,10 @@ section[id],
   flex-direction: column;
   gap: 0.85rem;
   position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .love-row {
@@ -589,9 +623,9 @@ section[id],
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
-  touch-action: pan-y;
+  touch-action: pan-x pan-y;
   overscroll-behavior-x: contain;
-  padding: 0.65rem 0 0.85rem;
+  padding: 0.65rem var(--gutter) 0.85rem;
 }
 
 .love-row.is-dragging {
@@ -620,9 +654,9 @@ section[id],
 
 .love-card {
   margin: 0;
-  flex: 0 0 auto;
+  flex: 0 0 min(17.75rem, calc(100vw - 2.5rem));
   box-sizing: border-box;
-  width: min(17.75rem, 100%);
+  width: min(17.75rem, calc(100vw - 2.5rem));
   height: 13.75rem;
   display: flex;
   flex-direction: column;
@@ -732,8 +766,8 @@ section[id],
 .love-popover {
   position: fixed;
   z-index: 60;
-  width: min(22.5rem, calc(100vw - 1.5rem));
-  max-height: min(80vh, calc(100dvh - 1.5rem));
+  width: min(34rem, calc(100vw - 1.5rem));
+  max-height: calc(100dvh - var(--header-h) - 1.25rem);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -778,7 +812,6 @@ section[id],
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   padding-bottom: 0.35rem;
-  mask-image: linear-gradient(180deg, #000 0%, #000 calc(100% - 1.35rem), transparent 100%);
 }
 
 .love-popover.is-scrollable.is-scrolled-end .love-popover-body {
@@ -811,25 +844,8 @@ section[id],
     var(--white);
 }
 
-.transform-consent {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  margin: 0.85rem auto 0;
-  color: var(--green);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  opacity: 1;
-}
-
-.transform-consent svg {
-  width: 1.05rem;
-  height: 1.05rem;
-  min-width: 1.05rem;
-  max-width: 1.05rem;
-  flex: 0 0 1.05rem;
+.transformations .section-intro p:last-child {
+  margin-bottom: 0;
 }
 
 .transform-grid {
@@ -1450,6 +1466,7 @@ section[id],
 
   .love-card {
     width: 20.5rem;
+    flex-basis: 20.5rem;
     height: 14rem;
   }
 
@@ -1524,25 +1541,88 @@ section[id],
    Expands to a horizontal bar from 1024px (still collapsed well below 768). */
 
 @media (min-width: 1024px) {
+  html {
+    --header-h: 7.65rem;
+  }
+
   .nav-toggle {
     display: none;
   }
 
   .header-inner {
-    gap: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas:
+      "brand primary cta"
+      "pagenav pagenav pagenav";
+    align-items: center;
+    column-gap: 1.25rem;
+  }
+
+  .brand {
+    grid-area: brand;
   }
 
   .primary-nav {
-    display: flex;
+    display: contents;
     position: static;
     background: transparent;
     padding: 0;
     border: 0;
     box-shadow: none;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
+  }
+
+  .nav-primary {
+    grid-area: primary;
+    justify-self: end;
+  }
+
+  .page-nav-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .page-nav {
+    grid-area: pagenav;
+    border-top: 1px solid rgba(31, 58, 46, 0.08);
+  }
+
+  .page-nav-track {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
+    align-items: center;
+    gap: 0 0.15rem;
+    min-height: 2.4rem;
+  }
+
+  .page-nav-track a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.35rem;
+    padding: 0 0.55rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  .page-nav-track a:hover {
+    color: var(--green);
+  }
+
+  .page-nav-track a.is-active {
+    color: var(--green);
+    border-bottom-color: var(--green);
   }
 
   .nav-list {
@@ -1558,6 +1638,7 @@ section[id],
   }
 
   .header-cta {
+    grid-area: cta;
     width: auto;
     margin-top: 0;
     flex-shrink: 0;
@@ -1595,6 +1676,7 @@ section[id],
   }
 
   .love-card {
+    flex-basis: 22rem;
     width: 22rem;
   }
 

@@ -7,6 +7,7 @@
   const mq = window.matchMedia("(max-width: 1023px)");
 
   function closeNav() {
+    if (!header || !toggle) return;
     header.classList.remove("nav-open");
     document.body.classList.remove("menu-open");
     toggle.setAttribute("aria-expanded", "false");
@@ -14,33 +15,36 @@
   }
 
   function openNav() {
+    if (!header || !toggle) return;
     header.classList.add("nav-open");
     document.body.classList.add("menu-open");
     toggle.setAttribute("aria-expanded", "true");
     toggle.setAttribute("aria-label", "Close menu");
   }
 
-  toggle.addEventListener("click", function () {
-    if (header.classList.contains("nav-open")) {
-      closeNav();
-    } else {
-      openNav();
-    }
-  });
-
-  nav.querySelectorAll("a").forEach(function (link) {
-    link.addEventListener("click", function () {
-      if (mq.matches) closeNav();
+  if (header && toggle && nav) {
+    toggle.addEventListener("click", function () {
+      if (header.classList.contains("nav-open")) {
+        closeNav();
+      } else {
+        openNav();
+      }
     });
-  });
 
-  mq.addEventListener("change", function (event) {
-    if (!event.matches) closeNav();
-  });
+    nav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        if (mq.matches) closeNav();
+      });
+    });
 
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") closeNav();
-  });
+    mq.addEventListener("change", function (event) {
+      if (!event.matches) closeNav();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeNav();
+    });
+  }
 
   /* FAQ: one panel open at a time */
   const triggers = Array.from(document.querySelectorAll(".accordion-trigger"));
@@ -52,13 +56,16 @@
 
       triggers.forEach(function (other) {
         other.setAttribute("aria-expanded", "false");
-        other.querySelector(".accordion-icon").textContent = "+";
-        document.getElementById(other.getAttribute("aria-controls")).hidden = true;
+        const icon = other.querySelector(".accordion-icon");
+        if (icon) icon.textContent = "+";
+        const otherPanel = document.getElementById(other.getAttribute("aria-controls"));
+        if (otherPanel) otherPanel.hidden = true;
       });
 
-      if (!expanded) {
+      if (!expanded && panel) {
         btn.setAttribute("aria-expanded", "true");
-        btn.querySelector(".accordion-icon").textContent = "−";
+        const icon = btn.querySelector(".accordion-icon");
+        if (icon) icon.textContent = "−";
         panel.hidden = false;
       }
     });
@@ -69,34 +76,36 @@
   const success = document.getElementById("form-success");
   const errorBox = document.getElementById("form-error");
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-    errorBox.hidden = true;
+  if (form && success && errorBox) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      errorBox.hidden = true;
 
-    const endpoint = form.getAttribute("action");
-    const submitBtn = form.querySelector('button[type="submit"]');
-    submitBtn.disabled = true;
+      const endpoint = form.getAttribute("action");
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
 
-    fetch(endpoint, {
-      method: "POST",
-      body: new FormData(form),
-      headers: { Accept: "application/json" },
-    })
-      .then(function (response) {
-        if (!response.ok) {
-          throw new Error("Formspree request failed");
-        }
-        form.classList.add("is-sent");
-        success.hidden = false;
-        form.reset();
+      fetch(endpoint, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
       })
-      .catch(function () {
-        errorBox.hidden = false;
-      })
-      .finally(function () {
-        submitBtn.disabled = false;
-      });
-  });
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Formspree request failed");
+          }
+          form.classList.add("is-sent");
+          success.hidden = false;
+          form.reset();
+        })
+        .catch(function () {
+          errorBox.hidden = false;
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
+    });
+  }
 
   const marqueeItems = [];
   let tickerOn = false;
@@ -236,8 +245,8 @@
       const dy = clientY - startY;
 
       if (!axis) {
-        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-        axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        axis = Math.abs(dx) >= Math.abs(dy) ? "x" : "y";
         if (axis === "x") {
           dragging = true;
           slider.classList.add("is-dragging");
@@ -375,6 +384,10 @@
 
     measure();
     apply();
+    requestAnimationFrame(function () {
+      measure();
+      apply();
+    });
     marqueeItems.push({ step: step });
     if (!reduceMotion) startMarqueeTicker();
 
@@ -519,9 +532,11 @@
 
   /* Wall of Love: auto-scrolling rows; full quote in a popover so cards stay fixed-size. */
   const loveWall = document.querySelector(".love-wall");
-  const popover = loveWall ? loveWall.querySelector(".love-popover") : null;
+  if (loveWall) {
+  const popover = loveWall.querySelector(".love-popover");
   const loveCtrls = [];
   let openCard = null;
+  let loveLeaveTimer = null;
 
   function hidePopover() {
     if (!popover) return;
@@ -546,6 +561,10 @@
     loveCtrls.forEach(function (item) {
       item.ctrl.setHoldPause(false);
     });
+    if (loveLeaveTimer) {
+      clearTimeout(loveLeaveTimer);
+      loveLeaveTimer = null;
+    }
     openCard = null;
     hidePopover();
   }
@@ -564,21 +583,16 @@
     popover.style.maxHeight = "";
     const cardRect = card.getBoundingClientRect();
     const gutter = 12;
-    const header = document.querySelector(".site-header");
-    const minTop = Math.max(gutter, (header ? header.getBoundingClientRect().bottom : 0) + 8);
-    const maxHeight = Math.max(160, window.innerHeight - minTop - gutter);
-    popover.style.maxHeight = Math.min(window.innerHeight * 0.8, maxHeight) + "px";
-    const width = Math.min(
-      window.innerWidth - gutter * 2,
-      Math.max(popover.offsetWidth, cardRect.width)
-    );
-    popover.style.width = width + "px";
+    const headerEl = document.querySelector(".site-header");
+    const minTop = Math.max(gutter, (headerEl ? headerEl.getBoundingClientRect().bottom : 0) + 8);
+    const available = Math.max(220, window.innerHeight - minTop - gutter);
+    popover.style.maxHeight = available + "px";
+    popover.style.width =
+      Math.min(window.innerWidth - gutter * 2, Math.max(cardRect.width, Math.min(544, window.innerWidth - gutter * 2))) +
+      "px";
     if (body) {
       body.scrollTop = 0;
       popover.classList.remove("is-scrollable", "is-scrolled-end");
-      const capped = popover.scrollHeight > popover.clientHeight + 1;
-      popover.classList.toggle("is-scrollable", capped);
-      popover.classList.toggle("is-scrolled-end", !capped);
     }
     const popH = popover.offsetHeight;
     const popW = popover.offsetWidth;
@@ -591,6 +605,11 @@
     if (top < minTop) top = minTop;
     popover.style.left = left + "px";
     popover.style.top = top + "px";
+    if (body) {
+      const capped = popover.scrollHeight > popover.clientHeight + 1;
+      popover.classList.toggle("is-scrollable", capped);
+      popover.classList.toggle("is-scrolled-end", !capped);
+    }
     popover.classList.add("is-visible");
   }
 
@@ -647,7 +666,11 @@
       });
       function closeRowIfLeft(event) {
         if (event.relatedTarget && popover && popover.contains(event.relatedTarget)) return;
-        closeAllLoveCards();
+        if (loveLeaveTimer) clearTimeout(loveLeaveTimer);
+        loveLeaveTimer = setTimeout(function () {
+          if (popover && popover.matches(":hover")) return;
+          closeAllLoveCards();
+        }, 180);
       }
       row.addEventListener("mouseleave", closeRowIfLeft);
       row.addEventListener("pointerleave", closeRowIfLeft);
@@ -691,6 +714,12 @@
       }
       closeAllLoveCards();
     }
+    popover.addEventListener("mouseenter", function () {
+      if (loveLeaveTimer) {
+        clearTimeout(loveLeaveTimer);
+        loveLeaveTimer = null;
+      }
+    });
     popover.addEventListener("mouseleave", closePopoverIfLeft);
     popover.addEventListener("pointerleave", closePopoverIfLeft);
   }
@@ -758,4 +787,57 @@
 
   requestAnimationFrame(updateLoveMores);
   window.addEventListener("resize", updateLoveMores);
+  }
+
+  /* Highlight the in-page section currently in view. */
+  const spyLinks = Array.from(document.querySelectorAll("[data-page-nav] a"));
+  const spySections = [];
+  const spySeen = {};
+  spyLinks.forEach(function (link) {
+    const href = link.getAttribute("href") || "";
+    if (href.charAt(0) !== "#") return;
+    const id = href.slice(1);
+    if (!id || spySeen[id]) return;
+    const section = document.getElementById(id);
+    if (!section) return;
+    spySeen[id] = true;
+    spySections.push(section);
+  });
+
+  function setSpyActive(id) {
+    spyLinks.forEach(function (link) {
+      link.classList.toggle("is-active", (link.getAttribute("href") || "") === "#" + id);
+    });
+  }
+
+  if (spySections.length) {
+    function updateSpyFromPosition() {
+      const line = (header ? header.getBoundingClientRect().bottom : 80) + 8;
+      let current = spySections[0].id;
+      spySections.forEach(function (section) {
+        if (section.getBoundingClientRect().top <= line) current = section.id;
+      });
+      setSpyActive(current);
+    }
+
+    updateSpyFromPosition();
+    window.addEventListener("scroll", updateSpyFromPosition, { passive: true });
+    window.addEventListener("resize", updateSpyFromPosition);
+
+    if ("IntersectionObserver" in window) {
+      const spyObserver = new IntersectionObserver(function () {
+        updateSpyFromPosition();
+      }, { rootMargin: "-20% 0px -55% 0px", threshold: [0, 0.25, 1] });
+      spySections.forEach(function (section) {
+        spyObserver.observe(section);
+      });
+    }
+
+    spyLinks.forEach(function (link) {
+      link.addEventListener("click", function () {
+        const href = link.getAttribute("href") || "";
+        if (href.charAt(0) === "#") setSpyActive(href.slice(1));
+      });
+    });
+  }
 })();
