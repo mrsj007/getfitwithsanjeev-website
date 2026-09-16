@@ -212,12 +212,6 @@ textarea:focus-visible {
   color: var(--green);
 }
 
-.btn-ghost-light {
-  background: transparent;
-  color: var(--cream);
-  border-color: rgba(244, 239, 230, 0.7);
-}
-
 .btn-full {
   width: 100%;
 }
@@ -422,8 +416,13 @@ section[id],
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
   gap: 0.75rem;
+}
+
+.hero-actions .btn {
+  width: auto;
 }
 
 /* Info cards */
@@ -654,10 +653,11 @@ section[id],
 
 .love-card {
   margin: 0;
-  flex: 0 0 min(17.75rem, calc(100vw - 2.5rem));
+  flex: 0 0 min(20rem, calc(100vw - 2.5rem));
   box-sizing: border-box;
-  width: min(17.75rem, calc(100vw - 2.5rem));
-  height: 13.75rem;
+  width: min(20rem, calc(100vw - 2.5rem));
+  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   background: var(--cream);
@@ -665,11 +665,8 @@ section[id],
   padding: 1.15rem 1.15rem 1.05rem;
   box-shadow: 0 14px 36px rgba(10, 18, 14, 0.22);
   border: 1px solid rgba(244, 239, 230, 0.12);
-  overflow: hidden;
   overflow-wrap: break-word;
-  position: relative;
-  z-index: 0;
-  cursor: pointer;
+  cursor: grab;
 }
 
 .love-set:nth-child(1) .love-card:nth-child(even),
@@ -711,23 +708,7 @@ section[id],
   font-size: 0.92rem;
   line-height: 1.55;
   overflow-wrap: break-word;
-  max-height: 4.65em;
-  overflow: hidden;
   flex: 1 1 auto;
-}
-
-.love-card blockquote.is-clipped {
-  mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
-}
-
-.love-more {
-  margin: 0 0 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--green);
-  flex: 0 0 auto;
 }
 
 .love-card figcaption {
@@ -743,16 +724,6 @@ section[id],
   flex: 0 0 auto;
 }
 
-.love-row.is-focused .love-card:not(.is-open) {
-  opacity: 0.62;
-}
-
-.love-card.is-open {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
 .love-row.is-dragging,
 .love-row.is-dragging .love-card {
   cursor: grabbing;
@@ -761,80 +732,6 @@ section[id],
 .love-card:focus-visible {
   outline: 2px solid #c4a574;
   outline-offset: 3px;
-}
-
-.love-popover {
-  position: fixed;
-  z-index: 60;
-  width: min(34rem, calc(100vw - 1.5rem));
-  max-height: calc(100dvh - var(--header-h) - 1.25rem);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  padding: 1.2rem 1.25rem 1.15rem;
-  background: var(--cream);
-  color: var(--text);
-  border-radius: var(--radius);
-  box-shadow: 0 22px 48px rgba(10, 18, 14, 0.32);
-  border: 1px solid rgba(244, 239, 230, 0.18);
-  opacity: 0;
-  transform: scale(0.96);
-  transform-origin: top left;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .love-row.is-focused .love-card:not(.is-open) {
-    transition: opacity 0.3s ease;
-  }
-
-  .love-popover {
-    transition: opacity 0.32s ease, transform 0.32s ease;
-  }
-}
-
-.love-popover.is-visible {
-  opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
-  visibility: visible;
-}
-
-.love-popover-body {
-  min-height: 0;
-  flex: 1 1 auto;
-  overflow: visible;
-}
-
-.love-popover.is-scrollable .love-popover-body {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  padding-bottom: 0.35rem;
-}
-
-.love-popover.is-scrollable.is-scrolled-end .love-popover-body {
-  mask-image: none;
-}
-
-.love-popover blockquote {
-  margin: 0.35rem 0 0.5rem;
-  color: var(--text);
-  font-size: 0.94rem;
-  line-height: 1.6;
-}
-
-.love-popover-name {
-  margin: 0;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(31, 58, 46, 0.16);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--green);
-  flex: 0 0 auto;
 }
 
 /* Client transformations */
@@ -922,16 +819,6 @@ section[id],
   text-transform: uppercase;
   color: var(--green);
   text-align: center;
-}
-
-.love-popover-stars {
-  width: 5.4em;
-  height: 0.82em;
-  margin: 0 0 0.4rem;
-  flex: 0 0 auto;
-  background-color: var(--green);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.2l2.7 6.6 7.1.6-5.4 4.6 1.6 6.9L12 17.8 5.99 21l1.62-6.9L2.2 9.4l7.1-.6L12 2.2z'/%3E%3C/svg%3E") repeat-x left center / 1.08em 0.82em;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.2l2.7 6.6 7.1.6-5.4 4.6 1.6 6.9L12 17.8 5.99 21l1.62-6.9L2.2 9.4l7.1-.6L12 2.2z'/%3E%3C/svg%3E") repeat-x left center / 1.08em 0.82em;
 }
 
 /* Origin story */
@@ -1465,9 +1352,8 @@ section[id],
   }
 
   .love-card {
-    width: 20.5rem;
-    flex-basis: 20.5rem;
-    height: 14rem;
+    width: 21.5rem;
+    flex-basis: 21.5rem;
   }
 
   .about-grid {
@@ -1676,8 +1562,8 @@ section[id],
   }
 
   .love-card {
-    flex-basis: 22rem;
-    width: 22rem;
+    flex-basis: 23rem;
+    width: 23rem;
   }
 
   .cert-card {
@@ -1748,28 +1634,14 @@ section[id],
 
   .love-card {
     width: 100%;
-    height: 13.75rem;
+    height: auto;
     flex: 1 1 100%;
   }
 
-  .love-card,
-  .love-row.is-focused .love-card:not(.is-open),
-  .love-popover,
-  .love-popover.is-visible {
+  .love-card {
     transform: none;
     transition: none;
     will-change: auto;
-  }
-
-  .love-card.is-open {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .love-popover.is-visible {
-    opacity: 1;
-    visibility: visible;
   }
 
   .origin-track-fill {
