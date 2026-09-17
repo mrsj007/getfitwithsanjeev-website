@@ -667,6 +667,9 @@ section[id],
   border: 1px solid rgba(244, 239, 230, 0.12);
   overflow-wrap: break-word;
   cursor: grab;
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
 }
 
 .love-set:nth-child(1) .love-card:nth-child(even),
@@ -811,14 +814,22 @@ section[id],
 
 .transform-card figcaption {
   margin: 0;
-  padding: 0.75rem 0.85rem 0.9rem;
+  padding: 0.7rem 0.85rem 0.95rem;
   font-family: var(--sans);
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--green);
   text-align: center;
+}
+
+.transform-duration {
+  display: block;
+  margin-top: 0.22rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  color: var(--green);
 }
 
 /* Origin story */
