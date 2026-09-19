@@ -105,6 +105,18 @@ ul {
   top: 1rem;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .container,
 .header-inner {
   width: min(100% - (var(--gutter) * 2), var(--max));
@@ -394,9 +406,74 @@ section[id],
 
 .hero h1 {
   max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: 0.28em;
+  row-gap: 0.02em;
+  margin-bottom: 0.8rem;
+  font-size: clamp(2.05rem, 6.4vw, 4.35rem);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.hero-eq,
+.hero-cycle {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.hero-eq {
+  white-space: nowrap;
+  line-height: 1.18;
+}
+
+.hero-cycle {
+  --hero-cycle-line: 1.18em;
+  position: relative;
+  display: inline-grid;
+  justify-items: start;
+}
+
+.hero-cycle-sizer {
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1.18;
+}
+
+.hero-cycle-window {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-cycle-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-cycle.is-instant .hero-cycle-strip {
+  transition: none;
+}
+
+.hero-cycle-word {
+  display: flex;
+  align-items: center;
+  flex: 0 0 var(--hero-cycle-line);
+  height: var(--hero-cycle-line);
+  white-space: nowrap;
+  line-height: 1.18;
 }
 
 .hero h1,
+.hero .hero-sub,
 .hero .hero-lede {
   color: var(--white);
 }
@@ -405,10 +482,21 @@ section[id],
   max-width: 100%;
 }
 
+.hero-sub {
+  max-width: min(38rem, 100%);
+  margin: 0 auto 0.5rem;
+  font-family: var(--serif);
+  font-size: clamp(1.08rem, 2.3vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--white);
+}
+
 .hero-lede {
   max-width: min(40rem, 100%);
   margin: 0 auto 1.75rem;
   font-size: 1.02rem;
+  opacity: 0.88;
   overflow-wrap: break-word;
 }
 
@@ -1424,6 +1512,11 @@ section[id],
     padding-bottom: 5rem;
   }
 
+  .hero h1 {
+    justify-content: flex-start;
+  }
+
+  .hero-sub,
   .hero-lede {
     margin-left: 0;
     max-width: min(40rem, 100%);
@@ -1657,6 +1750,11 @@ section[id],
 
   .origin-track-fill {
     transform: scaleY(1);
+  }
+
+  .hero-cycle-strip {
+    transition: none;
+    transform: none !important;
   }
 }
 
