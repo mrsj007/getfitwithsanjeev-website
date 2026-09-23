@@ -400,7 +400,7 @@ section[id],
 .hero-content {
   position: relative;
   z-index: 1;
-  padding: 4rem 0 3.5rem;
+  padding: 3.5rem 0 3.25rem;
   text-align: center;
 }
 
@@ -412,10 +412,10 @@ section[id],
   align-items: baseline;
   column-gap: 0.28em;
   row-gap: 0.02em;
-  margin-bottom: 0.8rem;
-  font-size: clamp(2.05rem, 6.4vw, 4.35rem);
-  font-weight: 600;
-  line-height: 1.05;
+  margin-bottom: 1.2rem;
+  font-size: clamp(2.18rem, 7.5vw, 5.15rem);
+  font-weight: 700;
+  line-height: 1.02;
 }
 
 .hero-eq,
@@ -438,11 +438,16 @@ section[id],
 }
 
 .hero-cycle-sizer {
+  display: grid;
   visibility: hidden;
-  white-space: nowrap;
   pointer-events: none;
   user-select: none;
   line-height: 1.18;
+}
+
+.hero-cycle-sizer > span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
 }
 
 .hero-cycle-window {
@@ -473,28 +478,18 @@ section[id],
 }
 
 .hero h1,
-.hero .hero-sub,
 .hero .hero-lede {
   color: var(--white);
 }
 
 .hero .eyebrow {
   max-width: 100%;
-}
-
-.hero-sub {
-  max-width: min(38rem, 100%);
-  margin: 0 auto 0.5rem;
-  font-family: var(--serif);
-  font-size: clamp(1.08rem, 2.3vw, 1.5rem);
-  font-weight: 500;
-  line-height: 1.35;
-  color: var(--white);
+  margin-bottom: 1rem;
 }
 
 .hero-lede {
   max-width: min(40rem, 100%);
-  margin: 0 auto 1.75rem;
+  margin: 0 auto 2rem;
   font-size: 1.02rem;
   opacity: 0.88;
   overflow-wrap: break-word;
@@ -1890,16 +1885,22 @@ section[id],
 
   .hero-content {
     text-align: left;
-    padding-bottom: 5rem;
+    padding-top: 4.5rem;
+    padding-bottom: 4.75rem;
   }
 
   .hero h1 {
     justify-content: flex-start;
+    margin-bottom: 1.35rem;
   }
 
-  .hero-sub,
+  .hero .eyebrow {
+    margin-bottom: 1.15rem;
+  }
+
   .hero-lede {
     margin-left: 0;
+    margin-bottom: 2.15rem;
     max-width: min(40rem, 100%);
   }
 
@@ -2056,8 +2057,16 @@ section[id],
 /* 1280 - wide */
 @media (min-width: 1280px) {
   .hero-content {
-    padding-top: 6rem;
-    padding-bottom: 6.5rem;
+    padding-top: 5.5rem;
+    padding-bottom: 5.75rem;
+  }
+
+  .hero h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-lede {
+    margin-bottom: 2.35rem;
   }
 
   .about-photo {

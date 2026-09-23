@@ -636,7 +636,7 @@
     });
   }
 
-  /* Hero: one-strip vertical carousel for Stronger / Longer / Fitter */
+  /* Hero: one-strip vertical carousel for Longevity / Mobility / Endurance */
   const heroCycle = document.querySelector(".hero-cycle");
   if (heroCycle) {
     const sizer = heroCycle.querySelector(".hero-cycle-sizer");
