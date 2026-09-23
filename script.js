@@ -530,19 +530,58 @@
     }
   }
 
-  /* Wall of Love: auto-scrolling rows with full quote text always visible. */
-  document.querySelectorAll(".love-row").forEach(function (row) {
-    const speed = parseFloat(row.getAttribute("data-speed")) || 16;
-    const direction = parseFloat(row.getAttribute("data-direction")) || 1;
-    bindMarquee(row, {
-      trackSelector: ".love-track",
-      listSelector: ".love-set",
-      speed: speed,
-      direction: direction,
+  /* Wall of Love: click arrows advance a block. Nothing changes on a timer. */
+  document.querySelectorAll(".love-block").forEach(function (block) {
+    const cards = Array.from(block.querySelectorAll(".love-card"));
+    const dots = Array.from(block.querySelectorAll(".love-dot"));
+    const prev = block.querySelector(".love-prev");
+    const next = block.querySelector(".love-next");
+    if (cards.length < 2 || !prev || !next) return;
+
+    let current = Math.max(0, cards.findIndex(function (card) {
+      return card.classList.contains("is-active");
+    }));
+
+    function show(index) {
+      const nextIndex = (index + cards.length) % cards.length;
+      if (nextIndex === current) return;
+      cards[current].classList.remove("is-active");
+      cards[current].setAttribute("aria-hidden", "true");
+      cards[nextIndex].classList.add("is-active");
+      cards[nextIndex].removeAttribute("aria-hidden");
+      dots.forEach(function (dot, dotIndex) {
+        const on = dotIndex === nextIndex;
+        dot.classList.toggle("is-on", on);
+        if (on) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+      current = nextIndex;
+    }
+
+    prev.addEventListener("click", function () {
+      show(current - 1);
+    });
+    next.addEventListener("click", function () {
+      show(current + 1);
+    });
+    dots.forEach(function (dot, dotIndex) {
+      dot.addEventListener("click", function () {
+        show(dotIndex);
+      });
+    });
+  });
+
+  const praise = document.querySelector(".love-marquee");
+  if (praise) {
+    bindMarquee(praise, {
+      trackSelector: ".love-marquee-track",
+      listSelector: ".love-marquee-set",
+      speed: 18,
+      direction: 1,
       duplicate: true,
       pauseOnHover: true,
     });
-  });
+  }
 
 
   /* Highlight the in-page section currently in view. */
