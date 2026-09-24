@@ -662,7 +662,11 @@
     }
 
     function lineHeight() {
-      return sizer ? sizer.offsetHeight : 0;
+      if (!sizer) return 0;
+      const word = sizer.querySelector("span");
+      const measured = word ? word.getBoundingClientRect().height : sizer.getBoundingClientRect().height;
+      const dpr = window.devicePixelRatio || 1;
+      return Math.round(measured * dpr) / dpr;
     }
 
     function applyOffset(animate) {

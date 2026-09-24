@@ -474,10 +474,14 @@ section[id],
   position: relative;
   display: inline-grid;
   justify-items: start;
+  height: var(--hero-cycle-line);
+  font-weight: 900;
 }
 
 .hero-cycle-sizer {
+  align-self: start;
   display: grid;
+  height: auto;
   visibility: hidden;
   pointer-events: none;
   user-select: none;
@@ -486,12 +490,17 @@ section[id],
 
 .hero-cycle-sizer > span {
   grid-area: 1 / 1;
+  align-self: start;
   white-space: nowrap;
+  line-height: 1.18;
 }
 
 .hero-cycle-window {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--hero-cycle-line);
   overflow: hidden;
 }
 
@@ -499,6 +508,8 @@ section[id],
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin: 0;
+  padding: 0;
   will-change: transform;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -508,12 +519,14 @@ section[id],
 }
 
 .hero-cycle-word {
-  display: flex;
-  align-items: center;
+  display: block;
   flex: 0 0 var(--hero-cycle-line);
   height: var(--hero-cycle-line);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
   white-space: nowrap;
-  line-height: 1.18;
+  line-height: var(--hero-cycle-line);
 }
 
 .hero h1,
