@@ -61,15 +61,33 @@
     <main id="main">
       <!-- ========== HERO ========== -->
       <section class="hero" aria-labelledby="hero-heading">
-        <!-- TODO: replace with client's real photos -->
-        <div
-          class="hero-bg"
-          role="img"
-          aria-label="Personal trainer coaching a client in a gym"
-          style="
-            background-image: url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1920&q=80');
-          "
-        ></div>
+        <!-- Previous static hero, kept for rollback:
+             https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1920&q=80 -->
+        <div class="hero-bg" aria-hidden="true">
+          <div class="hero-pan-track">
+            <div class="hero-pan-set">
+              <img
+                src="images/hero/collage-1.jpg"
+                alt=""
+                width="1024"
+                height="576"
+                fetchpriority="high"
+                decoding="async"
+              >
+              <img
+                src="images/hero/collage-2.jpg"
+                alt=""
+                width="1024"
+                height="576"
+                decoding="async"
+              >
+            </div>
+            <div class="hero-pan-set" aria-hidden="true">
+              <img src="images/hero/collage-1.jpg" alt="" width="1024" height="576" decoding="async">
+              <img src="images/hero/collage-2.jpg" alt="" width="1024" height="576" decoding="async">
+            </div>
+          </div>
+        </div>
         <div class="hero-overlay"></div>
         <div class="container hero-content">
           <p class="eyebrow eyebrow-light">Personal Trainer • Vancouver, BC</p>
