@@ -413,19 +413,11 @@
     };
   }
 
-  /* Slow auto-sliding certificate row; drag/swipe is 1:1 with the pointer. */
-  const slider = document.querySelector(".cert-slider");
-  if (slider) {
-    const certCtrl = bindMarquee(slider, {
-      trackSelector: ".cert-track",
-      listSelector: ".cert-list",
-      speed: 16,
-      direction: 1,
-      pauseOnHover: true,
-    });
-
+  /* Tap a certification card to open its short summary. */
+  const certList = document.querySelector(".cert-list");
+  if (certList) {
     function closeCertCards() {
-      slider.querySelectorAll(".cert-card.is-open").forEach(function (card) {
+      certList.querySelectorAll(".cert-card.is-open").forEach(function (card) {
         card.classList.remove("is-open");
         if (card.hasAttribute("aria-expanded")) {
           card.setAttribute("aria-expanded", "false");
@@ -445,16 +437,15 @@
       }
     }
 
-    slider.addEventListener("click", function (event) {
-      if (certCtrl && certCtrl.consumeClick()) return;
+    certList.addEventListener("click", function (event) {
       const card = event.target.closest(".cert-card");
-      if (!card || !slider.contains(card)) return;
+      if (!card || !certList.contains(card)) return;
       toggleCertCard(card);
     });
 
-    slider.addEventListener("keydown", function (event) {
+    certList.addEventListener("keydown", function (event) {
       const card = event.target.closest(".cert-card");
-      if (!card || card.closest("[aria-hidden='true']")) return;
+      if (!card || !certList.contains(card)) return;
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         toggleCertCard(card);
