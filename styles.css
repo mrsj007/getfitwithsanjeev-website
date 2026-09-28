@@ -1586,6 +1586,29 @@ section[id],
 .cert-badge-pronatal { color: #4c2a6b; }
 .cert-badge-pronatal .ribbon-tail { color: #8d6aa8; opacity: 1; }
 
+.cert-badge-hypervolt { color: #243036; }
+.cert-badge-hypervolt .ribbon-band { stroke: #d06a32; }
+.cert-badge-hypervolt .ribbon-fold,
+.cert-badge-hypervolt .ribbon-tail { color: #d06a32; opacity: 1; }
+
+.cert-wordmark {
+  position: absolute;
+  left: 50%;
+  top: 27%;
+  transform: translate(-50%, -50%);
+  max-width: 72%;
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #243036;
+  pointer-events: none;
+  user-select: none;
+}
+
 .cert-logo {
   position: absolute;
   left: 50%;
