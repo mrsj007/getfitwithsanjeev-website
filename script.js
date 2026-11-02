@@ -1,6 +1,12 @@
 /* Sanjeev Kumar site interactions: mobile nav, FAQ accordion, contact form. */
 
 (function () {
+  /* Temporary booking target. One-line swap when the booking page exists. */
+  const BOOKING_HREF = "index.html#guidance"; // TODO: point to book.html in the booking phase
+  document.querySelectorAll("[data-booking]").forEach(function (link) {
+    link.setAttribute("href", BOOKING_HREF);
+  });
+
   const header = document.querySelector(".site-header");
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("primary-nav");

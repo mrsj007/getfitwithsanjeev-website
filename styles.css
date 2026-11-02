@@ -179,6 +179,10 @@ ul {
   color: var(--cream);
 }
 
+h1.eyebrow {
+  line-height: 1.65;
+}
+
 /* Buttons - 44px min height for touch */
 .btn {
   display: inline-flex;
@@ -208,6 +212,8 @@ ul {
 .accordion-trigger:focus-visible,
 .primary-nav a:focus-visible,
 .page-nav a:focus-visible,
+.hero-text-link:focus-visible,
+.hero-lede a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
   outline: 2px solid #c4a574;
@@ -222,6 +228,12 @@ textarea:focus-visible {
 .btn-cream {
   background: var(--cream);
   color: var(--green);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--green);
+  border-color: rgba(31, 58, 46, 0.45);
 }
 
 .btn-full {
@@ -560,6 +572,22 @@ section[id],
   width: auto;
 }
 
+.hero-text-link {
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-underline-offset: 0.22em;
+  opacity: 0.88;
+}
+
+.hero-text-link:hover {
+  opacity: 1;
+}
+
+.hero-lede a {
+  color: inherit;
+}
+
 /* Info cards */
 .card-grid {
   display: grid;
@@ -598,6 +626,59 @@ section[id],
 
 .info-card p {
   font-size: 0.95rem;
+}
+
+.package-grid {
+  display: grid;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.package-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.package-card-primary {
+  border: 1.5px solid var(--green);
+}
+
+.package-card h3 {
+  font-size: 1.35rem;
+}
+
+.package-card-secondary h3 {
+  font-size: 1.15rem;
+}
+
+.package-card ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0 0 1.35rem;
+}
+
+.package-card li {
+  position: relative;
+  padding-left: 1.05rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.package-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.package-card .btn {
+  margin-top: auto;
+  align-self: flex-start;
 }
 
 /* Photo cards */
@@ -716,7 +797,7 @@ section[id],
   color: var(--cream);
 }
 
-/* Wall of Love — asymmetric mosaic, click-to-advance, praise marquee below. */
+/* Wall of Love: asymmetric mosaic, click-to-advance, praise marquee below. */
 .testimonials {
   background:
     radial-gradient(1200px 420px at 12% -10%, rgba(244, 239, 230, 0.1), transparent 55%),
@@ -1366,8 +1447,12 @@ section[id],
 }
 
 .origin-wrap h2 {
-  margin: 0 0 1.75rem;
+  margin: 0 0 0.75rem;
   font-size: clamp(1.85rem, 4vw, 2.85rem);
+}
+
+.origin-lead {
+  margin: 0 0 1.5rem;
 }
 
 .origin-timeline-box {
@@ -1814,6 +1899,11 @@ section[id],
   resize: vertical;
 }
 
+.form-intro {
+  margin: 0;
+  font-size: 1rem;
+}
+
 .form-note {
   font-size: 0.85rem;
   opacity: 0.85;
@@ -1833,7 +1923,8 @@ section[id],
 .contact-form.is-sent label,
 .contact-form.is-sent .btn,
 .contact-form.is-sent .form-note,
-.contact-form.is-sent .form-error {
+.contact-form.is-sent .form-error,
+.contact-form.is-sent .form-intro {
   display: none;
 }
 
@@ -1987,6 +2078,14 @@ section[id],
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: start;
+  }
+
+  .package-grid {
+    grid-template-columns: 1.4fr 0.9fr;
+  }
+
+  .package-card-primary {
+    padding: 2rem 1.75rem 1.85rem;
   }
 
   .cert-list {
