@@ -8,6 +8,7 @@ Credentials: NASM, ISSA, ProNatal and Hypervolt.
 
 - Home: https://www.getfitwithsanjeev.com/
 - About: https://www.getfitwithsanjeev.com/about.html
+- Book a consultation: https://www.getfitwithsanjeev.com/book.html - choose a 15 or 30 minute meeting, then pick a time.
 - LinkedIn: https://www.linkedin.com/in/sanjeev-kumar-0387b6207
 
-Package sizes, session lengths and prices are not published. Consultations currently start from the contact form. A booking page is planned.
+Package sizes, session lengths and prices are not published. Consultations are booked on the booking page. Free guidance questions still go through the contact form.

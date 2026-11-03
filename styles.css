@@ -344,6 +344,10 @@ textarea:focus-visible {
   width: 100%;
 }
 
+.header-cta[aria-current="page"] {
+  box-shadow: inset 0 0 0 2px rgba(244, 239, 230, 0.9);
+}
+
 .page-nav-label {
   margin: 0.85rem 0 0.2rem;
   font-family: var(--sans);
@@ -679,6 +683,82 @@ section[id],
 .package-card .btn {
   margin-top: auto;
   align-self: flex-start;
+}
+
+/* Booking page */
+.booking-subhead {
+  text-align: center;
+  margin: 0 0 1.25rem;
+}
+
+.booking-steps {
+  display: grid;
+  gap: 1rem;
+  margin: 0 auto 2.5rem;
+  padding: 0;
+  list-style: none;
+  max-width: 56rem;
+}
+
+.booking-step p:last-child {
+  margin: 0;
+  color: var(--text);
+}
+
+.booking-step-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.cal-hint {
+  text-align: center;
+  margin: 0 auto 0.85rem;
+  max-width: 36rem;
+}
+
+.cal-embed {
+  width: 100%;
+  max-width: 100%;
+  min-height: 650px;
+  overflow: hidden;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.cal-embed iframe {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  min-height: 650px;
+  border: 0;
+}
+
+.booking-fallback,
+.booking-write,
+.booking-note {
+  text-align: center;
+}
+
+.booking-fallback {
+  margin-top: 1.25rem;
+}
+
+.booking-write {
+  margin-top: 2rem;
+}
+
+.booking-write a {
+  color: var(--green);
+}
+
+.booking-note {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
 }
 
 /* Photo cards */
@@ -2084,6 +2164,10 @@ section[id],
     grid-template-columns: 1.4fr 0.9fr;
   }
 
+  .booking-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .package-card-primary {
     padding: 2rem 1.75rem 1.85rem;
   }
@@ -2272,6 +2356,14 @@ section[id],
   .cert-list {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1rem;
+  }
+
+  html.page-book {
+    --header-h: 5.4rem;
+  }
+
+  html.page-book .header-inner {
+    grid-template-areas: "brand primary cta";
   }
 
 }
