@@ -14,7 +14,7 @@ Credentials: NASM, ISSA, ProNatal and Hypervolt.
 Package sizes, session lengths and prices are not published. Consultations are booked on the booking page. Free guidance questions still go through the contact form.
 
 <!-- BLOG:START -->
-Starting From Zero: Your First Month of Training - https://www.getfitwithsanjeev.com/blog/your-first-month-of-training.html - New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working.
 Mobility for Desk Workers: A 10-Minute Routine - https://www.getfitwithsanjeev.com/blog/mobility-for-desk-workers.html - Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks and a 10-minute mobility routine.
+Starting From Zero: Your First Month of Training - https://www.getfitwithsanjeev.com/blog/your-first-month-of-training.html - New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working.
 Strength Training After 50: Where to Start - https://www.getfitwithsanjeev.com/blog/strength-training-after-50.html - A plain-language guide to starting strength training after 50: the basic movements, a simple weekly plan, and how to progress safely.
 <!-- BLOG:END -->

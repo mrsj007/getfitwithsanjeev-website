@@ -2,8 +2,8 @@
 title: "Mobility for Desk Workers: A 10-Minute Routine"
 slug: mobility-for-desk-workers
 description: "Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks and a 10-minute mobility routine."
-date: 2026-11-12
-updated: 2026-11-12
+date: 2026-11-03
+updated: 2026-11-03
 categories: ["Mobility"]
 tags: ["mobility", "desk work", "posture", "stretching"]
 image: "/images/blog/mobility-for-desk-workers.jpg"

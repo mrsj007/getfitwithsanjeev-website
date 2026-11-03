@@ -2,8 +2,8 @@
 title: "Starting From Zero: Your First Month of Training"
 slug: your-first-month-of-training
 description: "New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working."
-date: 2026-11-14
-updated: 2026-11-14
+date: 2026-11-03
+updated: 2026-11-03
 categories: ["Getting Started"]
 tags: ["beginners", "habits", "first month", "consistency"]
 image: "/images/blog/your-first-month-of-training.jpg"
