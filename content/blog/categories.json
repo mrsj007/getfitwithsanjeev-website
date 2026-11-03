@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Trending",
+    "slug": "trending",
+    "description": "An editorial label for posts Sanjeev wants to highlight right now."
+  },
+  {
+    "name": "Special",
+    "slug": "special",
+    "description": "An editorial label for posts Sanjeev chooses to set apart from the regular articles."
+  },
+  {
+    "name": "Fitness Digest",
+    "slug": "fitness-digest",
+    "description": "Roundup-style posts that gather several training ideas in one place."
+  },
+  {
+    "name": "Getting Started",
+    "slug": "getting-started",
+    "description": "First steps for people who are new to training."
+  },
+  {
+    "name": "Mobility",
+    "slug": "mobility",
+    "description": "Movement, flexibility and how to ease everyday stiffness."
+  },
+  {
+    "name": "Strength",
+    "slug": "strength",
+    "description": "Strength training, from first lifts to steady progress."
+  },
+  {
+    "name": "Endurance",
+    "slug": "endurance",
+    "description": "Cardio, stamina and training that builds staying power."
+  },
+  {
+    "name": "Active Aging",
+    "slug": "active-aging",
+    "description": "Training for strength, balance and independence later in life."
+  },
+  {
+    "name": "Women's Fitness",
+    "slug": "womens-fitness",
+    "description": "Training guidance written with women's health and life stages in mind."
+  },
+  {
+    "name": "Nutrition and Recovery",
+    "slug": "nutrition-and-recovery",
+    "description": "Food, rest and recovery that support the work you do in training."
+  }
+]

@@ -4,7 +4,7 @@ slug: ""
 description: ""
 date: ""          # first published, YYYY-MM-DD
 updated: ""       # last meaningful edit, YYYY-MM-DD
-category: ""      # one main category
+categories: []    # 1 to 3 names from content/blog/categories.json. The first is the primary category.
 tags: []
 image: ""         # optional, example: /images/blog/your-photo.jpg
 imageAlt: ""      # short description of the image, required if image is set
@@ -22,6 +22,6 @@ Write the article here.
 
 Use ## for section headings. The page title is already the heading at the top, so do not start with a single #.
 
-Put the opening paragraphs before the first ## heading. The key takeaways box sits under that intro.
+Put the opening paragraphs before the first ## heading. The key takeaways box sits under the byline and the hero image, before those opening paragraphs.
 
 Link to [about Sanjeev](/about.html) and [book a consultation](/book.html).

@@ -2938,6 +2938,17 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   color: var(--green);
 }
 
+.post-category a {
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 0.15em;
+}
+
+.post-category a:hover,
+.post-category a:focus-visible {
+  text-decoration: underline;
+}
+
 .post-byline {
   margin: 0;
   color: var(--text);
@@ -2960,7 +2971,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 }
 
 .post-hero {
-  margin: 1.25rem 0 1.5rem;
+  margin: 1.25rem 0 0;
 }
 
 .post-hero img,
@@ -2981,32 +2992,38 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 }
 
 .takeaways {
-  margin: 0 0 1.75rem;
-  padding: 1.1rem 1.2rem 1.15rem;
-  background: var(--white);
-  border-left: 4px solid var(--green);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  background: rgba(217, 203, 180, 0.38);
+  border-left: 3px solid var(--green);
+  border-radius: 8px;
+  box-shadow: none;
 }
 
-.takeaways h2 {
-  margin: 0 0 0.65rem;
-  font-size: 1.2rem;
+.takeaways .eyebrow {
+  margin: 0 0 0.7rem;
 }
 
 .takeaways ul {
   margin: 0;
-  padding-left: 1.15rem;
+  padding-left: 1.05rem;
   list-style: disc;
 }
 
 .takeaways li {
-  margin: 0.35rem 0;
+  margin: 0;
   color: var(--text);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.takeaways li + li {
+  margin-top: 0.45rem;
 }
 
 .takeaways li::marker {
   color: var(--green);
+  font-size: 0.7em;
 }
 
 .article-body {
@@ -3022,6 +3039,12 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 
 .article-body h2:first-child {
   margin-top: 0;
+}
+
+.article-body .post-lead {
+  font-size: 1.15em;
+  line-height: 1.65;
+  color: var(--text);
 }
 
 .article-body ul,
@@ -3103,6 +3126,14 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   color: var(--green);
 }
 
+.post-toc {
+  margin: 0.85rem 0 0;
+  padding: 0 0 0 0.85rem;
+  border-left: 1px solid rgba(31, 58, 46, 0.18);
+  background: transparent;
+  box-shadow: none;
+}
+
 .post-toc-toggle {
   width: 100%;
   min-height: 44px;
@@ -3110,15 +3141,14 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.35rem 0;
+  padding: 0;
   border: 0;
-  border-bottom: 1px solid rgba(31, 58, 46, 0.12);
   background: transparent;
-  color: var(--green);
+  color: var(--muted);
   font-family: var(--sans);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
   text-align: left;
@@ -3151,9 +3181,14 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   align-items: center;
   min-height: 44px;
   text-decoration: none;
-  color: var(--text);
-  font-size: 0.95rem;
+  color: var(--muted);
+  font-size: 14px;
   line-height: 1.35;
+}
+
+.post-toc-list a[aria-current="location"] {
+  color: var(--green);
+  font-weight: 600;
 }
 
 .post-toc.is-collapsed .post-toc-list {
@@ -3219,33 +3254,88 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   color: var(--muted);
 }
 
-.blog-filters {
+.blog-filter-bar {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
   margin: 0 0 1.75rem;
 }
 
-.blog-filter {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0.4rem 0.95rem;
-  border: 1px solid rgba(31, 58, 46, 0.28);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--green);
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 600;
+.blog-filter-field {
+  flex: 1 1 16rem;
+  max-width: 24rem;
 }
 
-.blog-filter[aria-current="true"] {
-  background: var(--green);
+.blog-filter-label {
+  display: block;
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.blog-select-wrap {
+  position: relative;
+}
+
+.blog-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: -0.34rem;
+  border-right: 1.5px solid var(--green);
+  border-bottom: 1.5px solid var(--green);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.blog-category-select,
+#blog-category {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 2.6rem 0.5rem 0.9rem;
+  border: 1px solid rgba(31, 58, 46, 0.28);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.3;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.blog-category-select:focus,
+#blog-category:focus {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
   border-color: var(--green);
-  color: var(--cream);
+}
+
+.blog-count {
+  margin: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.blog-filter-empty {
+  margin: 0.25rem 0 0;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.blog-card[hidden],
+.blog-filter-empty[hidden] {
+  display: none !important;
 }
 
 .blog-feature {
@@ -3365,7 +3455,6 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   justify-content: center;
 }
 
-.blog-filter:focus-visible,
 .post-toc a:focus-visible,
 .post-toc-toggle:focus-visible,
 .article-body a:focus-visible,
@@ -3375,6 +3464,10 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .post-byline a:focus-visible {
   outline: 2px solid #c4a574;
   outline-offset: 3px;
+}
+
+.blog-card-grid > .blog-card-feature {
+  grid-column: 1 / -1;
 }
 
 @media (min-width: 768px) {
@@ -3400,6 +3493,34 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 
   .blog-card-feature .blog-card-title {
     font-size: clamp(1.7rem, 3vw, 2.25rem);
+  }
+
+  .blog-card-grid.is-filtered > .blog-card-feature {
+    grid-column: auto;
+  }
+
+  .blog-card-grid.is-filtered .blog-card-feature .blog-card-link {
+    display: flex;
+    grid-template-columns: none;
+  }
+
+  .blog-card-grid.is-filtered .blog-card-feature .blog-card-media {
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: 0;
+  }
+
+  .blog-card-grid.is-filtered .blog-card-feature .blog-card-copy {
+    justify-content: flex-start;
+    padding: 1.05rem 1.15rem 1.15rem;
+  }
+
+  .blog-card-grid.is-filtered .blog-card-feature .blog-card-title {
+    font-size: 1.35rem;
+  }
+
+  .blog-card-grid.is-filtered .blog-card-feature .blog-card-excerpt {
+    -webkit-line-clamp: 2;
   }
 }
 
@@ -3435,21 +3556,29 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
     position: sticky;
     top: calc(var(--header-h) + 0.85rem);
     align-self: start;
+    margin: 0;
+  }
+
+  .post-toc.is-collapsed .post-toc-list {
+    display: block;
   }
 
   .post-toc-toggle {
     min-height: 0;
-    padding: 0 0 0.35rem;
+    padding: 0 0 0.55rem;
     border-bottom: 0;
     cursor: default;
+    pointer-events: none;
   }
 
-  .post-toc-toggle::after {
+  .post-toc-toggle::after,
+  .post-toc-toggle[aria-expanded="true"]::after {
     content: none;
   }
 
   .post-toc-list a {
-    min-height: 2.4rem;
+    min-height: 0;
+    padding: 0.28rem 0;
   }
 }
 
