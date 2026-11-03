@@ -753,6 +753,7 @@
   if (toc) {
     const toggle = toc.querySelector(".post-toc-toggle");
     const wideMq = window.matchMedia("(min-width: 1024px)");
+    const tocLinks = Array.from(toc.querySelectorAll(".post-toc-list a"));
     function syncToc() {
       if (!toggle) return;
       if (wideMq.matches) {
@@ -760,6 +761,8 @@
         toggle.setAttribute("aria-expanded", "true");
         toggle.tabIndex = -1;
       } else {
+        toc.classList.add("is-collapsed");
+        toggle.setAttribute("aria-expanded", "false");
         toggle.tabIndex = 0;
       }
     }
@@ -774,64 +777,83 @@
         toc.classList.toggle("is-collapsed", open);
       });
     }
+    if (tocLinks.length) {
+      const tocIds = tocLinks.map(function (link) {
+        return (link.getAttribute("href") || "").replace(/^#/, "");
+      });
+      function setActiveToc(id) {
+        tocLinks.forEach(function (link) {
+          const on = (link.getAttribute("href") || "") === "#" + id;
+          if (on) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      }
+      function updateActiveToc() {
+        const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 84;
+        const line = header + 24;
+        let current = tocIds[0];
+        tocIds.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (!el) return;
+          if (el.getBoundingClientRect().top <= line) current = id;
+        });
+        setActiveToc(current);
+      }
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    }
   }
 
-  const filterNav = document.querySelector(".blog-filters");
-  if (filterNav) {
-    const links = Array.from(filterNav.querySelectorAll("a[data-category]"));
-    const cards = Array.from(document.querySelectorAll("[data-blog-card]"));
+  const categorySelect = document.getElementById("blog-category");
+  if (categorySelect) {
+    const cards = Array.from(document.querySelectorAll("#blog-card-grid [data-blog-card]"));
+    const grid = document.getElementById("blog-card-grid");
     const emptyNote = document.querySelector(".blog-filter-empty");
+    const countEl = document.querySelector(".blog-count");
+    const known = Array.from(categorySelect.options).map(function (option) {
+      return option.value;
+    });
+
+    function countLabel(count) {
+      return count + (count === 1 ? " article" : " articles");
+    }
 
     function applyFilter(category) {
+      const active = category && known.indexOf(category) !== -1 ? category : "";
+      categorySelect.value = active;
+      if (grid) grid.classList.toggle("is-filtered", !!active);
       let shown = 0;
       cards.forEach(function (card) {
-        const match = !category || card.getAttribute("data-category") === category;
+        const cats = (card.getAttribute("data-categories") || "").split(/\s+/);
+        const match = !active || cats.indexOf(active) !== -1;
         card.hidden = !match;
         if (match) shown += 1;
       });
       if (emptyNote) emptyNote.hidden = shown !== 0;
-      links.forEach(function (link) {
-        const on = (link.getAttribute("data-category") || "") === category;
-        if (on) link.setAttribute("aria-current", "true");
-        else link.removeAttribute("aria-current");
-      });
+      if (countEl) countEl.textContent = countLabel(shown);
     }
 
     function categoryFromUrl() {
-      const value = new URLSearchParams(window.location.search).get("category") || "";
-      const known = !value || links.some(function (link) {
-        return (link.getAttribute("data-category") || "") === value;
-      });
-      return known ? value : "";
+      return new URLSearchParams(window.location.search).get("category") || "";
     }
 
     applyFilter(categoryFromUrl());
-    links.forEach(function (link) {
-      link.addEventListener("click", function (event) {
-        event.preventDefault();
-        const category = link.getAttribute("data-category") || "";
-        applyFilter(category);
-        const url = new URL(window.location.href);
-        if (category) url.searchParams.set("category", category);
-        else url.searchParams.delete("category");
-        window.history.pushState({ category: category }, "", url.pathname + url.search);
-      });
+    if (categoryFromUrl() !== categorySelect.value) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("category");
+      window.history.replaceState({ category: "" }, "", url.pathname + url.search);
+    }
+    categorySelect.addEventListener("change", function () {
+      const category = categorySelect.value;
+      applyFilter(category);
+      const url = new URL(window.location.href);
+      if (category) url.searchParams.set("category", category);
+      else url.searchParams.delete("category");
+      window.history.pushState({ category: category }, "", url.pathname + url.search);
     });
     window.addEventListener("popstate", function () {
       applyFilter(categoryFromUrl());
-    });
-    filterNav.addEventListener("keydown", function (event) {
-      const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
-      if (keys.indexOf(event.key) === -1) return;
-      const index = links.indexOf(document.activeElement);
-      if (index === -1) return;
-      event.preventDefault();
-      let next = index;
-      if (event.key === "ArrowRight") next = (index + 1) % links.length;
-      else if (event.key === "ArrowLeft") next = (index - 1 + links.length) % links.length;
-      else if (event.key === "Home") next = 0;
-      else if (event.key === "End") next = links.length - 1;
-      links[next].focus();
     });
   }
 

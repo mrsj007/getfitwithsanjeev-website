@@ -4,7 +4,7 @@ slug: your-first-month-of-training
 description: "New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working."
 date: 2026-11-14
 updated: 2026-11-14
-category: "Getting Started"
+categories: ["Getting Started"]
 tags: ["beginners", "habits", "first month", "consistency"]
 image: "/images/blog/your-first-month-of-training.jpg"
 imageAlt: "A trainer watches a woman lift a light dumbbell in a gym."

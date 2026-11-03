@@ -12,15 +12,32 @@ This is the short version. You do not need to know how to code. You copy a templ
    - **description**: one or two plain sentences for Google. Keep it under 155 characters.
    - **date**: the day you first publish it, written as `YYYY-MM-DD`.
    - **updated**: the day you last made a real edit. Use the same date as `date` if nothing has changed since.
-   - **category**: one main category, such as `Active Aging`.
+   - **categories**: 1 to 3 names from `content/blog/categories.json`. The first name is the primary category. It shows on the card, in the breadcrumb, and in related articles. Use the name exactly, for example `["Active Aging", "Strength"]`.
    - **tags**: a few short labels. These are optional.
    - **image**: optional. Put the picture in `images/blog/` and set this to `/images/blog/your-photo.jpg`.
    - **imageAlt**: a short description of what is in the picture.
    - **status**: leave this as `draft` until Sanjeev has approved the article.
-   - **keyTakeaways**: 3 to 5 short bullets. These show in a box near the top.
+   - **keyTakeaways**: 3 to 5 short bullets. These show in a box under the byline and hero image, before the opening paragraphs.
    - **faq**: optional. Two to four real questions a reader might ask, with short answers.
 4. Write the article under the fields. Use `##` for section headings. Link to the About page and the booking page at least once.
 5. Files whose names start with `_` are templates. The build skips them. `sample-post.md` is a layout test. Leave it as a draft.
+
+Allowed categories, in this order, live in `content/blog/categories.json`. Use the name, not the slug. A post needs at least one and at most three. The build stops with an error if a name is missing, unknown, or if there are more than three.
+
+Trending and Special are editorial labels. Sanjeev decides which posts get them. Fitness Digest is for roundup-style posts.
+
+| Name | Slug |
+| --- | --- |
+| Trending | trending |
+| Special | special |
+| Fitness Digest | fitness-digest |
+| Getting Started | getting-started |
+| Mobility | mobility |
+| Strength | strength |
+| Endurance | endurance |
+| Active Aging | active-aging |
+| Women's Fitness | womens-fitness |
+| Nutrition and Recovery | nutrition-and-recovery |
 
 ## Preview it on your computer
 

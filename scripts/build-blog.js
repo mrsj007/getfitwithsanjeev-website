@@ -32,10 +32,10 @@ const BANNED_JSON_KEYS = new Set([
   "address",
 ]);
 
-const INDEX_TITLE = "Blog | Sanjeev Kumar - Fitness Guidance in Vancouver";
+const INDEX_TITLE = "Blog | Sanjeev Kumar - Fitness Guidance in South Surrey";
 const INDEX_H1 = "Guidance for Longevity, Mobility and Endurance";
 const INDEX_DESCRIPTION =
-  "Practical articles on longevity, mobility and endurance from Sanjeev Kumar, a Level 3 personal trainer in Vancouver.";
+  "Practical articles on longevity, mobility and endurance from Sanjeev Kumar, a Level 3 personal trainer in South Surrey.";
 const INDEX_INTRO =
   "Plain-language guidance from Sanjeev Kumar on strength, mobility and training that fits real life.";
 const DISCLAIMER =
@@ -44,6 +44,7 @@ const PORTRAIT = "/images/sanjeev-kumar.jpg";
 const PORTRAIT_ALT = "Sanjeev Kumar, personal trainer, photographed in a gym";
 
 const warnings = [];
+let CATEGORIES = [];
 
 function fail(message) {
   console.error("Error: " + message);
@@ -124,15 +125,6 @@ function formatDate(iso) {
 function rssDate(iso) {
   const parts = iso.split("-").map(Number);
   return new Date(Date.UTC(parts[0], parts[1] - 1, parts[2], 16, 0, 0)).toUTCString();
-}
-
-function categorySlug(name) {
-  return String(name)
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
 }
 
 function headingSlug(text) {
@@ -231,6 +223,64 @@ function stringList(value, file, field) {
   return value.map((item) => cleanText(item)).filter(Boolean);
 }
 
+function loadCategories() {
+  const filePath = path.join(CONTENT_DIR, "categories.json");
+  if (!fs.existsSync(filePath)) fail("Missing content/blog/categories.json.");
+  let data;
+  try {
+    data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch (error) {
+    fail("content/blog/categories.json could not be read. " + error.message);
+  }
+  if (!Array.isArray(data) || data.length === 0) {
+    fail("content/blog/categories.json must list at least one category.");
+  }
+  if (data.length > 10) {
+    fail("content/blog/categories.json lists " + data.length + " categories. The maximum is 10.");
+  }
+  const names = new Set();
+  const slugs = new Set();
+  CATEGORIES = data.map((item, index) => {
+    const label = "content/blog/categories.json item " + (index + 1);
+    const name = cleanText(item && item.name);
+    const slug = cleanText(item && item.slug);
+    const description = cleanText(item && item.description);
+    if (!name || !slug || !description) fail(label + " needs a name, a slug and a description.");
+    if (!SLUG_RE.test(slug)) {
+      fail(label + ' slug "' + slug + '" must be lowercase words separated by hyphens.');
+    }
+    if (names.has(name)) fail(label + ' repeats the name "' + name + '".');
+    if (slugs.has(slug)) fail(label + ' repeats the slug "' + slug + '".');
+    names.add(name);
+    slugs.add(slug);
+    return { name, slug, description };
+  });
+  return CATEGORIES;
+}
+
+function categoriesForPost(data, file) {
+  if (Object.prototype.hasOwnProperty.call(data, "category")) {
+    fail(file + ' uses "category". Use categories with 1 to 3 names from content/blog/categories.json.');
+  }
+  if (!Object.prototype.hasOwnProperty.call(data, "categories") || data.categories == null || data.categories === "") {
+    fail(file + " has no categories. Add 1 to 3 names from content/blog/categories.json.");
+  }
+  if (!Array.isArray(data.categories)) {
+    fail(file + " categories must be a list of 1 to 3 names from content/blog/categories.json.");
+  }
+  const names = data.categories.map((item) => cleanText(item)).filter((item) => item !== "");
+  if (!names.length) fail(file + " has no categories. Add 1 to 3 names from content/blog/categories.json.");
+  if (names.length > 3) fail(file + " has " + names.length + " categories. A post can have at most 3.");
+  const seen = new Set();
+  return names.map((name) => {
+    const found = CATEGORIES.find((item) => item.name === name);
+    if (!found) fail(file + ' uses category "' + name + '", which is not in content/blog/categories.json.');
+    if (seen.has(found.slug)) fail(file + ' lists "' + name + '" more than once.');
+    seen.add(found.slug);
+    return found;
+  });
+}
+
 function loadPosts() {
   if (!fs.existsSync(CONTENT_DIR)) fail("Missing content/blog/. Create it and add a Markdown file.");
   const names = fs
@@ -265,7 +315,7 @@ function normalizePost(data, body, name, raw) {
   const title = cleanText(data.title);
   const slug = cleanText(data.slug);
   const description = cleanText(data.description);
-  const category = cleanText(data.category);
+  const categories = categoriesForPost(data, file);
   const status = cleanText(data.status);
   if (!title) fail(file + " is missing a title.");
   if (!slug) fail(file + " is missing a slug.");
@@ -277,7 +327,6 @@ function normalizePost(data, body, name, raw) {
   if ([...description].length > 160) {
     fail(file + " description is " + [...description].length + " characters. Keep it to 160 or fewer.");
   }
-  if (!category) fail(file + " is missing a category.");
   if (status !== "draft" && status !== "published") {
     fail(file + ' status must be "draft" or "published".');
   }
@@ -328,8 +377,10 @@ function normalizePost(data, body, name, raw) {
     description,
     date,
     updated,
-    category,
-    categorySlug: categorySlug(category),
+    categories,
+    category: categories[0].name,
+    categorySlug: categories[0].slug,
+    categorySlugs: categories.map((item) => item.slug),
     tags: stringList(data.tags, file, "tags"),
     image,
     imageAlt,
@@ -455,8 +506,8 @@ function tocHtml(headings) {
     })
     .join("");
   return (
-    '<nav class="post-toc" aria-label="On this page">' +
-    '<button type="button" class="post-toc-toggle" aria-expanded="true" aria-controls="post-toc-list">On this page</button>' +
+    '<nav class="post-toc is-collapsed" aria-label="On this page">' +
+    '<button type="button" class="post-toc-toggle" aria-expanded="false" aria-controls="post-toc-list">On this page</button>' +
     '<ol id="post-toc-list" class="post-toc-list">' +
     items +
     "</ol></nav>"
@@ -466,8 +517,8 @@ function tocHtml(headings) {
 function takeawaysHtml(items) {
   if (!items.length) return "";
   return (
-    '<aside class="takeaways">' +
-    "<h2>Key takeaways</h2><ul>" +
+    '<aside class="takeaways" aria-label="Key takeaways">' +
+    '<p class="eyebrow">Key takeaways</p><ul>' +
     items.map((item) => "<li>" + escapeHtml(item) + "</li>").join("") +
     "</ul></aside>"
   );
@@ -525,8 +576,8 @@ function cardHtml(post, options) {
   return (
     '<article class="blog-card' +
     (options.featured ? " blog-card-feature" : "") +
-    '" data-blog-card data-category="' +
-    escapeHtml(post.categorySlug) +
+    '" data-blog-card data-categories="' +
+    escapeHtml(post.categorySlugs.join(" ")) +
     '"><a class="blog-card-link" href="' +
     escapeHtml(options.href) +
     '" aria-labelledby="' +
@@ -586,6 +637,7 @@ function articleJson(post) {
     image: absoluteImage(post),
     datePublished: post.date,
     dateModified: post.updated,
+    articleSection: post.category,
     inLanguage: "en-CA",
     author: {
       "@type": "Person",
@@ -612,7 +664,13 @@ function breadcrumbJson(post) {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
       { "@type": "ListItem", position: 2, name: "Blog", item: SITE + "/blog/" },
-      { "@type": "ListItem", position: 3, name: post.title, item: url },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.category,
+        item: SITE + "/blog/?category=" + post.categorySlug,
+      },
+      { "@type": "ListItem", position: 4, name: post.title, item: url },
     ],
   };
 }
@@ -730,7 +788,7 @@ function headerHtml() {
       <div class="header-inner">
         <a class="brand" href="../index.html">
           <span class="brand-name">SANJEEV KUMAR</span>
-          <span class="brand-tag">Personal Trainer • Vancouver</span>
+          <span class="brand-tag">Personal Trainer • South Surrey</span>
         </a>
         <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -755,7 +813,7 @@ function footerHtml() {
       <div class="container footer-grid">
         <div>
           <p class="brand-name footer-brand">SANJEEV KUMAR</p>
-          <p class="footer-place">Personal Trainer - Vancouver and South Surrey</p>
+          <p class="footer-place">Personal Trainer - South Surrey</p>
           <p class="footer-tagline">Guidance for longevity, mobility and endurance.</p>
         </div>
         <div>
@@ -766,7 +824,7 @@ function footerHtml() {
             <!-- BLOG:FOOTER:START -->
             <!-- BLOG:FOOTER:END -->
             <li><a href="../book.html">Book a Consultation</a></li>
-            <li><a href="../index.html#packages">In-person training in Vancouver and South Surrey</a></li>
+            <li><a href="../index.html#packages">In-person training in South Surrey</a></li>
             <li><a href="../index.html#transformations">Real Results</a></li>
             <li><a href="../index.html#testimonials">Social Proof</a></li>
             <li><a href="../about.html#approach">The Sanjeev Method</a></li>
@@ -846,6 +904,10 @@ function renderPost(post, posts) {
     : "";
   const json = [articleJson(post), breadcrumbJson(post)];
   if (post.faq.length) json.push(faqJson(post));
+  const bodyHtml = [rendered.intro, rendered.rest].filter(Boolean).join("\n");
+  const articleBody = bodyHtml
+    ? '<div class="article-body">' + bodyHtml.replace(/<p>/, '<p class="post-lead">') + "</div>"
+    : "";
   const html = `<!DOCTYPE html>
 <html lang="en-CA" class="page-blog">
   <head>
@@ -868,12 +930,13 @@ ${headerHtml()}
           <ol>
             <li><a href="../index.html">Home</a></li>
             <li><a href="index.html">Blog</a></li>
+            <li><a href="index.html?category=${encodeURIComponent(post.categorySlug)}">${escapeHtml(post.category)}</a></li>
             <li aria-current="page">${escapeHtml(post.title)}</li>
           </ol>
         </nav>
         <header class="post-header">
           <h1>${escapeHtml(post.title)}</h1>
-          <p class="post-category">${escapeHtml(post.category)}</p>
+          <p class="post-category"><a href="index.html?category=${encodeURIComponent(post.categorySlug)}">${escapeHtml(post.category)}</a></p>
           <p class="post-byline"><a href="../about.html">By Sanjeev Kumar, Level 3 Personal Trainer</a></p>
           <ul class="post-meta">
             <li><time datetime="${post.date}">${escapeHtml(formatDate(post.date))}</time></li>
@@ -883,11 +946,10 @@ ${headerHtml()}
           </ul>
         </header>
         ${draft}
-        ${hero}
-        ${rendered.intro ? '<div class="article-body post-intro">' + rendered.intro + "</div>" : ""}
-        ${takeawaysHtml(post.keyTakeaways)}
         ${toc}
-        ${rendered.rest ? '<div class="article-body">' + rendered.rest + "</div>" : ""}
+        ${hero}
+        ${takeawaysHtml(post.keyTakeaways)}
+        ${articleBody}
         ${faqHtml(post.faq)}
         <aside class="post-cta" aria-labelledby="post-cta-heading">
           <h2 id="post-cta-heading">Want guidance built around you?</h2>
@@ -909,37 +971,57 @@ ${footerHtml()}
   return html;
 }
 
-function renderIndex(posts, publishedCount) {
-  const categories = [];
-  const seen = new Set();
+function categoryCounts(posts) {
+  const counts = new Map();
   posts.forEach((post) => {
-    if (seen.has(post.categorySlug)) return;
-    seen.add(post.categorySlug);
-    categories.push(post);
+    post.categories.forEach((category) => {
+      counts.set(category.slug, (counts.get(category.slug) || 0) + 1);
+    });
   });
-  categories.sort((a, b) => a.category.localeCompare(b.category));
+  return counts;
+}
+
+function articleCountLabel(count) {
+  return count + (count === 1 ? " article" : " articles");
+}
+
+function renderIndex(posts, publishedCount) {
+  const counts = categoryCounts(posts);
+  const options = CATEGORIES.filter((category) => counts.has(category.slug))
+    .map((category) => {
+      const count = counts.get(category.slug);
+      return (
+        '<option value="' +
+        escapeHtml(category.slug) +
+        '">' +
+        escapeHtml(category.name) +
+        " (" +
+        count +
+        ")</option>"
+      );
+    })
+    .join("");
   const filters = posts.length
-    ? '<nav class="blog-filters" aria-label="Categories"><a class="blog-filter" href="./" data-category="" aria-current="true">All</a>' +
-      categories
-        .map(
-          (post) =>
-            '<a class="blog-filter" href="?category=' +
-            encodeURIComponent(post.categorySlug) +
-            '" data-category="' +
-            escapeHtml(post.categorySlug) +
-            '">' +
-            escapeHtml(post.category) +
-            "</a>"
-        )
-        .join("") +
-      "</nav>"
+    ? '<div class="blog-filter-bar">' +
+      '<div class="blog-filter-field">' +
+      '<label class="blog-filter-label" for="blog-category">Filter by category</label>' +
+      '<div class="blog-select-wrap">' +
+      '<select id="blog-category" name="category">' +
+      '<option value="" selected>All categories</option>' +
+      options +
+      "</select></div></div>" +
+      '<p class="blog-count">' +
+      articleCountLabel(posts.length) +
+      "</p></div>"
     : "";
-  const featured = posts[0] ? '<div class="blog-feature">' + cardHtml(posts[0], cardOptions(posts[0], "blog", "h2", true)) + "</div>" : "";
-  const rest = posts.slice(1);
-  const grid = rest.length
-    ? '<div class="blog-card-grid">' + rest.map((post) => cardHtml(post, cardOptions(post, "blog", "h2", false))).join("") + "</div>"
+  const grid = posts.length
+    ? '<div class="blog-card-grid" id="blog-card-grid">' +
+      posts.map((post, index) => cardHtml(post, cardOptions(post, "blog", "h2", index === 0))).join("") +
+      "</div>"
     : "";
-  const filterEmpty = posts.length ? '<p class="blog-filter-empty" hidden>No articles in this category yet.</p>' : "";
+  const filterEmpty = posts.length
+    ? '<p class="blog-filter-empty" hidden>No articles in this category yet. Choose another category, or view all articles.</p>'
+    : "";
   const empty = posts.length
     ? ""
     : `<div class="blog-empty">
@@ -959,6 +1041,7 @@ ${headHtml({
   canonical: SITE + "/blog/",
   type: "website",
   robots: publishedCount === 0 ? "noindex" : "",
+  preload: posts[0] && posts[0].image && !posts[0].imageMissing ? "../" + posts[0].image.replace(/^\//, "") : "",
   json: [collectionJson(posts)],
 })}
   </head>
@@ -972,7 +1055,7 @@ ${headerHtml().replace('    <div class="reading-progress" id="reading-progress" 
             <h1 id="blog-heading">${INDEX_H1}</h1>
             <p>${INDEX_INTRO}</p>
           </header>
-          ${[filters, featured, grid, filterEmpty, empty].filter(Boolean).join("\n          ")}
+          ${[filters, grid, filterEmpty, empty].filter(Boolean).join("\n          ")}
         </div>
       </section>
     </main>
@@ -1026,11 +1109,23 @@ function assertPost(html, post) {
   if (article.datePublished !== post.date || article.dateModified !== post.updated) {
     fail(post.file + " Article dates do not match the front matter.");
   }
+  if (article.articleSection !== post.category) {
+    fail(post.file + " Article articleSection must be the primary category.");
+  }
   if (!article.author || article.author.name !== "Sanjeev Kumar" || article.author.url !== SITE + "/about.html") {
     fail(post.file + " Article author must be Sanjeev Kumar with a link to About.");
   }
-  if (!crumbs || !crumbs.itemListElement || crumbs.itemListElement.length !== 3) {
-    fail(post.file + " BreadcrumbList must list Home, Blog and the article.");
+  const crumbItems = crumbs && crumbs.itemListElement;
+  if (!crumbItems || crumbItems.length !== 4) {
+    fail(post.file + " BreadcrumbList must list Home, Blog, the primary category and the article.");
+  }
+  if (
+    crumbItems[0].name !== "Home" ||
+    crumbItems[1].name !== "Blog" ||
+    crumbItems[2].name !== post.category ||
+    crumbItems[3].name !== post.title
+  ) {
+    fail(post.file + " BreadcrumbList must list Home, Blog, the primary category and the article.");
   }
   if (post.faq.length) {
     const faq = blocks.find((block) => block["@type"] === "FAQPage");
@@ -1063,6 +1158,9 @@ function assertIndex(html, posts, publishedCount) {
   if (!posts.length && !html.includes("First articles are coming soon")) {
     fail("The blog index is missing the empty state.");
   }
+  if (posts.length && !html.includes('<option value="" selected>All categories</option>')) {
+    fail("The blog index filter must default to All categories.");
+  }
   posts.forEach((post) => {
     if (!html.includes(escapeHtml(post.title))) fail("The blog index is missing " + post.title + ".");
   });
@@ -1077,12 +1175,16 @@ function renderRss(posts) {
   const items = posts
     .map((post) => {
       const url = SITE + "/blog/" + post.slug + ".html";
+      const categories = post.categories
+        .map((category) => "      <category>" + escapeXml(category.name) + "</category>\n")
+        .join("");
       return (
         "    <item>\n" +
         "      <title>" + escapeXml(post.title) + "</title>\n" +
         "      <link>" + escapeXml(url) + "</link>\n" +
         "      <description>" + escapeXml(post.description) + "</description>\n" +
         "      <pubDate>" + rssDate(post.date) + "</pubDate>\n" +
+        categories +
         '      <guid isPermaLink="true">' + escapeXml(url) + "</guid>\n" +
         "    </item>"
       );
@@ -1285,6 +1387,7 @@ function summary(publishedCount, draftCount) {
 
 function main() {
   assertSourceMarkers();
+  loadCategories();
   const posts = loadPosts();
   const published = posts.filter((post) => post.status === "published");
   const drafts = posts.filter((post) => post.status === "draft");

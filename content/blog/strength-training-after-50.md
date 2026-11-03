@@ -4,7 +4,7 @@ slug: strength-training-after-50
 description: "A plain-language guide to starting strength training after 50: the basic movements, a simple weekly plan, and how to progress safely."
 date: 2026-11-10
 updated: 2026-11-10
-category: "Active Aging"
+categories: ["Active Aging", "Strength"]
 tags: ["strength training", "over 50", "beginners", "longevity"]
 image: "/images/blog/strength-training-after-50.jpg"
 imageAlt: "Older adults seated in a bright room, raising resistance bands with an instructor."

@@ -1,6 +1,6 @@
 # Sanjeev Kumar - Personal Trainer Website
 
-Site for Sanjeev Kumar, a Level 3 personal trainer in Vancouver and South Surrey. Free fitness guidance stays on the site, alongside in-person training packages (the main offer), online consultations, and a blog. Built with plain HTML, CSS, and vanilla JavaScript so it can be hosted on Netlify, Vercel, GitHub Pages, or any static host.
+Site for Sanjeev Kumar, a Level 3 personal trainer in South Surrey. Free fitness guidance stays on the site, alongside in-person training packages (the main offer), online consultations, and a blog. Built with plain HTML, CSS, and vanilla JavaScript so it can be hosted on Netlify, Vercel, GitHub Pages, or any static host.
 
 Blog articles are written in Markdown and turned into static HTML on your computer with `npm run build:blog`. The host only serves the finished files. `package.json` is private and has no `build` script, so Vercel will not try to compile the site.
 
@@ -26,6 +26,8 @@ npm run build:blog               # live pages only; run this before you commit
 Only posts with `status: published` appear on the live site. Drafts are skipped unless you pass `--drafts`. Do not commit a `--drafts` preview. Run the normal build first so the generated HTML matches the published articles.
 
 `content/blog/_template.md` is the blank starter. The build ignores any file whose name starts with `_`. `content/blog/sample-post.md` is a layout test and must stay a draft.
+
+`content/blog/categories.json` is the only list of categories, in a fixed order, with a maximum of 10. Each post uses `categories` with 1 to 3 of those names. The first name is the primary category. The build fails if a post has none, more than three, or a name that is not on the list. The blog index filters with a dropdown and does not create category pages or sitemap entries. Trending and Special are editorial labels. Fitness Digest is for roundup-style posts.
 
 When at least one article is published, the build adds a Blog link to the header and footer, a Latest Guidance section on the home page, `/blog/` and each article in `sitemap.xml`, a feed at `blog/rss.xml`, and one line per article in `llms.txt`. With no published articles, those links and the home section stay empty, and `/blog/` is left out of the sitemap.
 
