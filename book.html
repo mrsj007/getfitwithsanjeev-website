@@ -43,6 +43,8 @@
         }
       }
     </script>
+    <link rel="preconnect" href="https://app.cal.com" />
+    <link rel="dns-prefetch" href="https://app.cal.com" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -53,6 +55,48 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      (function (C, A, L) {
+        const queue = function (target, args) {
+          target.q.push(args);
+        };
+        const doc = C.document;
+        C.Cal =
+          C.Cal ||
+          function () {
+            const cal = C.Cal;
+            const args = arguments;
+            if (!cal.loaded) {
+              cal.ns = {};
+              cal.q = cal.q || [];
+              const script = doc.createElement("script");
+              script.src = A;
+              script.async = true;
+              script.onerror = function () {
+                doc.dispatchEvent(new CustomEvent("cal-embed-error"));
+              };
+              doc.head.appendChild(script);
+              cal.loaded = true;
+            }
+            if (args[0] === L) {
+              const api = function () {
+                queue(api, arguments);
+              };
+              const namespace = args[1];
+              api.q = api.q || [];
+              if (typeof namespace === "string") {
+                cal.ns[namespace] = cal.ns[namespace] || api;
+                queue(cal.ns[namespace], args);
+                queue(cal, ["initNamespace", namespace]);
+              } else {
+                queue(cal, args);
+              }
+              return;
+            }
+            queue(cal, args);
+          };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -87,39 +131,119 @@
     </header>
 
     <main id="main">
-      <section class="section section-cream" aria-labelledby="booking-heading">
+      <section class="section section-cream booking-hero" aria-labelledby="booking-heading">
+        <div class="booking-atmosphere" aria-hidden="true">
+          <span class="booking-blob booking-blob-a"></span>
+          <span class="booking-blob booking-blob-b"></span>
+        </div>
         <div class="container">
           <header class="section-intro">
-            <p class="eyebrow">Work With Sanjeev</p>
-            <h1 id="booking-heading">Book a Consultation</h1>
-            <p>
+            <p class="eyebrow booking-reveal">Work With Sanjeev</p>
+            <h1 id="booking-heading" class="booking-reveal">Book a Consultation</h1>
+            <p class="booking-reveal">
               This is a short, friendly conversation to understand your goals, history and any concerns, so Sanjeev can suggest the right next step - in-person training or an online consultation.
             </p>
           </header>
 
+          <ul class="trust-strip booking-reveal">
+            <li>Level 3 Personal Trainer</li>
+            <li>NASM - ISSA - ProNatal - Hypervolt certified</li>
+            <li>Vancouver and South Surrey</li>
+            <li>No pressure</li>
+          </ul>
+
           <h2 class="booking-subhead">What to expect</h2>
           <ol class="booking-steps">
-            <li class="info-card booking-step">
-              <p class="booking-step-label">Step 1</p>
+            <li class="info-card booking-step booking-reveal">
+              <span class="booking-step-num" aria-hidden="true">1</span>
               <p>Pick a time that suits you</p>
             </li>
-            <li class="info-card booking-step">
-              <p class="booking-step-label">Step 2</p>
+            <li class="info-card booking-step booking-reveal">
+              <span class="booking-step-num" aria-hidden="true">2</span>
               <p>We talk about you and your goals</p>
             </li>
-            <li class="info-card booking-step">
-              <p class="booking-step-label">Step 3</p>
+            <li class="info-card booking-step booking-reveal">
+              <span class="booking-step-num" aria-hidden="true">3</span>
               <p>You leave with a clear next step - no pressure</p>
             </li>
           </ol>
 
-          <p class="cal-hint" id="cal-hint">Choose a 15 min meeting or a 30 min meeting, then pick a time.</p>
-          <div id="cal-inline" class="cal-embed"></div>
+          <div class="cal-frame booking-reveal">
+            <h2 class="cal-frame-title">Pick a time that suits you</h2>
+            <div class="cal-toggle" id="cal-toggle" role="tablist" aria-label="Meeting length">
+              <span class="cal-toggle-pill" aria-hidden="true"></span>
+              <button
+                class="cal-tab"
+                type="button"
+                role="tab"
+                id="cal-tab-quick"
+                data-event="quick"
+                aria-selected="true"
+                aria-controls="cal-panel-quick"
+                tabindex="0"
+              >
+                <span class="cal-tab-title">15 min</span>
+                <span class="cal-tab-desc">Quick intro call: a short chat to see if we're a good fit.</span>
+              </button>
+              <button
+                class="cal-tab"
+                type="button"
+                role="tab"
+                id="cal-tab-full"
+                data-event="full"
+                aria-selected="false"
+                aria-controls="cal-panel-full"
+                tabindex="-1"
+              >
+                <span class="cal-tab-title">30 min</span>
+                <span class="cal-tab-desc">Full consultation: time to go through your goals, history and next steps.</span>
+              </button>
+            </div>
+
+            <div class="cal-stage" id="cal-stage">
+              <div class="cal-skeleton" id="cal-skeleton" aria-hidden="true">
+                <div class="cal-skel-header"></div>
+                <div class="cal-skel-layout">
+                  <div class="cal-skel-grid">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <div class="cal-skel-slots">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cal-panel is-active"
+                id="cal-panel-quick"
+                role="tabpanel"
+                aria-labelledby="cal-tab-quick"
+                data-event="quick"
+              >
+                <div id="cal-quick" class="cal-embed"></div>
+              </div>
+              <div
+                class="cal-panel"
+                id="cal-panel-full"
+                role="tabpanel"
+                aria-labelledby="cal-tab-full"
+                data-event="full"
+                aria-hidden="true"
+                inert
+              >
+                <div id="cal-full" class="cal-embed"></div>
+              </div>
+            </div>
+          </div>
+
           <p class="booking-fallback">
             <a
               class="btn btn-outline"
               id="cal-fallback"
-              href="https://cal.com/sanjeev-kumar-rge18l"
+              href="https://cal.com/sanjeev-kumar-rge18l/15min"
               target="_blank"
               rel="noopener noreferrer"
             >Open the booking calendar in a new tab</a>
@@ -138,7 +262,7 @@
       <div class="container footer-grid">
         <div>
           <p class="brand-name footer-brand">SANJEEV KUMAR</p>
-          <p>Personal Trainer sharing expert fitness guidance</p>
+          <p class="footer-place">Personal Trainer - Vancouver and South Surrey</p>
           <p class="footer-tagline">Guidance for longevity, mobility and endurance.</p>
         </div>
         <div>
@@ -208,16 +332,33 @@
     </footer>
 
     <script>
-      /* Cal.com profile. Change this one value if the username changes. */
-      const CAL_LINK = "sanjeev-kumar-rge18l"; // TODO: once event slugs are known, this can point to a single event (e.g. "username/consultation").
-      const CAL_URL = "https://cal.com/" + CAL_LINK;
+      /* Cal.com profile. Change CAL_LINK if the username changes. */
+      const CAL_LINK = "sanjeev-kumar-rge18l";
+      const CAL_EVENTS = { quick: "15min", full: "30min" };
+      // TODO: confirm these slugs match the event URLs in Sanjeev's Cal.com account (cal.com/<username>/15min).
 
       (function () {
-        const host = document.getElementById("cal-inline");
+        const stage = document.getElementById("cal-stage");
+        const toggle = document.getElementById("cal-toggle");
         const fallback = document.getElementById("cal-fallback");
-        if (fallback) fallback.href = CAL_URL;
+        const fallbackWrap = document.querySelector(".booking-fallback");
+        const tabs = Array.from(document.querySelectorAll(".cal-tab"));
+        const panels = Array.from(document.querySelectorAll(".cal-panel"));
+        if (!stage || !toggle || !tabs.length || !panels.length) return;
 
+        const keys = ["quick", "full"];
+        const started = { quick: false, full: false };
+        const ready = { quick: false, full: false };
+        const late = { quick: false, full: false };
+        const heights = { quick: 0, full: 0 };
+        let active = "quick";
         let tracked = false;
+        let embedFailed = false;
+
+        function eventUrl(key) {
+          return "https://cal.com/" + CAL_LINK + "/" + CAL_EVENTS[key];
+        }
+
         function trackBookingView() {
           if (tracked) return;
           tracked = true;
@@ -226,81 +367,276 @@
           }
         }
 
-        function mountIframe() {
+        function floorHeight() {
+          return window.matchMedia("(max-width: 767px)").matches ? 640 : 560;
+        }
+
+        function readPayloadHeight(payload) {
+          if (!payload) return 0;
+          const detail = payload.detail || payload;
+          const data = detail.data || detail;
+          const raw = data.iframeHeight || data.height || 0;
+          const value = typeof raw === "number" ? raw : parseInt(raw, 10);
+          return value > 80 ? value : 0;
+        }
+
+        function measure(key) {
+          const host = document.getElementById("cal-" + key);
+          const frame = host ? host.querySelector("iframe") : null;
+          if (!frame) return;
+          const box = frame.getBoundingClientRect().height;
+          const styled = parseInt(frame.style.height, 10);
+          const next = Math.max(box || 0, isNaN(styled) ? 0 : styled);
+          if (next > 80) heights[key] = Math.ceil(next);
+          applyStageHeight();
+        }
+
+        function applyStageHeight() {
+          const next = heights[active];
+          if (!(next > 400)) return;
+          const px = next + "px";
+          stage.style.minHeight = px;
+          stage.style.height = px;
+        }
+
+        function updateFallback() {
+          if (fallback) fallback.href = eventUrl(active);
+          const show = late[active] && !ready[active];
+          if (fallback) fallback.classList.toggle("is-prominent", show);
+          if (fallbackWrap) fallbackWrap.classList.toggle("is-prominent", show);
+        }
+
+        function markReady(key) {
+          if (ready[key]) return;
+          ready[key] = true;
+          const panel = document.getElementById("cal-panel-" + key);
+          if (panel) panel.classList.add("is-ready");
+          if (key === active) stage.classList.add("is-ready");
+          updateFallback();
+          trackBookingView();
+          measure(key);
+          window.setTimeout(function () { measure(key); }, 350);
+          if (key === "quick") warmFull();
+        }
+
+        function markLate(key) {
+          if (ready[key]) return;
+          late[key] = true;
+          updateFallback();
+        }
+
+        function mountPlain(key) {
+          const host = document.getElementById("cal-" + key);
           if (!host || host.querySelector("iframe")) return;
           const frame = document.createElement("iframe");
-          frame.src = CAL_URL + "?embed=true&theme=light";
+          frame.src = eventUrl(key) + "?embed=true&theme=light&layout=month_view";
           frame.title = "Book a consultation with Sanjeev Kumar";
-          frame.loading = "lazy";
+          frame.loading = "eager";
           frame.setAttribute("width", "100%");
-          frame.addEventListener("load", trackBookingView);
+          frame.addEventListener("load", function () {
+            markReady(key);
+            measure(key);
+          });
           host.appendChild(frame);
         }
 
-        (function (C, A, L) {
-          const queue = function (target, args) {
-            target.q.push(args);
-          };
-          const doc = C.document;
-          C.Cal =
-            C.Cal ||
-            function () {
-              const cal = C.Cal;
-              const args = arguments;
-              if (!cal.loaded) {
-                cal.ns = {};
-                cal.q = cal.q || [];
-                const script = doc.createElement("script");
-                script.src = A;
-                script.async = true;
-                script.onerror = mountIframe;
-                doc.head.appendChild(script);
-                cal.loaded = true;
-              }
-              if (args[0] === L) {
-                const api = function () {
-                  queue(api, arguments);
-                };
-                const namespace = args[1];
-                api.q = api.q || [];
-                if (typeof namespace === "string") {
-                  cal.ns[namespace] = cal.ns[namespace] || api;
-                  queue(cal.ns[namespace], args);
-                  queue(cal, ["initNamespace", namespace]);
-                } else {
-                  queue(cal, args);
-                }
-                return;
-              }
-              queue(cal, args);
-            };
-        })(window, "https://app.cal.com/embed/embed.js", "init");
+        function initEmbed(key) {
+          if (started[key]) return;
+          started[key] = true;
+          if (embedFailed || typeof window.Cal !== "function") {
+            mountPlain(key);
+            window.setTimeout(function () { markLate(key); }, 8000);
+            return;
+          }
 
-        if (host && window.MutationObserver) {
-          const observer = new MutationObserver(function () {
-            const frame = host.querySelector("iframe");
-            if (!frame || frame.dataset.tracked === "true") return;
-            frame.dataset.tracked = "true";
-            frame.addEventListener("load", trackBookingView);
+          const namespace = key;
+          window.Cal("init", namespace, { origin: "https://cal.com" });
+          const api = window.Cal.ns && window.Cal.ns[namespace];
+          if (typeof api !== "function") {
+            mountPlain(key);
+            window.setTimeout(function () { markLate(key); }, 8000);
+            return;
+          }
+
+          api("inline", {
+            elementOrSelector: "#cal-" + key,
+            calLink: CAL_LINK + "/" + CAL_EVENTS[key],
+            config: { layout: "month_view", theme: "light" }
           });
-          observer.observe(host, { childList: true, subtree: true });
+          api("ui", {
+            theme: "light",
+            layout: "month_view",
+            hideEventTypeDetails: false
+          });
+          api("on", {
+            action: "linkReady",
+            callback: function () {
+              markReady(key);
+            }
+          });
+          api("on", {
+            action: "__dimensionChanged",
+            callback: function (payload) {
+              const reported = readPayloadHeight(payload);
+              if (reported) heights[key] = reported;
+              measure(key);
+            }
+          });
+
+          const host = document.getElementById("cal-" + key);
+          if (host && window.MutationObserver) {
+            const observer = new MutationObserver(function () {
+              const frame = host.querySelector("iframe");
+              if (!frame || frame.dataset.watched === "true") return;
+              frame.dataset.watched = "true";
+              frame.addEventListener("load", function () {
+                measure(key);
+              });
+              measure(key);
+            });
+            observer.observe(host, { childList: true, subtree: true });
+          }
+
+          window.setTimeout(function () { markLate(key); }, 8000);
         }
 
-        window.Cal("init", { origin: "https://cal.com" });
-        window.Cal("inline", {
-          elementOrSelector: "#cal-inline",
-          calLink: CAL_LINK,
-          config: { theme: "light" }
-        });
-        window.Cal("on", {
-          action: "__iframeReady",
-          callback: trackBookingView
+        function warmFull() {
+          initEmbed("full");
+        }
+
+        function select(key, focusTab) {
+          if (keys.indexOf(key) === -1) return;
+          active = key;
+          tabs.forEach(function (tab) {
+            const on = tab.dataset.event === key;
+            tab.setAttribute("aria-selected", on ? "true" : "false");
+            tab.tabIndex = on ? 0 : -1;
+            if (on && focusTab) tab.focus();
+          });
+          panels.forEach(function (panel) {
+            const on = panel.dataset.event === key;
+            panel.classList.toggle("is-active", on);
+            if (on) {
+              panel.removeAttribute("aria-hidden");
+              panel.removeAttribute("inert");
+            } else {
+              panel.setAttribute("aria-hidden", "true");
+              panel.setAttribute("inert", "");
+            }
+          });
+          toggle.classList.toggle("is-full", key === "full");
+          stage.classList.toggle("is-ready", !!ready[key]);
+          updateFallback();
+          applyStageHeight();
+          if (key === "full") warmFull();
+          window.requestAnimationFrame(function () { measure(key); });
+        }
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            select(tab.dataset.event, false);
+          });
         });
 
-        window.setTimeout(function () {
-          if (!host || host.querySelector("iframe")) return;
-          mountIframe();
-        }, 5000);
+        toggle.addEventListener("keydown", function (event) {
+          const order = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+          if (order.indexOf(event.key) === -1) return;
+          event.preventDefault();
+          const current = tabs.findIndex(function (tab) {
+            return tab.getAttribute("aria-selected") === "true";
+          });
+          let next = current < 0 ? 0 : current;
+          if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (next + 1) % tabs.length;
+          else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (next - 1 + tabs.length) % tabs.length;
+          else if (event.key === "Home") next = 0;
+          else if (event.key === "End") next = tabs.length - 1;
+          select(tabs[next].dataset.event, true);
+        });
+
+        const fullTab = document.getElementById("cal-tab-full");
+        if (fullTab) {
+          ["pointerenter", "focus", "touchstart"].forEach(function (type) {
+            fullTab.addEventListener(type, warmFull, { once: true, passive: true });
+          });
+        }
+
+        document.addEventListener("cal-embed-error", function () {
+          embedFailed = true;
+          keys.forEach(function (key) {
+            if (started[key] && !ready[key]) mountPlain(key);
+          });
+        });
+
+        updateFallback();
+        initEmbed("quick");
+
+        window.addEventListener("resize", function () {
+          keys.forEach(measure);
+        });
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const reveals = Array.from(document.querySelectorAll(".booking-reveal"));
+        const steps = document.querySelector(".booking-steps");
+
+        function drawLine() {
+          if (steps) steps.classList.add("is-drawn");
+        }
+
+        if (reduceMotion) {
+          drawLine();
+        } else if ("IntersectionObserver" in window) {
+          document.documentElement.classList.add("booking-motion");
+          const seen = new WeakSet();
+          const revealObserver = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (!entry.isIntersecting || seen.has(entry.target)) return;
+                seen.add(entry.target);
+                entry.target.classList.add("is-inview");
+                revealObserver.unobserve(entry.target);
+              });
+            },
+            { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+          );
+          const lineObserver = steps
+            ? new IntersectionObserver(
+                function (entries) {
+                  entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    drawLine();
+                    lineObserver.disconnect();
+                  });
+                },
+                { threshold: 0.3 }
+              )
+            : null;
+
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+              reveals.forEach(function (node) {
+                const rect = node.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+                  seen.add(node);
+                  node.classList.add("is-inview");
+                } else {
+                  revealObserver.observe(node);
+                }
+              });
+              if (!steps || !lineObserver) return;
+              const stepsRect = steps.getBoundingClientRect();
+              if (stepsRect.top < window.innerHeight * 0.9 && stepsRect.bottom > 0) drawLine();
+              else lineObserver.observe(steps);
+            });
+          });
+        } else {
+          reveals.forEach(function (node) { node.classList.add("is-inview"); });
+          drawLine();
+        }
+
+        document.addEventListener("visibilitychange", function () {
+          document.documentElement.classList.toggle("is-paused", document.hidden);
+        });
+        if (document.hidden) document.documentElement.classList.add("is-paused");
       })();
     </script>
     <script src="script.js"></script>
