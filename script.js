@@ -732,4 +732,128 @@
       }
     });
   }
+
+  /* Blog: reading progress, table of contents, category filters, card fade-in. */
+  const reduceBlogMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const progress = document.getElementById("reading-progress");
+  const progressArticle = document.querySelector(".post-article");
+  if (progress && progressArticle && !reduceBlogMotion) {
+    function updateProgress() {
+      const start = progressArticle.offsetTop;
+      const span = Math.max(progressArticle.offsetHeight - window.innerHeight, 1);
+      const value = Math.min(1, Math.max(0, (window.scrollY - start) / span));
+      progress.style.transform = "scaleX(" + value.toFixed(4) + ")";
+    }
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+  }
+
+  const toc = document.querySelector(".post-toc");
+  if (toc) {
+    const toggle = toc.querySelector(".post-toc-toggle");
+    const wideMq = window.matchMedia("(min-width: 1024px)");
+    function syncToc() {
+      if (!toggle) return;
+      if (wideMq.matches) {
+        toc.classList.remove("is-collapsed");
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.tabIndex = -1;
+      } else {
+        toggle.tabIndex = 0;
+      }
+    }
+    syncToc();
+    if (wideMq.addEventListener) wideMq.addEventListener("change", syncToc);
+    else if (wideMq.addListener) wideMq.addListener(syncToc);
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        if (wideMq.matches) return;
+        const open = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", open ? "false" : "true");
+        toc.classList.toggle("is-collapsed", open);
+      });
+    }
+  }
+
+  const filterNav = document.querySelector(".blog-filters");
+  if (filterNav) {
+    const links = Array.from(filterNav.querySelectorAll("a[data-category]"));
+    const cards = Array.from(document.querySelectorAll("[data-blog-card]"));
+    const emptyNote = document.querySelector(".blog-filter-empty");
+
+    function applyFilter(category) {
+      let shown = 0;
+      cards.forEach(function (card) {
+        const match = !category || card.getAttribute("data-category") === category;
+        card.hidden = !match;
+        if (match) shown += 1;
+      });
+      if (emptyNote) emptyNote.hidden = shown !== 0;
+      links.forEach(function (link) {
+        const on = (link.getAttribute("data-category") || "") === category;
+        if (on) link.setAttribute("aria-current", "true");
+        else link.removeAttribute("aria-current");
+      });
+    }
+
+    function categoryFromUrl() {
+      const value = new URLSearchParams(window.location.search).get("category") || "";
+      const known = !value || links.some(function (link) {
+        return (link.getAttribute("data-category") || "") === value;
+      });
+      return known ? value : "";
+    }
+
+    applyFilter(categoryFromUrl());
+    links.forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        const category = link.getAttribute("data-category") || "";
+        applyFilter(category);
+        const url = new URL(window.location.href);
+        if (category) url.searchParams.set("category", category);
+        else url.searchParams.delete("category");
+        window.history.pushState({ category: category }, "", url.pathname + url.search);
+      });
+    });
+    window.addEventListener("popstate", function () {
+      applyFilter(categoryFromUrl());
+    });
+    filterNav.addEventListener("keydown", function (event) {
+      const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
+      if (keys.indexOf(event.key) === -1) return;
+      const index = links.indexOf(document.activeElement);
+      if (index === -1) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === "ArrowRight") next = (index + 1) % links.length;
+      else if (event.key === "ArrowLeft") next = (index - 1 + links.length) % links.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = links.length - 1;
+      links[next].focus();
+    });
+  }
+
+  const blogCards = Array.from(document.querySelectorAll(".blog-card"));
+  if (blogCards.length && !reduceBlogMotion && "IntersectionObserver" in window) {
+    const cardObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-inview");
+          cardObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+    );
+    window.requestAnimationFrame(function () {
+      document.documentElement.classList.add("blog-motion");
+      blogCards.forEach(function (card) {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) card.classList.add("is-inview");
+        else cardObserver.observe(card);
+      });
+    });
+  }
 })();

@@ -12,3 +12,6 @@ Credentials: NASM, ISSA, ProNatal and Hypervolt.
 - LinkedIn: https://www.linkedin.com/in/sanjeev-kumar-0387b6207
 
 Package sizes, session lengths and prices are not published. Consultations are booked on the booking page. Free guidance questions still go through the contact form.
+
+<!-- BLOG:START -->
+<!-- BLOG:END -->

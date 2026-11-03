@@ -1,0 +1,12 @@
+{
+  "name": "sanjeev-kumar",
+  "private": true,
+  "description": "Static website for Sanjeev Kumar. Blog pages are generated locally with npm run build:blog.",
+  "scripts": {
+    "build:blog": "node scripts/build-blog.js"
+  },
+  "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.12"
+  }
+}
