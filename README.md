@@ -27,7 +27,33 @@ Only posts with `status: published` appear on the live site. Drafts are skipped 
 
 `content/blog/_template.md` is the blank starter. The build ignores any file whose name starts with `_`. `content/blog/sample-post.md` is a layout test and must stay a draft.
 
-`content/blog/categories.json` is the only list of categories, in a fixed order, with a maximum of 10. Each post uses `categories` with 1 to 3 of those names. The first name is the primary category. The build fails if a post has none, more than three, or a name that is not on the list. The blog index filters with a dropdown and does not create category pages or sitemap entries. Trending and Special are editorial labels. Fitness Digest is for roundup-style posts.
+`content/blog/categories.json` is the only list of categories. It has three groups, in this order: Workout (`workout`), Nutrition (`nutrition`) and Supplementation (`supplementation`). Each group has topics. A post uses `categories` with 1 to 3 entries written as `Group > Topic`, and the names must match the file exactly. The first entry is the primary topic. It shows on the card and on the post as `Group - Topic`. The build fails if an entry is missing, is not in that form, is not in the file, if there are more than three, or if the same topic is repeated. Posts may mix groups.
+
+`featured: true` is optional. When one or more published posts set it, the newest of those is the large card on the blog index while All categories is selected. If none are featured, the newest post is the large card. If the dates match, the title that comes first alphabetically is used. A category filter shows matching cards at the normal size.
+
+The blog index keeps one dropdown, labelled Filter by category, with All categories first. Groups that have a published post appear as optgroups. Inside each group, the first option is All plus the group name, then the topics that have posts, each with a count. The address uses `?category=` and a group slug, such as `workout`, or a topic slug, such as `workout-strength`. The build does not create category pages or add categories to the sitemap. The breadcrumb on a post stays Home, Blog, then the article title.
+
+| Group | Topic | Entry | Slug |
+| --- | --- | --- | --- |
+| Workout | Beginner / Getting Started | Workout > Beginner / Getting Started | workout-beginner-getting-started |
+| Workout | Fat Loss | Workout > Fat Loss | workout-fat-loss |
+| Workout | Muscle Gain | Workout > Muscle Gain | workout-muscle-gain |
+| Workout | Body Composition Changes | Workout > Body Composition Changes | workout-body-composition-changes |
+| Workout | Strength | Workout > Strength | workout-strength |
+| Workout | GLP-1 (Ozempic) | Workout > GLP-1 (Ozempic) | workout-glp-1 |
+| Workout | TRT | Workout > TRT | workout-trt |
+| Workout | Prenatal / Postnatal | Workout > Prenatal / Postnatal | workout-prenatal-postnatal |
+| Workout | Stress Management / Healthy Lifestyle | Workout > Stress Management / Healthy Lifestyle | workout-stress-management-healthy-lifestyle |
+| Workout | Arthritis, Osteoporosis and Sarcopenia | Workout > Arthritis, Osteoporosis and Sarcopenia | workout-arthritis-osteoporosis-and-sarcopenia |
+| Nutrition | Fat / Weight Loss | Nutrition > Fat / Weight Loss | nutrition-fat-weight-loss |
+| Nutrition | Ozempic | Nutrition > Ozempic | nutrition-ozempic |
+| Nutrition | Vegetarian Diet | Nutrition > Vegetarian Diet | nutrition-vegetarian-diet |
+| Nutrition | Vegan Diet | Nutrition > Vegan Diet | nutrition-vegan-diet |
+| Nutrition | Athletic Performance | Nutrition > Athletic Performance | nutrition-athletic-performance |
+| Nutrition | Gluten-Free and Lactose-Free Diet | Nutrition > Gluten-Free and Lactose-Free Diet | nutrition-gluten-free-and-lactose-free-diet |
+| Supplementation | Performance Enhancement | Supplementation > Performance Enhancement | supplementation-performance-enhancement |
+| Supplementation | Recovery | Supplementation > Recovery | supplementation-recovery |
+| Supplementation | General Health | Supplementation > General Health | supplementation-general-health |
 
 When at least one article is published, the build adds a Blog link to the header and footer, a Latest Guidance section on the home page, `/blog/` and each article in `sitemap.xml`, a feed at `blog/rss.xml`, and one line per article in `llms.txt`. With no published articles, those links and the home section stay empty, and `/blog/` is left out of the sitemap.
 

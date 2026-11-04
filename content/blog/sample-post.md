@@ -4,7 +4,8 @@ slug: sample-post
 description: "A labelled layout test for the blog template. It is not an article and it is not for publication."
 date: "2026-11-03"
 updated: "2026-11-10"
-categories: ["Getting Started"]
+categories: ["Workout > Beginner / Getting Started"]
+featured: false
 tags: ["template", "layout"]
 image: "/images/blog/sample-layout.png"
 imageAlt: "Green and cream graphic used to test the blog image layout"

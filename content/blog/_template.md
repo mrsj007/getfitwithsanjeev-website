@@ -4,7 +4,8 @@ slug: ""
 description: ""
 date: ""          # first published, YYYY-MM-DD
 updated: ""       # last meaningful edit, YYYY-MM-DD
-categories: []    # 1 to 3 names from content/blog/categories.json. The first is the primary category.
+categories: []    # 1 to 3 entries as "Group > Topic". The first is the primary topic. Example: ["Workout > Strength"]
+featured: false   # optional. true uses this post as the large card on the blog index when All categories is selected.
 tags: []
 image: ""         # optional, example: /images/blog/your-photo.jpg
 imageAlt: ""      # short description of the image, required if image is set

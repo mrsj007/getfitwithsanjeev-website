@@ -21,6 +21,18 @@ const BLOG_DIR = path.join(ROOT, "blog");
 const SITE = "https://www.getfitwithsanjeev.com";
 const INCLUDE_DRAFTS = process.argv.includes("--drafts");
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const MEDICAL_TERMS = [
+  "cure",
+  "treat",
+  "heal",
+  "prescribe",
+  "dosage",
+  "dose",
+  "stop taking",
+  "replace your medication",
+  "guaranteed",
+  "detox",
+];
 const BANNED_JSON_KEYS = new Set([
   "aggregateRating",
   "review",
@@ -44,7 +56,7 @@ const PORTRAIT = "/images/sanjeev-kumar.jpg";
 const PORTRAIT_ALT = "Sanjeev Kumar, personal trainer, photographed in a gym";
 
 const warnings = [];
-let CATEGORIES = [];
+let GROUPS = [];
 
 function fail(message) {
   console.error("Error: " + message);
@@ -54,6 +66,21 @@ function fail(message) {
 function warn(message) {
   warnings.push(message);
   console.warn("Warning: " + message);
+}
+
+function warnMedicalLanguage(raw, file, status) {
+  if (status !== "published") return;
+  MEDICAL_TERMS.forEach((term) => {
+    const pattern = new RegExp("\\b" + escapeReg(term) + "\\b", "i");
+    if (pattern.test(raw)) {
+      warn(
+        file +
+          ' contains "' +
+          term +
+          '". Posts support people alongside medical care and must not advise medication changes or claim that training, food or a supplement treats or cures a condition.'
+      );
+    }
+  });
 }
 
 function escapeHtml(value) {
@@ -233,15 +260,12 @@ function loadCategories() {
     fail("content/blog/categories.json could not be read. " + error.message);
   }
   if (!Array.isArray(data) || data.length === 0) {
-    fail("content/blog/categories.json must list at least one category.");
+    fail("content/blog/categories.json must list at least one group.");
   }
-  if (data.length > 10) {
-    fail("content/blog/categories.json lists " + data.length + " categories. The maximum is 10.");
-  }
-  const names = new Set();
   const slugs = new Set();
-  CATEGORIES = data.map((item, index) => {
-    const label = "content/blog/categories.json item " + (index + 1);
+  const groupNames = new Set();
+  GROUPS = data.map((item, index) => {
+    const label = "content/blog/categories.json group " + (index + 1);
     const name = cleanText(item && item.name);
     const slug = cleanText(item && item.slug);
     const description = cleanText(item && item.description);
@@ -249,35 +273,79 @@ function loadCategories() {
     if (!SLUG_RE.test(slug)) {
       fail(label + ' slug "' + slug + '" must be lowercase words separated by hyphens.');
     }
-    if (names.has(name)) fail(label + ' repeats the name "' + name + '".');
+    if (groupNames.has(name)) fail(label + ' repeats the name "' + name + '".');
     if (slugs.has(slug)) fail(label + ' repeats the slug "' + slug + '".');
-    names.add(name);
+    if (!item || !Array.isArray(item.topics) || item.topics.length === 0) {
+      fail(label + " needs a topics list.");
+    }
+    groupNames.add(name);
     slugs.add(slug);
-    return { name, slug, description };
+    const topicNames = new Set();
+    const topics = item.topics.map((topic, topicIndex) => {
+      const topicLabel = label + " topic " + (topicIndex + 1);
+      const topicName = cleanText(topic && topic.name);
+      const topicSlug = cleanText(topic && topic.slug);
+      const topicDescription = cleanText(topic && topic.description);
+      if (!topicName || !topicSlug || !topicDescription) {
+        fail(topicLabel + " needs a name, a slug and a description.");
+      }
+      if (!SLUG_RE.test(topicSlug)) {
+        fail(topicLabel + ' slug "' + topicSlug + '" must be lowercase words separated by hyphens.');
+      }
+      if (!topicSlug.startsWith(slug + "-")) {
+        fail(topicLabel + ' slug "' + topicSlug + '" must start with "' + slug + '-".');
+      }
+      if (topicNames.has(topicName)) fail(topicLabel + ' repeats the name "' + topicName + '".');
+      if (slugs.has(topicSlug)) fail(topicLabel + ' repeats the slug "' + topicSlug + '".');
+      topicNames.add(topicName);
+      slugs.add(topicSlug);
+      return { name: topicName, slug: topicSlug, description: topicDescription };
+    });
+    return { name, slug, description, topics };
   });
-  return CATEGORIES;
+  return GROUPS;
 }
 
 function categoriesForPost(data, file) {
+  const formExample = ' Use the form "Group > Topic", for example "Workout > Strength".';
   if (Object.prototype.hasOwnProperty.call(data, "category")) {
-    fail(file + ' uses "category". Use categories with 1 to 3 names from content/blog/categories.json.');
+    fail(file + ' uses "category". Use categories with 1 to 3 entries from content/blog/categories.json.' + formExample);
   }
   if (!Object.prototype.hasOwnProperty.call(data, "categories") || data.categories == null || data.categories === "") {
-    fail(file + " has no categories. Add 1 to 3 names from content/blog/categories.json.");
+    fail(file + " has no categories. Add 1 to 3 entries from content/blog/categories.json." + formExample);
   }
   if (!Array.isArray(data.categories)) {
-    fail(file + " categories must be a list of 1 to 3 names from content/blog/categories.json.");
+    fail(file + " categories must be a list of 1 to 3 entries from content/blog/categories.json." + formExample);
   }
   const names = data.categories.map((item) => cleanText(item)).filter((item) => item !== "");
-  if (!names.length) fail(file + " has no categories. Add 1 to 3 names from content/blog/categories.json.");
+  if (!names.length) {
+    fail(file + " has no categories. Add 1 to 3 entries from content/blog/categories.json." + formExample);
+  }
   if (names.length > 3) fail(file + " has " + names.length + " categories. A post can have at most 3.");
   const seen = new Set();
   return names.map((name) => {
-    const found = CATEGORIES.find((item) => item.name === name);
-    if (!found) fail(file + ' uses category "' + name + '", which is not in content/blog/categories.json.');
-    if (seen.has(found.slug)) fail(file + ' lists "' + name + '" more than once.');
-    seen.add(found.slug);
-    return found;
+    const separator = " > ";
+    const splitAt = name.indexOf(separator);
+    const again = splitAt === -1 ? -1 : name.indexOf(separator, splitAt + separator.length);
+    const groupName = splitAt === -1 ? "" : name.slice(0, splitAt).trim();
+    const topicName = splitAt === -1 ? "" : name.slice(splitAt + separator.length).trim();
+    if (splitAt === -1 || again !== -1 || !groupName || !topicName) {
+      fail(file + ' category "' + name + '" is not in "Group > Topic" form.' + formExample);
+    }
+    const group = GROUPS.find((item) => item.name === groupName);
+    const topic = group && group.topics.find((item) => item.name === topicName);
+    if (!group || !topic) {
+      fail(file + ' uses category "' + name + '", which is not in content/blog/categories.json.');
+    }
+    if (seen.has(topic.slug)) fail(file + ' lists "' + name + '" more than once.');
+    seen.add(topic.slug);
+    return {
+      name: topic.name,
+      slug: topic.slug,
+      description: topic.description,
+      entry: group.name + " > " + topic.name,
+      group: { name: group.name, slug: group.slug, description: group.description },
+    };
   });
 }
 
@@ -333,6 +401,11 @@ function normalizePost(data, body, name, raw) {
   if (slug === "sample-post" && status === "published") {
     fail(file + " is a layout test and must stay status: draft.");
   }
+  let featured = false;
+  if (Object.prototype.hasOwnProperty.call(data, "featured")) {
+    if (typeof data.featured !== "boolean") fail(file + " featured must be true or false.");
+    featured = data.featured;
+  }
   const date = requireDate(data.date, file, "date");
   const updated = data.updated == null || cleanText(data.updated) === "" ? date : requireDate(data.updated, file, "updated");
   const image = cleanText(data.image);
@@ -344,6 +417,7 @@ function normalizePost(data, body, name, raw) {
   if (raw.includes("\u2014") || raw.includes("&mdash;") || raw.includes("&#8212;") || raw.includes("&#x2014;")) {
     warn(file + " contains an em dash. Use a comma, a period, or a hyphen.");
   }
+  warnMedicalLanguage(raw, file, status);
   if (image && !imageAlt) warn(file + " has an image with no imageAlt.");
   if (status === "published" && !reviewedBy) warn(file + " is published with no reviewedBy.");
   const bodyImages = body.match(/!\[[^\]]*\]\([^)]+\)/g) || [];
@@ -370,6 +444,11 @@ function normalizePost(data, body, name, raw) {
   }
   const pageTitle = documentTitle(title);
   if (pageTitle.length > 60) fail(file + " browser title is " + pageTitle.length + " characters. Keep it to about 60.");
+  const categorySlugs = [];
+  categories.forEach((category) => {
+    if (categorySlugs.indexOf(category.group.slug) === -1) categorySlugs.push(category.group.slug);
+    if (categorySlugs.indexOf(category.slug) === -1) categorySlugs.push(category.slug);
+  });
   return {
     file,
     title,
@@ -377,10 +456,11 @@ function normalizePost(data, body, name, raw) {
     description,
     date,
     updated,
+    featured,
     categories,
     category: categories[0].name,
     categorySlug: categories[0].slug,
-    categorySlugs: categories.map((item) => item.slug),
+    categorySlugs,
     tags: stringList(data.tags, file, "tags"),
     image,
     imageAlt,
@@ -556,9 +636,36 @@ function faqHtml(items) {
 
 function relatedPosts(post, posts) {
   const others = posts.filter((item) => item.slug !== post.slug);
-  const same = others.filter((item) => item.category === post.category);
-  const rest = others.filter((item) => item.category !== post.category);
+  const same = others.filter((item) => item.categorySlug === post.categorySlug);
+  const rest = others.filter((item) => item.categorySlug !== post.categorySlug);
   return same.concat(rest).slice(0, 3);
+}
+
+function categoryLabelHtml(category) {
+  return (
+    '<span class="category-prefix">' +
+    escapeHtml(category.group.name) +
+    "</span> - " +
+    escapeHtml(category.name)
+  );
+}
+
+function byDateThenTitle(a, b) {
+  if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+  return a.title.localeCompare(b.title);
+}
+
+function featuredHero(posts) {
+  const featured = posts.filter((post) => post.status === "published" && post.featured).slice().sort(byDateThenTitle);
+  if (featured.length) return featured[0];
+  if (!posts.length) return null;
+  return posts.slice().sort(byDateThenTitle)[0];
+}
+
+function withFeaturedFirst(posts) {
+  const hero = featuredHero(posts);
+  if (!hero) return posts.slice();
+  return [hero].concat(posts.filter((post) => post.slug !== hero.slug));
 }
 
 function cardHtml(post, options) {
@@ -585,7 +692,7 @@ function cardHtml(post, options) {
     '"><span class="blog-card-media">' +
     media +
     '</span><span class="blog-card-copy"><p class="blog-card-category">' +
-    escapeHtml(post.category) +
+    categoryLabelHtml(post.categories[0]) +
     "</p><" +
     options.level +
     ' class="blog-card-title" id="' +
@@ -637,7 +744,8 @@ function articleJson(post) {
     image: absoluteImage(post),
     datePublished: post.date,
     dateModified: post.updated,
-    articleSection: post.category,
+    articleSection: post.categories[0].group.name,
+    keywords: post.categories.map((category) => category.name).join(", "),
     inLanguage: "en-CA",
     author: {
       "@type": "Person",
@@ -664,13 +772,7 @@ function breadcrumbJson(post) {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
       { "@type": "ListItem", position: 2, name: "Blog", item: SITE + "/blog/" },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: post.category,
-        item: SITE + "/blog/?category=" + post.categorySlug,
-      },
-      { "@type": "ListItem", position: 4, name: post.title, item: url },
+      { "@type": "ListItem", position: 3, name: post.title, item: url },
     ],
   };
 }
@@ -721,7 +823,7 @@ function headHtml(options) {
       '" />\n'
     : "";
   const preload = options.preload
-    ? '    <link rel="preload" as="image" href="' + escapeHtml(options.preload) + '" />\n'
+    ? '    <link rel="preload" as="image" href="' + escapeHtml(options.preload) + '" fetchpriority="high" />\n'
     : "";
   return (
     "    <meta charset=\"UTF-8\" />\n" +
@@ -930,13 +1032,12 @@ ${headerHtml()}
           <ol>
             <li><a href="../index.html">Home</a></li>
             <li><a href="index.html">Blog</a></li>
-            <li><a href="index.html?category=${encodeURIComponent(post.categorySlug)}">${escapeHtml(post.category)}</a></li>
             <li aria-current="page">${escapeHtml(post.title)}</li>
           </ol>
         </nav>
         <header class="post-header">
           <h1>${escapeHtml(post.title)}</h1>
-          <p class="post-category"><a href="index.html?category=${encodeURIComponent(post.categorySlug)}">${escapeHtml(post.category)}</a></p>
+          <p class="post-category"><a href="index.html?category=${encodeURIComponent(post.categorySlug)}">${categoryLabelHtml(post.categories[0])}</a></p>
           <p class="post-byline"><a href="../about.html">By Sanjeev Kumar, Level 3 Personal Trainer</a></p>
           <ul class="post-meta">
             <li><time datetime="${post.date}">${escapeHtml(formatDate(post.date))}</time></li>
@@ -971,14 +1072,48 @@ ${footerHtml()}
   return html;
 }
 
-function categoryCounts(posts) {
-  const counts = new Map();
-  posts.forEach((post) => {
-    post.categories.forEach((category) => {
-      counts.set(category.slug, (counts.get(category.slug) || 0) + 1);
-    });
-  });
-  return counts;
+function postsInGroup(posts, group) {
+  return posts.filter((post) => post.categories.some((category) => category.group.slug === group.slug));
+}
+
+function postsWithTopic(posts, topic) {
+  return posts.filter((post) => post.categories.some((category) => category.slug === topic.slug));
+}
+
+function categoryOptions(posts) {
+  return GROUPS.map((group) => {
+    const inGroup = postsInGroup(posts, group);
+    if (!inGroup.length) return "";
+    const topics = group.topics
+      .map((topic) => {
+        const count = postsWithTopic(posts, topic).length;
+        if (!count) return "";
+        return (
+          '<option value="' +
+          escapeHtml(topic.slug) +
+          '">' +
+          escapeHtml(topic.name) +
+          " (" +
+          count +
+          ")</option>"
+        );
+      })
+      .filter(Boolean)
+      .join("");
+    return (
+      '<optgroup label="' +
+      escapeHtml(group.name) +
+      '"><option value="' +
+      escapeHtml(group.slug) +
+      '">All ' +
+      escapeHtml(group.name) +
+      " (" +
+      inGroup.length +
+      ")</option>" +
+      topics +
+      "</optgroup>"
+    );
+  }).join("");
 }
 
 function articleCountLabel(count) {
@@ -986,21 +1121,8 @@ function articleCountLabel(count) {
 }
 
 function renderIndex(posts, publishedCount) {
-  const counts = categoryCounts(posts);
-  const options = CATEGORIES.filter((category) => counts.has(category.slug))
-    .map((category) => {
-      const count = counts.get(category.slug);
-      return (
-        '<option value="' +
-        escapeHtml(category.slug) +
-        '">' +
-        escapeHtml(category.name) +
-        " (" +
-        count +
-        ")</option>"
-      );
-    })
-    .join("");
+  const ordered = withFeaturedFirst(posts);
+  const options = categoryOptions(posts);
   const filters = posts.length
     ? '<div class="blog-filter-bar">' +
       '<div class="blog-filter-field">' +
@@ -1014,9 +1136,12 @@ function renderIndex(posts, publishedCount) {
       articleCountLabel(posts.length) +
       "</p></div>"
     : "";
-  const grid = posts.length
+  const filterStatus = posts.length
+    ? '<p class="blog-filter-status" id="blog-filter-status" hidden>Showing: <span id="blog-filter-selection"></span> - <button type="button" class="blog-filter-clear" id="blog-filter-clear">clear</button></p>'
+    : "";
+  const grid = ordered.length
     ? '<div class="blog-card-grid" id="blog-card-grid">' +
-      posts.map((post, index) => cardHtml(post, cardOptions(post, "blog", "h2", index === 0))).join("") +
+      ordered.map((post, index) => cardHtml(post, cardOptions(post, "blog", "h2", index === 0))).join("") +
       "</div>"
     : "";
   const filterEmpty = posts.length
@@ -1041,8 +1166,8 @@ ${headHtml({
   canonical: SITE + "/blog/",
   type: "website",
   robots: publishedCount === 0 ? "noindex" : "",
-  preload: posts[0] && posts[0].image && !posts[0].imageMissing ? "../" + posts[0].image.replace(/^\//, "") : "",
-  json: [collectionJson(posts)],
+  preload: ordered[0] && ordered[0].image && !ordered[0].imageMissing ? "../" + ordered[0].image.replace(/^\//, "") : "",
+  json: [collectionJson(ordered)],
 })}
   </head>
   <body class="blog-index">
@@ -1055,7 +1180,7 @@ ${headerHtml().replace('    <div class="reading-progress" id="reading-progress" 
             <h1 id="blog-heading">${INDEX_H1}</h1>
             <p>${INDEX_INTRO}</p>
           </header>
-          ${[filters, grid, filterEmpty, empty].filter(Boolean).join("\n          ")}
+          ${[filters, filterStatus, grid, filterEmpty, empty].filter(Boolean).join("\n          ")}
         </div>
       </section>
     </main>
@@ -1063,7 +1188,7 @@ ${footerHtml()}
   </body>
 </html>
 `;
-  assertIndex(html, posts, publishedCount);
+  assertIndex(html, ordered, publishedCount);
   return html;
 }
 
@@ -1109,23 +1234,29 @@ function assertPost(html, post) {
   if (article.datePublished !== post.date || article.dateModified !== post.updated) {
     fail(post.file + " Article dates do not match the front matter.");
   }
-  if (article.articleSection !== post.category) {
-    fail(post.file + " Article articleSection must be the primary category.");
+  if (article.articleSection !== post.categories[0].group.name) {
+    fail(post.file + " Article articleSection must be the primary group.");
+  }
+  const keywords = post.categories.map((category) => category.name).join(", ");
+  if (article.keywords !== keywords) {
+    fail(post.file + " Article keywords must be the topic names.");
   }
   if (!article.author || article.author.name !== "Sanjeev Kumar" || article.author.url !== SITE + "/about.html") {
     fail(post.file + " Article author must be Sanjeev Kumar with a link to About.");
   }
   const crumbItems = crumbs && crumbs.itemListElement;
-  if (!crumbItems || crumbItems.length !== 4) {
-    fail(post.file + " BreadcrumbList must list Home, Blog, the primary category and the article.");
+  if (!crumbItems || crumbItems.length !== 3) {
+    fail(post.file + " BreadcrumbList must list Home, Blog and the article.");
   }
-  if (
-    crumbItems[0].name !== "Home" ||
-    crumbItems[1].name !== "Blog" ||
-    crumbItems[2].name !== post.category ||
-    crumbItems[3].name !== post.title
-  ) {
-    fail(post.file + " BreadcrumbList must list Home, Blog, the primary category and the article.");
+  if (crumbItems[0].name !== "Home" || crumbItems[1].name !== "Blog" || crumbItems[2].name !== post.title) {
+    fail(post.file + " BreadcrumbList must list Home, Blog and the article.");
+  }
+  const crumbStart = html.indexOf('<nav class="breadcrumb"');
+  const crumbEnd = html.indexOf("</nav>", crumbStart);
+  const crumb = crumbStart === -1 ? "" : html.slice(crumbStart, crumbEnd);
+  const crumbItemsHtml = crumb.match(/<li[\s>]/g) || [];
+  if (crumbItemsHtml.length !== 3 || crumb.includes("?category=")) {
+    fail(post.file + " breadcrumb must be Home, Blog and the article title.");
   }
   if (post.faq.length) {
     const faq = blocks.find((block) => block["@type"] === "FAQPage");
@@ -1161,6 +1292,38 @@ function assertIndex(html, posts, publishedCount) {
   if (posts.length && !html.includes('<option value="" selected>All categories</option>')) {
     fail("The blog index filter must default to All categories.");
   }
+  if (posts.length) {
+    const hero = posts[0];
+    const start = html.indexOf('class="blog-card blog-card-feature"');
+    const next = start === -1 ? -1 : html.indexOf("<article", start + 10);
+    const featureHtml = start === -1 ? "" : html.slice(start, next === -1 ? html.length : next);
+    if (!featureHtml.includes(hero.slug + ".html")) {
+      fail("The large card must be the newest featured post, or the newest post when none are featured.");
+    }
+    GROUPS.forEach((group) => {
+      const inGroup = postsInGroup(posts, group);
+      if (!inGroup.length) {
+        if (html.includes('<optgroup label="' + escapeHtml(group.name) + '">')) {
+          fail("The blog index filter shows " + group.name + ", which has no published posts.");
+        }
+        return;
+      }
+      if (!html.includes('<optgroup label="' + escapeHtml(group.name) + '">')) {
+        fail("The blog index filter is missing the " + group.name + " group.");
+      }
+      if (!html.includes(">All " + escapeHtml(group.name) + " (" + inGroup.length + ")</option>")) {
+        fail("The blog index filter is missing All " + group.name + ".");
+      }
+      group.topics.forEach((topic) => {
+        const count = postsWithTopic(posts, topic).length;
+        const option = '<option value="' + escapeHtml(topic.slug) + '">' + escapeHtml(topic.name) + " (" + count + ")</option>";
+        if (count && !html.includes(option)) fail("The blog index filter is missing " + topic.name + ".");
+        if (!count && html.includes('value="' + escapeHtml(topic.slug) + '"')) {
+          fail("The blog index filter shows " + topic.name + ", which has no published posts.");
+        }
+      });
+    });
+  }
   posts.forEach((post) => {
     if (!html.includes(escapeHtml(post.title))) fail("The blog index is missing " + post.title + ".");
   });
@@ -1175,9 +1338,18 @@ function renderRss(posts) {
   const items = posts
     .map((post) => {
       const url = SITE + "/blog/" + post.slug + ".html";
+      const seenGroups = new Set();
       const categories = post.categories
-        .map((category) => "      <category>" + escapeXml(category.name) + "</category>\n")
-        .join("");
+        .map((category) => {
+          const lines = [];
+          if (!seenGroups.has(category.group.slug)) {
+            seenGroups.add(category.group.slug);
+            lines.push("      <category>" + escapeXml(category.group.name) + "</category>");
+          }
+          lines.push("      <category>" + escapeXml(category.name) + "</category>");
+          return lines.join("\n");
+        })
+        .join("\n") + "\n";
       return (
         "    <item>\n" +
         "      <title>" + escapeXml(post.title) + "</title>\n" +

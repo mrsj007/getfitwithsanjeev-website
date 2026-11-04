@@ -811,12 +811,21 @@
     const grid = document.getElementById("blog-card-grid");
     const emptyNote = document.querySelector(".blog-filter-empty");
     const countEl = document.querySelector(".blog-count");
+    const statusEl = document.getElementById("blog-filter-status");
+    const selectionEl = document.getElementById("blog-filter-selection");
+    const clearEl = document.getElementById("blog-filter-clear");
     const known = Array.from(categorySelect.options).map(function (option) {
       return option.value;
     });
 
     function countLabel(count) {
       return count + (count === 1 ? " article" : " articles");
+    }
+
+    function selectionLabel() {
+      const option = categorySelect.options[categorySelect.selectedIndex];
+      if (!option) return "";
+      return String(option.textContent || "").replace(/\s*\(\d+\)\s*$/, "");
     }
 
     function applyFilter(category) {
@@ -832,6 +841,8 @@
       });
       if (emptyNote) emptyNote.hidden = shown !== 0;
       if (countEl) countEl.textContent = countLabel(shown);
+      if (statusEl) statusEl.hidden = !active;
+      if (selectionEl) selectionEl.textContent = active ? selectionLabel() : "";
     }
 
     function categoryFromUrl() {
@@ -855,6 +866,14 @@
     window.addEventListener("popstate", function () {
       applyFilter(categoryFromUrl());
     });
+    if (clearEl) {
+      clearEl.addEventListener("click", function () {
+        applyFilter("");
+        const url = new URL(window.location.href);
+        url.searchParams.delete("category");
+        window.history.pushState({ category: "" }, "", url.pathname + url.search);
+      });
+    }
   }
 
   const blogCards = Array.from(document.querySelectorAll(".blog-card"));

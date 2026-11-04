@@ -1,52 +1,118 @@
 [
   {
-    "name": "Trending",
-    "slug": "trending",
-    "description": "An editorial label for posts Sanjeev wants to highlight right now."
+    "name": "Workout",
+    "slug": "workout",
+    "description": "Training topics, from a first workout through strength, body composition and life stage.",
+    "topics": [
+      {
+        "name": "Beginner / Getting Started",
+        "slug": "workout-beginner-getting-started",
+        "description": "First steps for people who are new to training."
+      },
+      {
+        "name": "Fat Loss",
+        "slug": "workout-fat-loss",
+        "description": "Training that supports losing body fat."
+      },
+      {
+        "name": "Muscle Gain",
+        "slug": "workout-muscle-gain",
+        "description": "Training that helps build muscle over time."
+      },
+      {
+        "name": "Body Composition Changes",
+        "slug": "workout-body-composition-changes",
+        "description": "How training can shift the balance of fat and muscle."
+      },
+      {
+        "name": "Strength",
+        "slug": "workout-strength",
+        "description": "Strength training, from first lifts to steady progress."
+      },
+      {
+        "name": "GLP-1 (Ozempic)",
+        "slug": "workout-glp-1",
+        "description": "How to train while using a GLP-1 medication, with medical decisions left to the person's doctor."
+      },
+      {
+        "name": "TRT",
+        "slug": "workout-trt",
+        "description": "How to train while using testosterone therapy, with medical decisions left to the person's doctor."
+      },
+      {
+        "name": "Prenatal / Postnatal",
+        "slug": "workout-prenatal-postnatal",
+        "description": "Training ideas for pregnancy and the months after birth, alongside prenatal care."
+      },
+      {
+        "name": "Stress Management / Healthy Lifestyle",
+        "slug": "workout-stress-management-healthy-lifestyle",
+        "description": "Movement and daily habits that support stress, sleep and everyday health."
+      },
+      {
+        "name": "Arthritis, Osteoporosis and Sarcopenia",
+        "slug": "workout-arthritis-osteoporosis-and-sarcopenia",
+        "description": "Strength and movement ideas for joints, bones and the muscle loss that can come with age."
+      }
+    ]
   },
   {
-    "name": "Special",
-    "slug": "special",
-    "description": "An editorial label for posts Sanjeev chooses to set apart from the regular articles."
+    "name": "Nutrition",
+    "slug": "nutrition",
+    "description": "Food patterns that support training, body weight and everyday health.",
+    "topics": [
+      {
+        "name": "Fat / Weight Loss",
+        "slug": "nutrition-fat-weight-loss",
+        "description": "Eating patterns that support losing fat or weight."
+      },
+      {
+        "name": "Ozempic",
+        "slug": "nutrition-ozempic",
+        "description": "Food choices while using a GLP-1 medication, alongside the person's own medical care."
+      },
+      {
+        "name": "Vegetarian Diet",
+        "slug": "nutrition-vegetarian-diet",
+        "description": "How to meet training needs with a vegetarian way of eating."
+      },
+      {
+        "name": "Vegan Diet",
+        "slug": "nutrition-vegan-diet",
+        "description": "How to meet training needs with a fully plant-based way of eating."
+      },
+      {
+        "name": "Athletic Performance",
+        "slug": "nutrition-athletic-performance",
+        "description": "Food choices and timing that support training and sport."
+      },
+      {
+        "name": "Gluten-Free and Lactose-Free Diet",
+        "slug": "nutrition-gluten-free-and-lactose-free-diet",
+        "description": "How to eat well when avoiding gluten, lactose, or both."
+      }
+    ]
   },
   {
-    "name": "Fitness Digest",
-    "slug": "fitness-digest",
-    "description": "Roundup-style posts that gather several training ideas in one place."
-  },
-  {
-    "name": "Getting Started",
-    "slug": "getting-started",
-    "description": "First steps for people who are new to training."
-  },
-  {
-    "name": "Mobility",
-    "slug": "mobility",
-    "description": "Movement, flexibility and how to ease everyday stiffness."
-  },
-  {
-    "name": "Strength",
-    "slug": "strength",
-    "description": "Strength training, from first lifts to steady progress."
-  },
-  {
-    "name": "Endurance",
-    "slug": "endurance",
-    "description": "Cardio, stamina and training that builds staying power."
-  },
-  {
-    "name": "Active Aging",
-    "slug": "active-aging",
-    "description": "Training for strength, balance and independence later in life."
-  },
-  {
-    "name": "Women's Fitness",
-    "slug": "womens-fitness",
-    "description": "Training guidance written with women's health and life stages in mind."
-  },
-  {
-    "name": "Nutrition and Recovery",
-    "slug": "nutrition-and-recovery",
-    "description": "Food, rest and recovery that support the work you do in training."
+    "name": "Supplementation",
+    "slug": "supplementation",
+    "description": "General notes on supplements people ask about alongside training.",
+    "topics": [
+      {
+        "name": "Performance Enhancement",
+        "slug": "supplementation-performance-enhancement",
+        "description": "General notes on supplements people use to support training performance."
+      },
+      {
+        "name": "Recovery",
+        "slug": "supplementation-recovery",
+        "description": "General notes on supplements people use between sessions."
+      },
+      {
+        "name": "General Health",
+        "slug": "supplementation-general-health",
+        "description": "General notes on supplements people take for everyday health."
+      }
+    ]
   }
 ]

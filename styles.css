@@ -3333,8 +3333,34 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   font-size: 1.05rem;
 }
 
+.blog-filter-status {
+  margin: -0.85rem 0 1.35rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.blog-filter-clear {
+  margin: 0;
+  padding: 0.35rem 0.15rem;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.blog-filter-clear:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
 .blog-card[hidden],
-.blog-filter-empty[hidden] {
+.blog-filter-empty[hidden],
+.blog-filter-status[hidden] {
   display: none !important;
 }
 
@@ -3404,6 +3430,13 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   color: var(--green);
 }
 
+.category-prefix {
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+
 .blog-card-title {
   margin: 0;
   font-family: var(--serif);
@@ -3468,6 +3501,14 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 
 .blog-card-grid > .blog-card-feature {
   grid-column: 1 / -1;
+}
+
+.blog-card-grid.is-filtered > .blog-card-feature {
+  grid-column: auto;
+}
+
+.blog-card-grid.is-filtered .blog-card-feature .blog-card-excerpt {
+  -webkit-line-clamp: 2;
 }
 
 @media (min-width: 768px) {
