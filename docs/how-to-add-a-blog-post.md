@@ -25,7 +25,7 @@ This is the short version. You do not need to know how to code. You copy a templ
 
 Allowed categories live in `content/blog/categories.json`, in the order below. Each entry is `Group > Topic`. Use those exact names, not the slug. A post needs at least one and at most three. The build stops with an error if an entry is missing, is not in `Group > Topic` form, is not in the file, if there are more than three, or if the same topic is repeated.
 
-The blog index uses one dropdown. It shows only groups and topics that have a published post. Choosing a group shows posts with any topic in that group. Choosing a topic shows posts that list that topic, including when it is not the primary one. There are no separate category pages, and categories are not added to the sitemap. The breadcrumb on a post stays Home, Blog, then the article title.
+The blog index menu always shows the full list from `categories.json`. Adding a group or topic there adds it to the menu on the next build, even when that topic has no published post yet. A count is shown only when it is above zero. Choosing a group shows posts with any topic in that group. Choosing a topic shows posts that list that topic, including when it is not the primary one. If that choice has no published posts, the index shows a short note with links to all articles and to booking. There are no separate category pages, and categories are not added to the sitemap. Filtered addresses use `?category=` on the blog index, and the canonical URL stays `/blog/`. The breadcrumb on a post stays Home, Blog, then the article title.
 
 | Group | Topic | Entry | Slug |
 | --- | --- | --- | --- |

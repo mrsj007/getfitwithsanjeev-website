@@ -1080,40 +1080,96 @@ function postsWithTopic(posts, topic) {
   return posts.filter((post) => post.categories.some((category) => category.slug === topic.slug));
 }
 
-function categoryOptions(posts) {
+function countSuffix(count) {
+  return count > 0 ? " (" + count + ")" : "";
+}
+
+function menuOption(id, value, label, count, className, selected) {
+  const empty = count === 0 ? " is-empty" : "";
+  const countHtml = count > 0 ? ' <span class="blog-category-option-count">(' + count + ")</span>" : "";
+  return (
+    '<div class="blog-category-option ' +
+    className +
+    empty +
+    '" role="option" id="' +
+    escapeHtml(id) +
+    '" data-value="' +
+    escapeHtml(value) +
+    '" data-label="' +
+    escapeHtml(label) +
+    '" aria-selected="' +
+    (selected ? "true" : "false") +
+    '" tabindex="-1"><span class="blog-category-option-label">' +
+    escapeHtml(label) +
+    countHtml +
+    "</span>" +
+    '<span class="blog-category-check" aria-hidden="true">&#10003;</span></div>'
+  );
+}
+
+function categorySelectOptions(posts) {
   return GROUPS.map((group) => {
-    const inGroup = postsInGroup(posts, group);
-    if (!inGroup.length) return "";
+    const inGroup = postsInGroup(posts, group).length;
+    const groupLabel = "All " + group.name;
     const topics = group.topics
       .map((topic) => {
         const count = postsWithTopic(posts, topic).length;
-        if (!count) return "";
         return (
           '<option value="' +
           escapeHtml(topic.slug) +
-          '">' +
+          '" data-label="' +
           escapeHtml(topic.name) +
-          " (" +
-          count +
-          ")</option>"
+          '">' +
+          escapeHtml(topic.name + countSuffix(count)) +
+          "</option>"
         );
       })
-      .filter(Boolean)
       .join("");
     return (
       '<optgroup label="' +
       escapeHtml(group.name) +
       '"><option value="' +
       escapeHtml(group.slug) +
-      '">All ' +
+      '" data-label="' +
+      escapeHtml(groupLabel) +
+      '" data-empty-name="' +
       escapeHtml(group.name) +
-      " (" +
-      inGroup.length +
-      ")</option>" +
+      '">' +
+      escapeHtml(groupLabel + countSuffix(inGroup)) +
+      "</option>" +
       topics +
       "</optgroup>"
     );
   }).join("");
+}
+
+function categoryPanel(posts) {
+  const all = menuOption("blog-opt-all", "", "All categories", null, "is-all", true);
+  const columns = GROUPS.map((group) => {
+    const inGroup = postsInGroup(posts, group).length;
+    const heading = menuOption("blog-opt-" + group.slug, group.slug, "All " + group.name, inGroup, "is-group", false);
+    const topics = group.topics
+      .map((topic) => {
+        const count = postsWithTopic(posts, topic).length;
+        return menuOption("blog-opt-" + topic.slug, topic.slug, topic.name, count, "is-topic", false);
+      })
+      .join("");
+    return (
+      '<div class="blog-category-column" role="group" aria-label="' +
+      escapeHtml(group.name) +
+      '">' +
+      heading +
+      topics +
+      "</div>"
+    );
+  }).join("");
+  return (
+    '<div class="blog-category-panel" id="blog-category-panel" role="listbox" aria-labelledby="blog-category-label" hidden tabindex="-1">' +
+    all +
+    '<div class="blog-category-columns">' +
+    columns +
+    "</div></div>"
+  );
 }
 
 function articleCountLabel(count) {
@@ -1122,19 +1178,25 @@ function articleCountLabel(count) {
 
 function renderIndex(posts, publishedCount) {
   const ordered = withFeaturedFirst(posts);
-  const options = categoryOptions(posts);
+  const options = categorySelectOptions(posts);
   const filters = posts.length
     ? '<div class="blog-filter-bar">' +
       '<div class="blog-filter-field">' +
-      '<label class="blog-filter-label" for="blog-category">Filter by category</label>' +
+      '<label class="blog-filter-label" id="blog-category-label" for="blog-category">Filter by category</label>' +
       '<div class="blog-select-wrap">' +
       '<select id="blog-category" name="category">' +
-      '<option value="" selected>All categories</option>' +
+      '<option value="" data-label="All categories" selected>All categories</option>' +
       options +
-      "</select></div></div>" +
+      "</select>" +
+      '<button type="button" class="blog-category-trigger" id="blog-category-trigger" hidden aria-haspopup="listbox" aria-expanded="false" aria-controls="blog-category-panel" aria-labelledby="blog-category-label blog-category-value">' +
+      '<span class="blog-category-trigger-value" id="blog-category-value">All categories</span>' +
+      '<span class="blog-category-chevron" aria-hidden="true"></span></button>' +
+      "</div></div>" +
       '<p class="blog-count">' +
       articleCountLabel(posts.length) +
-      "</p></div>"
+      "</p>" +
+      categoryPanel(posts) +
+      "</div>"
     : "";
   const filterStatus = posts.length
     ? '<p class="blog-filter-status" id="blog-filter-status" hidden>Showing: <span id="blog-filter-selection"></span> - <button type="button" class="blog-filter-clear" id="blog-filter-clear">clear</button></p>'
@@ -1145,7 +1207,12 @@ function renderIndex(posts, publishedCount) {
       "</div>"
     : "";
   const filterEmpty = posts.length
-    ? '<p class="blog-filter-empty" hidden>No articles in this category yet. Choose another category, or view all articles.</p>'
+    ? '<div class="blog-filter-empty" id="blog-filter-empty" hidden>' +
+      '<p id="blog-filter-empty-text">No articles in <span id="blog-filter-empty-name"></span> yet. New guidance is added regularly.</p>' +
+      '<div class="blog-empty-actions">' +
+      '<button type="button" class="btn btn-primary" id="blog-filter-see-all">See all articles</button>' +
+      '<a class="btn btn-outline" href="../book.html">Book a Consultation</a>' +
+      "</div></div>"
     : "";
   const empty = posts.length
     ? ""
@@ -1180,7 +1247,7 @@ ${headerHtml().replace('    <div class="reading-progress" id="reading-progress" 
             <h1 id="blog-heading">${INDEX_H1}</h1>
             <p>${INDEX_INTRO}</p>
           </header>
-          ${[filters, filterStatus, grid, filterEmpty, empty].filter(Boolean).join("\n          ")}
+          ${[filters, filterStatus, filterEmpty, grid, empty].filter(Boolean).join("\n          ")}
         </div>
       </section>
     </main>
@@ -1289,7 +1356,7 @@ function assertIndex(html, posts, publishedCount) {
   if (!posts.length && !html.includes("First articles are coming soon")) {
     fail("The blog index is missing the empty state.");
   }
-  if (posts.length && !html.includes('<option value="" selected>All categories</option>')) {
+  if (posts.length && !html.includes('<option value="" data-label="All categories" selected>All categories</option>')) {
     fail("The blog index filter must default to All categories.");
   }
   if (posts.length) {
@@ -1300,26 +1367,58 @@ function assertIndex(html, posts, publishedCount) {
     if (!featureHtml.includes(hero.slug + ".html")) {
       fail("The large card must be the newest featured post, or the newest post when none are featured.");
     }
+    if (!html.includes('<link rel="canonical" href="' + SITE + '/blog/" />')) {
+      fail("The blog index canonical must stay /blog/.");
+    }
+    if (html.includes("/blog/?category=")) {
+      fail("The blog index must not publish category query URLs.");
+    }
+    if (!html.includes('aria-haspopup="listbox"') || !html.includes('id="blog-category-panel" role="listbox"')) {
+      fail("The blog index category menu is missing the listbox.");
+    }
+    if (!html.includes("New guidance is added regularly.")) {
+      fail("The blog index is missing the empty category message.");
+    }
+    if (!html.includes('id="blog-filter-see-all">See all articles</button>')) {
+      fail("The blog index empty category message is missing See all articles.");
+    }
+    if (!html.includes('<a class="btn btn-outline" href="../book.html">Book a Consultation</a>')) {
+      fail("The blog index empty category message is missing Book a Consultation.");
+    }
     GROUPS.forEach((group) => {
       const inGroup = postsInGroup(posts, group);
-      if (!inGroup.length) {
-        if (html.includes('<optgroup label="' + escapeHtml(group.name) + '">')) {
-          fail("The blog index filter shows " + group.name + ", which has no published posts.");
-        }
-        return;
-      }
       if (!html.includes('<optgroup label="' + escapeHtml(group.name) + '">')) {
         fail("The blog index filter is missing the " + group.name + " group.");
       }
-      if (!html.includes(">All " + escapeHtml(group.name) + " (" + inGroup.length + ")</option>")) {
+      if (!html.includes('role="group" aria-label="' + escapeHtml(group.name) + '"')) {
+        fail("The blog index menu is missing the " + group.name + " group.");
+      }
+      const groupText = "All " + group.name + countSuffix(inGroup.length);
+      if (!html.includes(">" + escapeHtml(groupText) + "</option>")) {
         fail("The blog index filter is missing All " + group.name + ".");
+      }
+      if (!inGroup.length && (html.includes("All " + escapeHtml(group.name) + " (0)") || html.includes(">(0)</span>"))) {
+        fail("The blog index filter shows a zero count for " + group.name + ".");
+      }
+      const groupClass = inGroup.length
+        ? 'class="blog-category-option is-group"'
+        : 'class="blog-category-option is-group is-empty"';
+      if (!html.includes(groupClass + ' role="option" id="blog-opt-' + escapeHtml(group.slug) + '"')) {
+        fail("The blog index menu is missing All " + group.name + ".");
       }
       group.topics.forEach((topic) => {
         const count = postsWithTopic(posts, topic).length;
-        const option = '<option value="' + escapeHtml(topic.slug) + '">' + escapeHtml(topic.name) + " (" + count + ")</option>";
-        if (count && !html.includes(option)) fail("The blog index filter is missing " + topic.name + ".");
-        if (!count && html.includes('value="' + escapeHtml(topic.slug) + '"')) {
-          fail("The blog index filter shows " + topic.name + ", which has no published posts.");
+        if (!html.includes(">" + escapeHtml(topic.name + countSuffix(count)) + "</option>")) {
+          fail("The blog index filter is missing " + topic.name + ".");
+        }
+        if (!count && html.includes(escapeHtml(topic.name) + " (0)")) {
+          fail("The blog index filter shows a zero count for " + topic.name + ".");
+        }
+        const topicClass = count
+          ? 'class="blog-category-option is-topic"'
+          : 'class="blog-category-option is-topic is-empty"';
+        if (!html.includes(topicClass + ' role="option" id="blog-opt-' + escapeHtml(topic.slug) + '"')) {
+          fail("The blog index menu is missing " + topic.name + ".");
         }
       });
     });
