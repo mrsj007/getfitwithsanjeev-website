@@ -843,6 +843,12 @@
       return option.getAttribute("data-label") || String(option.textContent || "").replace(/\s*\(\d+\)\s*$/, "");
     }
 
+    function buttonLabel() {
+      const option = selectedOption();
+      if (!option) return "All categories";
+      return option.getAttribute("data-button-label") || option.getAttribute("data-label") || "All categories";
+    }
+
     function emptyLabel() {
       const option = selectedOption();
       if (!option) return "";
@@ -861,7 +867,84 @@
         const on = (option.getAttribute("data-value") || "") === active;
         option.setAttribute("aria-selected", on ? "true" : "false");
       });
-      if (valueEl) valueEl.textContent = selectionLabel() || "All categories";
+      if (valueEl) valueEl.textContent = buttonLabel();
+    }
+
+    function visibleRows() {
+      if (!panel) return [];
+      const rows = [];
+      const all = document.getElementById("blog-opt-all");
+      if (all) rows.push(all);
+      Array.from(panel.querySelectorAll(".blog-category-group")).forEach(function (group) {
+        const toggle = group.querySelector(".blog-category-group-toggle");
+        if (toggle) rows.push(toggle);
+        const sub = group.querySelector(".blog-category-sub");
+        if (sub && sub.classList.contains("is-open")) {
+          Array.from(sub.querySelectorAll('[role="option"]')).forEach(function (option) {
+            rows.push(option);
+          });
+        }
+      });
+      return rows;
+    }
+
+    function setGroupOpen(group, open) {
+      if (!group) return;
+      const toggle = group.querySelector(".blog-category-group-toggle");
+      const sub = group.querySelector(".blog-category-sub");
+      if (!toggle || !sub) return;
+      if (open) {
+        Array.from(panel.querySelectorAll(".blog-category-group")).forEach(function (other) {
+          if (other !== group) setGroupOpen(other, false);
+        });
+      }
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      if (isOpen === open) return;
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      sub.classList.toggle("is-open", open);
+      if (open) {
+        sub.removeAttribute("aria-hidden");
+        sub.removeAttribute("inert");
+      } else {
+        sub.setAttribute("aria-hidden", "true");
+        sub.setAttribute("inert", "");
+      }
+    }
+
+    function toggleGroup(group) {
+      const toggle = group && group.querySelector(".blog-category-group-toggle");
+      if (!toggle) return;
+      setGroupOpen(group, toggle.getAttribute("aria-expanded") !== "true");
+    }
+
+    function expandForSelection() {
+      if (!panel) return;
+      let match = null;
+      const value = categorySelect.value;
+      if (value) {
+        const options = menuOptions();
+        for (let i = 0; i < options.length; i += 1) {
+          if ((options[i].getAttribute("data-value") || "") === value) {
+            match = options[i].closest(".blog-category-group");
+            break;
+          }
+        }
+      }
+      panel.classList.add("is-instant");
+      Array.from(panel.querySelectorAll(".blog-category-group")).forEach(function (group) {
+        setGroupOpen(group, group === match);
+      });
+      void panel.offsetWidth;
+      panel.classList.remove("is-instant");
+    }
+
+    function groupToggleFromEvent(event) {
+      let node = event.target;
+      while (node && node !== panel) {
+        if (node.classList && node.classList.contains("blog-category-group-toggle")) return node;
+        node = node.parentNode;
+      }
+      return null;
     }
 
     function applyFilter(category) {
@@ -907,38 +990,52 @@
     }
 
     function placePanel() {
-      if (!panel || !trigger || !bar) return;
+      if (!panel || !trigger) return;
+      const field = trigger.closest(".blog-filter-field") || bar;
+      if (!field) return;
       const triggerRect = trigger.getBoundingClientRect();
-      const barRect = bar.getBoundingClientRect();
+      const fieldRect = field.getBoundingClientRect();
+      const margin = 16;
+      const viewport = window.innerWidth;
+      let width = Math.min(fieldRect.width, 360);
+      if (viewport < 768) width = Math.min(fieldRect.width, viewport - margin * 2);
+      let left = 0;
+      if (fieldRect.left + width > viewport - margin) left -= fieldRect.left + width - (viewport - margin);
+      if (fieldRect.left + left < margin) left = margin - fieldRect.left;
       const available = Math.floor(window.innerHeight - triggerRect.bottom - 12);
-      panel.style.top = Math.round(triggerRect.bottom - barRect.top + 6) + "px";
-      panel.style.maxHeight = Math.max(available, 96) + "px";
+      const cap = Math.floor(window.innerHeight * 0.6);
+      panel.style.top = Math.round(triggerRect.bottom - fieldRect.top + 6) + "px";
+      panel.style.left = Math.round(left) + "px";
+      panel.style.right = "auto";
+      panel.style.width = Math.round(width) + "px";
+      panel.style.maxHeight = Math.max(Math.min(available, cap), 96) + "px";
     }
 
     function focusOption(option) {
       if (!option || !panel) return;
-      menuOptions().forEach(function (item) {
+      visibleRows().forEach(function (item) {
         item.tabIndex = item === option ? 0 : -1;
       });
       option.focus({ preventScroll: true });
-      const top = option.offsetTop;
-      const bottom = top + option.offsetHeight;
-      if (top < panel.scrollTop) panel.scrollTop = top;
-      else if (bottom > panel.scrollTop + panel.clientHeight) panel.scrollTop = bottom - panel.clientHeight;
+      const rowRect = option.getBoundingClientRect();
+      const panelRect = panel.getBoundingClientRect();
+      if (rowRect.top < panelRect.top) panel.scrollTop -= panelRect.top - rowRect.top;
+      else if (rowRect.bottom > panelRect.bottom) panel.scrollTop += rowRect.bottom - panelRect.bottom;
     }
 
     function openMenu(where) {
       if (!panel || !trigger || menuOpen) return;
+      expandForSelection();
       panel.hidden = false;
       menuOpen = true;
       trigger.setAttribute("aria-expanded", "true");
       placePanel();
-      const options = menuOptions();
-      let target = options[0];
-      if (where === "end") target = options[options.length - 1];
+      const rows = visibleRows();
+      let target = rows[0];
+      if (where === "end") target = rows[rows.length - 1];
       else {
-        options.forEach(function (option) {
-          if (option.getAttribute("aria-selected") === "true") target = option;
+        rows.forEach(function (row) {
+          if (row.getAttribute("aria-selected") === "true") target = row;
         });
       }
       window.requestAnimationFrame(function () {
@@ -959,6 +1056,9 @@
       panel.classList.remove("is-open");
       panel.hidden = true;
       trigger.setAttribute("aria-expanded", "false");
+      visibleRows().forEach(function (row) {
+        row.tabIndex = -1;
+      });
       menuOptions().forEach(function (option) {
         option.tabIndex = -1;
       });
@@ -996,7 +1096,15 @@
         if (menuOpen) closeMenu(false);
         else openMenu("selected");
       });
+      let groupKeyToggle = 0;
       panel.addEventListener("click", function (event) {
+        const toggle = groupToggleFromEvent(event);
+        if (toggle) {
+          if (Date.now() - groupKeyToggle < 400) return;
+          event.preventDefault();
+          toggleGroup(toggle.closest(".blog-category-group"));
+          return;
+        }
         const option = optionFromEvent(event);
         if (!option) return;
         commit(option.getAttribute("data-value") || "");
@@ -1012,8 +1120,10 @@
           }
           return;
         }
-        const options = menuOptions();
-        const index = options.indexOf(document.activeElement);
+        const rows = visibleRows();
+        const index = rows.indexOf(document.activeElement);
+        const current = index === -1 ? null : rows[index];
+        const onGroup = current && current.classList.contains("blog-category-group-toggle");
         if (event.key === "Escape") {
           event.preventDefault();
           closeMenu(true);
@@ -1021,33 +1131,44 @@
         }
         if (event.target === trigger && (event.key === "ArrowDown" || event.key === "ArrowUp" || event.key === "Home" || event.key === "End")) {
           event.preventDefault();
-          const edge = event.key === "ArrowUp" || event.key === "End" ? options[options.length - 1] : options[0];
+          const edge = event.key === "ArrowUp" || event.key === "End" ? rows[rows.length - 1] : rows[0];
           focusOption(edge);
+          return;
+        }
+        if (onGroup && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
+          event.preventDefault();
+          setGroupOpen(current.closest(".blog-category-group"), event.key === "ArrowRight");
+          return;
+        }
+        if (onGroup && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          groupKeyToggle = Date.now();
+          toggleGroup(current.closest(".blog-category-group"));
           return;
         }
         if (index === -1) return;
         if (event.key === "ArrowDown") {
           event.preventDefault();
-          focusOption(options[Math.min(index + 1, options.length - 1)]);
+          focusOption(rows[Math.min(index + 1, rows.length - 1)]);
         } else if (event.key === "ArrowUp") {
           event.preventDefault();
-          focusOption(options[Math.max(index - 1, 0)]);
+          focusOption(rows[Math.max(index - 1, 0)]);
         } else if (event.key === "Home") {
           event.preventDefault();
-          focusOption(options[0]);
+          focusOption(rows[0]);
         } else if (event.key === "End") {
           event.preventDefault();
-          focusOption(options[options.length - 1]);
+          focusOption(rows[rows.length - 1]);
         } else if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          commit(options[index].getAttribute("data-value") || "");
+          commit(current.getAttribute("data-value") || "");
         } else if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
           typeBuffer += event.key.toLowerCase();
           window.clearTimeout(typeTimer);
           typeTimer = window.setTimeout(function () {
             typeBuffer = "";
           }, 500);
-          const ordered = options.slice(index + 1).concat(options.slice(0, index + 1));
+          const ordered = rows.slice(index + 1).concat(rows.slice(0, index + 1));
           let match = null;
           for (let i = 0; i < ordered.length; i += 1) {
             const label = (ordered[i].getAttribute("data-label") || "").toLowerCase();

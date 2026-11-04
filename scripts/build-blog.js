@@ -1114,10 +1114,15 @@ function categorySelectOptions(posts) {
     const topics = group.topics
       .map((topic) => {
         const count = postsWithTopic(posts, topic).length;
+        const buttonLabel = group.name + " - " + topic.name;
         return (
           '<option value="' +
           escapeHtml(topic.slug) +
           '" data-label="' +
+          escapeHtml(topic.name) +
+          '" data-button-label="' +
+          escapeHtml(buttonLabel) +
+          '" data-empty-name="' +
           escapeHtml(topic.name) +
           '">' +
           escapeHtml(topic.name + countSuffix(count)) +
@@ -1132,6 +1137,8 @@ function categorySelectOptions(posts) {
       escapeHtml(group.slug) +
       '" data-label="' +
       escapeHtml(groupLabel) +
+      '" data-button-label="' +
+      escapeHtml(groupLabel) +
       '" data-empty-name="' +
       escapeHtml(group.name) +
       '">' +
@@ -1143,9 +1150,25 @@ function categorySelectOptions(posts) {
   }).join("");
 }
 
+function groupToggle(group, count) {
+  const countHtml = count > 0 ? ' <span class="blog-category-option-count">(' + count + ")</span>" : "";
+  return (
+    '<button type="button" class="blog-category-group-toggle" id="blog-group-' +
+    escapeHtml(group.slug) +
+    '" data-label="' +
+    escapeHtml(group.name) +
+    '" aria-expanded="false" aria-controls="blog-sub-' +
+    escapeHtml(group.slug) +
+    '" tabindex="-1"><span class="blog-category-option-label">' +
+    escapeHtml(group.name) +
+    countHtml +
+    '</span><span class="blog-category-group-chevron" aria-hidden="true"></span></button>'
+  );
+}
+
 function categoryPanel(posts) {
   const all = menuOption("blog-opt-all", "", "All categories", null, "is-all", true);
-  const columns = GROUPS.map((group) => {
+  const groups = GROUPS.map((group) => {
     const inGroup = postsInGroup(posts, group).length;
     const heading = menuOption("blog-opt-" + group.slug, group.slug, "All " + group.name, inGroup, "is-group", false);
     const topics = group.topics
@@ -1155,20 +1178,25 @@ function categoryPanel(posts) {
       })
       .join("");
     return (
-      '<div class="blog-category-column" role="group" aria-label="' +
-      escapeHtml(group.name) +
+      '<div class="blog-category-group" data-group="' +
+      escapeHtml(group.slug) +
       '">' +
+      groupToggle(group, inGroup) +
+      '<div class="blog-category-sub" id="blog-sub-' +
+      escapeHtml(group.slug) +
+      '" role="group" aria-label="' +
+      escapeHtml(group.name) +
+      '" aria-hidden="true" inert><div class="blog-category-sub-inner">' +
       heading +
       topics +
-      "</div>"
+      "</div></div></div>"
     );
   }).join("");
   return (
     '<div class="blog-category-panel" id="blog-category-panel" role="listbox" aria-labelledby="blog-category-label" hidden tabindex="-1">' +
     all +
-    '<div class="blog-category-columns">' +
-    columns +
-    "</div></div>"
+    groups +
+    "</div>"
   );
 }
 
@@ -1191,12 +1219,12 @@ function renderIndex(posts, publishedCount) {
       '<button type="button" class="blog-category-trigger" id="blog-category-trigger" hidden aria-haspopup="listbox" aria-expanded="false" aria-controls="blog-category-panel" aria-labelledby="blog-category-label blog-category-value">' +
       '<span class="blog-category-trigger-value" id="blog-category-value">All categories</span>' +
       '<span class="blog-category-chevron" aria-hidden="true"></span></button>' +
-      "</div></div>" +
+      "</div>" +
+      categoryPanel(posts) +
+      "</div>" +
       '<p class="blog-count">' +
       articleCountLabel(posts.length) +
-      "</p>" +
-      categoryPanel(posts) +
-      "</div>"
+      "</p></div>"
     : "";
   const filterStatus = posts.length
     ? '<p class="blog-filter-status" id="blog-filter-status" hidden>Showing: <span id="blog-filter-selection"></span> - <button type="button" class="blog-filter-clear" id="blog-filter-clear">clear</button></p>'
@@ -1393,6 +1421,12 @@ function assertIndex(html, posts, publishedCount) {
       if (!html.includes('role="group" aria-label="' + escapeHtml(group.name) + '"')) {
         fail("The blog index menu is missing the " + group.name + " group.");
       }
+      if (!html.includes('class="blog-category-group-toggle" id="blog-group-' + escapeHtml(group.slug) + '"')) {
+        fail("The blog index menu is missing the " + group.name + " category button.");
+      }
+      if (!html.includes('aria-expanded="false" aria-controls="blog-sub-' + escapeHtml(group.slug) + '"')) {
+        fail("The blog index menu is missing the " + group.name + " subcategory control.");
+      }
       const groupText = "All " + group.name + countSuffix(inGroup.length);
       if (!html.includes(">" + escapeHtml(groupText) + "</option>")) {
         fail("The blog index filter is missing All " + group.name + ".");
@@ -1410,6 +1444,9 @@ function assertIndex(html, posts, publishedCount) {
         const count = postsWithTopic(posts, topic).length;
         if (!html.includes(">" + escapeHtml(topic.name + countSuffix(count)) + "</option>")) {
           fail("The blog index filter is missing " + topic.name + ".");
+        }
+        if (!html.includes('data-button-label="' + escapeHtml(group.name + " - " + topic.name) + '"')) {
+          fail("The blog index filter is missing the button label for " + topic.name + ".");
         }
         if (!count && html.includes(escapeHtml(topic.name) + " (0)")) {
           fail("The blog index filter shows a zero count for " + topic.name + ".");

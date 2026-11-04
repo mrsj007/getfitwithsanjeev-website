@@ -3266,6 +3266,8 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 }
 
 .blog-filter-field {
+  position: relative;
+  z-index: 1;
   flex: 1 1 16rem;
   max-width: 24rem;
 }
@@ -3357,14 +3359,15 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   position: absolute;
   z-index: 30;
   left: 0;
-  right: 0;
   top: calc(100% + 0.35rem);
-  max-height: min(32rem, 70vh);
+  width: min(100%, 360px);
+  max-width: calc(100vw - 32px);
+  max-height: 60vh;
   overflow: auto;
   padding: 0.35rem;
   background: var(--white);
   border: 1px solid rgba(31, 58, 46, 0.18);
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: var(--shadow);
   opacity: 0;
   transform: translateY(-8px);
@@ -3376,9 +3379,86 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   transform: translateY(0);
 }
 
-.blog-category-columns {
+.blog-category-group-toggle {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+
+.blog-category-group-toggle .blog-category-option-label {
+  flex: 1 1 auto;
+}
+
+.blog-category-group-chevron {
+  flex: 0 0 auto;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.15rem;
+  border-right: 1.5px solid var(--green);
+  border-bottom: 1.5px solid var(--green);
+  transform: rotate(45deg) translateY(-0.12rem);
+  transition: transform 200ms ease;
+}
+
+.blog-category-group-toggle[aria-expanded="true"] .blog-category-group-chevron {
+  transform: rotate(225deg) translateY(-0.12rem);
+}
+
+.blog-category-group-toggle:focus {
+  outline: none;
+}
+
+.blog-category-group-toggle:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: -2px;
+}
+
+.blog-category-sub {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 200ms ease, opacity 200ms ease;
+}
+
+.blog-category-sub.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.blog-category-panel.is-instant .blog-category-sub,
+.blog-category-panel.is-instant .blog-category-group-chevron {
+  transition: none;
+}
+
+.blog-category-sub:not(.is-open) {
+  pointer-events: none;
+}
+
+.blog-category-sub-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.blog-category-sub .blog-category-option.is-group {
+  padding-left: 1.15rem;
+}
+
+.blog-category-sub .blog-category-option.is-topic {
+  padding-left: 1.7rem;
 }
 
 .blog-category-option {
@@ -3455,7 +3535,8 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 }
 
 @media (hover: hover) {
-  .blog-category-option:hover {
+  .blog-category-option:hover,
+  .blog-category-group-toggle:hover {
     background: rgba(31, 58, 46, 0.06);
   }
 
@@ -3473,14 +3554,13 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 }
 
 @media (max-width: 767px) {
-  .blog-category-column + .blog-category-column {
-    margin-top: 0.25rem;
-    padding-top: 0.25rem;
-    border-top: 1px solid rgba(31, 58, 46, 0.1);
+  .blog-filter-field {
+    flex-basis: 100%;
+    max-width: none;
   }
 
-  .blog-category-option.is-topic {
-    padding-left: 1.35rem;
+  .blog-category-panel {
+    width: 100%;
   }
 }
 
@@ -3490,13 +3570,6 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
     border-bottom: 1px solid rgba(31, 58, 46, 0.12);
     border-radius: 8px 8px 0 0;
   }
-
-  .blog-category-columns {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: start;
-    gap: 0.15rem 0.75rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3504,6 +3577,12 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   .blog-category-panel.is-open {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  .blog-category-sub,
+  .blog-category-sub.is-open,
+  .blog-category-group-chevron {
     transition: none;
   }
 }
