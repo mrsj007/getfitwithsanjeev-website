@@ -3448,6 +3448,22 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   pointer-events: none;
 }
 
+.blog-category-detail {
+  display: none;
+}
+
+.blog-category-hint {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.blog-category-hint[hidden] {
+  display: none !important;
+}
+
 .blog-category-sub-inner {
   min-height: 0;
   overflow: hidden;
@@ -3565,10 +3581,128 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 }
 
 @media (min-width: 768px) {
-  .blog-category-option.is-all {
+  .blog-category-panel.is-wide {
+    display: flex;
+    align-items: stretch;
+    width: min(620px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: min(60vh, var(--blog-menu-cap, 60vh));
+    padding: 0;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .blog-category-panel.is-wide .blog-category-main {
+    flex: 0 0 260px;
+    width: 260px;
+    min-height: 0;
+    padding: 0.35rem;
+    overflow: hidden;
+    background: rgba(217, 203, 180, 0.45);
+  }
+
+  .blog-category-panel.is-wide .blog-category-detail {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--white);
+    border-left: 1px solid rgba(31, 58, 46, 0.12);
+    transition: opacity 150ms ease;
+  }
+
+  .blog-category-panel.is-wide.is-fading .blog-category-detail,
+  .blog-category-panel.is-wide.is-instant .blog-category-detail {
+    transition: none;
+  }
+
+  .blog-category-panel.is-wide.is-fading .blog-category-detail {
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+
+  .blog-category-panel.is-wide .blog-category-option.is-all {
     margin-bottom: 0.15rem;
     border-bottom: 1px solid rgba(31, 58, 46, 0.12);
     border-radius: 8px 8px 0 0;
+  }
+
+  .blog-category-panel.is-wide .blog-category-group-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin: 0;
+    border: 0;
+    transform: none;
+    transition: none;
+  }
+
+  .blog-category-panel.is-wide .blog-category-group-chevron::before {
+    content: "";
+    display: block;
+    width: 0.42rem;
+    height: 0.42rem;
+    margin-left: 0.12rem;
+    border-right: 1.5px solid var(--green);
+    border-bottom: 1.5px solid var(--green);
+    transform: rotate(-45deg);
+  }
+
+  .blog-category-panel.is-wide .blog-category-group-toggle[aria-expanded="true"] {
+    background: rgba(31, 58, 46, 0.1);
+    box-shadow: inset 3px 0 0 var(--green);
+    color: var(--green);
+  }
+
+  .blog-category-panel.is-wide .blog-category-group-toggle[aria-expanded="true"] .blog-category-group-chevron {
+    transform: none;
+  }
+
+  .blog-category-panel.is-wide .blog-category-group-toggle[aria-expanded="true"] .blog-category-group-chevron::before {
+    width: 0;
+    height: 0;
+    margin-left: 0.16rem;
+    border: 0.28rem solid transparent;
+    border-left: 0.4rem solid var(--green);
+    border-right-width: 0;
+    transform: none;
+  }
+
+  .blog-category-panel.is-wide .blog-category-sub,
+  .blog-category-panel.is-wide .blog-category-sub.is-open {
+    display: none;
+    grid-template-rows: none;
+    opacity: 1;
+    pointer-events: none;
+    transition: none;
+  }
+
+  .blog-category-panel.is-wide .blog-category-sub.is-open {
+    display: block;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    pointer-events: auto;
+  }
+
+  .blog-category-panel.is-wide .blog-category-sub.is-open .blog-category-sub-inner {
+    overflow: visible;
+  }
+
+  .blog-category-panel.is-wide .blog-category-sub .blog-category-option.is-group,
+  .blog-category-panel.is-wide .blog-category-sub .blog-category-option.is-topic {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .blog-category-panel.is-wide .blog-category-sub .blog-category-option[aria-selected="true"] {
+    font-weight: 700;
+    color: var(--green);
   }
 }
 
@@ -3582,7 +3716,10 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 
   .blog-category-sub,
   .blog-category-sub.is-open,
-  .blog-category-group-chevron {
+  .blog-category-group-chevron,
+  .blog-category-detail,
+  .blog-category-panel.is-wide .blog-category-detail,
+  .blog-category-panel.is-wide.is-fading .blog-category-detail {
     transition: none;
   }
 }

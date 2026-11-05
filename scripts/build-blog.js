@@ -1157,9 +1157,7 @@ function groupToggle(group, count) {
     escapeHtml(group.slug) +
     '" data-label="' +
     escapeHtml(group.name) +
-    '" aria-expanded="false" aria-controls="blog-sub-' +
-    escapeHtml(group.slug) +
-    '" tabindex="-1"><span class="blog-category-option-label">' +
+    '" aria-expanded="false" aria-controls="blog-category-detail" tabindex="-1"><span class="blog-category-option-label">' +
     escapeHtml(group.name) +
     countHtml +
     '</span><span class="blog-category-group-chevron" aria-hidden="true"></span></button>'
@@ -1186,6 +1184,8 @@ function categoryPanel(posts) {
       escapeHtml(group.slug) +
       '" role="group" aria-label="' +
       escapeHtml(group.name) +
+      '" data-label="' +
+      escapeHtml(group.name) +
       '" aria-hidden="true" inert><div class="blog-category-sub-inner">' +
       heading +
       topics +
@@ -1196,7 +1196,10 @@ function categoryPanel(posts) {
     '<div class="blog-category-panel" id="blog-category-panel" role="listbox" aria-labelledby="blog-category-label" hidden tabindex="-1">' +
     all +
     groups +
-    "</div>"
+    '<div class="blog-category-detail" id="blog-category-detail">' +
+    '<p class="blog-category-hint" id="blog-category-hint">Choose Workout, Nutrition or Supplementation to see topics.</p>' +
+    "</div></div>" +
+    '<div class="visually-hidden" id="blog-category-live" aria-live="polite"></div>'
   );
 }
 
@@ -1404,6 +1407,15 @@ function assertIndex(html, posts, publishedCount) {
     if (!html.includes('aria-haspopup="listbox"') || !html.includes('id="blog-category-panel" role="listbox"')) {
       fail("The blog index category menu is missing the listbox.");
     }
+    if (!html.includes('id="blog-category-detail"') || !html.includes('id="blog-category-hint"')) {
+      fail("The blog index category menu is missing the subcategory pane.");
+    }
+    if (!html.includes("Choose Workout, Nutrition or Supplementation to see topics.")) {
+      fail("The blog index category menu is missing the subcategory hint.");
+    }
+    if (!html.includes('id="blog-category-live" aria-live="polite"')) {
+      fail("The blog index category menu is missing the subcategory status.");
+    }
     if (!html.includes("New guidance is added regularly.")) {
       fail("The blog index is missing the empty category message.");
     }
@@ -1424,8 +1436,11 @@ function assertIndex(html, posts, publishedCount) {
       if (!html.includes('class="blog-category-group-toggle" id="blog-group-' + escapeHtml(group.slug) + '"')) {
         fail("The blog index menu is missing the " + group.name + " category button.");
       }
-      if (!html.includes('aria-expanded="false" aria-controls="blog-sub-' + escapeHtml(group.slug) + '"')) {
+      if (!html.includes('aria-expanded="false" aria-controls="blog-category-detail"')) {
         fail("The blog index menu is missing the " + group.name + " subcategory control.");
+      }
+      if (!html.includes('id="blog-sub-' + escapeHtml(group.slug) + '"')) {
+        fail("The blog index menu is missing the " + group.name + " subcategory list.");
       }
       const groupText = "All " + group.name + countSuffix(inGroup.length);
       if (!html.includes(">" + escapeHtml(groupText) + "</option>")) {

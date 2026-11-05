@@ -825,9 +825,12 @@
     const known = Array.from(categorySelect.options).map(function (option) {
       return option.value;
     });
+    const wideMq = window.matchMedia("(min-width: 768px)");
     let menuOpen = false;
     let typeBuffer = "";
     let typeTimer = 0;
+    let fadeTimer = 0;
+    let fadeJob = null;
 
     function countLabel(count) {
       return count + (count === 1 ? " article" : " articles");
@@ -855,9 +858,23 @@
       return option.getAttribute("data-empty-name") || selectionLabel();
     }
 
+    function wideMenu() {
+      return wideMq.matches;
+    }
+
     function menuOptions() {
       if (!panel) return [];
       return Array.from(panel.querySelectorAll('[role="option"]'));
+    }
+
+    function subForToggle(toggle) {
+      if (!toggle || !toggle.id) return null;
+      return document.getElementById(toggle.id.replace("blog-group-", "blog-sub-"));
+    }
+
+    function openToggle() {
+      if (!panel) return null;
+      return panel.querySelector(".blog-category-group-toggle[aria-expanded='true']");
     }
 
     function syncMenu() {
@@ -878,7 +895,7 @@
       Array.from(panel.querySelectorAll(".blog-category-group")).forEach(function (group) {
         const toggle = group.querySelector(".blog-category-group-toggle");
         if (toggle) rows.push(toggle);
-        const sub = group.querySelector(".blog-category-sub");
+        const sub = toggle ? subForToggle(toggle) : null;
         if (sub && sub.classList.contains("is-open")) {
           Array.from(sub.querySelectorAll('[role="option"]')).forEach(function (option) {
             rows.push(option);
@@ -888,14 +905,150 @@
       return rows;
     }
 
-    function setGroupOpen(group, open) {
-      if (!group) return;
-      const toggle = group.querySelector(".blog-category-group-toggle");
-      const sub = group.querySelector(".blog-category-sub");
-      if (!toggle || !sub) return;
+    function leftRows() {
+      const rows = [];
+      const all = document.getElementById("blog-opt-all");
+      if (all) rows.push(all);
+      if (!panel) return rows;
+      Array.from(panel.querySelectorAll(".blog-category-group-toggle")).forEach(function (toggle) {
+        rows.push(toggle);
+      });
+      return rows;
+    }
+
+    function rightRows() {
+      const toggle = openToggle();
+      if (!toggle) return [];
+      const sub = subForToggle(toggle);
+      if (!sub) return [];
+      return Array.from(sub.querySelectorAll('[role="option"]'));
+    }
+
+    function columnRows(node) {
+      if (!wideMenu()) return visibleRows();
+      if (node && rightRows().indexOf(node) !== -1) return rightRows();
+      return leftRows();
+    }
+
+    function syncDetail() {
+      const detail = document.getElementById("blog-category-detail");
+      const hint = document.getElementById("blog-category-hint");
+      const toggle = openToggle();
+      const wide = wideMenu();
+      if (hint) {
+        if (wide && !toggle) hint.removeAttribute("hidden");
+        else hint.setAttribute("hidden", "");
+      }
+      if (!detail) return;
+      if (wide && toggle) {
+        detail.setAttribute("role", "listbox");
+        detail.setAttribute("aria-label", toggle.getAttribute("data-label") || "");
+      } else {
+        detail.removeAttribute("role");
+        detail.removeAttribute("aria-label");
+      }
+    }
+
+    function announce(message) {
+      const live = document.getElementById("blog-category-live");
+      if (!live || !wideMenu()) return;
+      const next = message || "";
+      if (live.textContent === next) {
+        live.textContent = "";
+        window.setTimeout(function () {
+          live.textContent = next;
+        }, 30);
+      } else {
+        live.textContent = next;
+      }
+    }
+
+    function announceGroup(toggle) {
+      if (!wideMenu()) return;
+      if (!toggle) {
+        announce("Choose Workout, Nutrition or Supplementation to see topics.");
+        return;
+      }
+      const sub = subForToggle(toggle);
+      const count = sub ? sub.querySelectorAll('[role="option"]').length : 0;
+      const name = toggle.getAttribute("data-label") || "Category";
+      announce(name + " topics, " + count + " " + (count === 1 ? "option" : "options"));
+    }
+
+    function layoutColumns() {
+      if (!panel) return;
+      const detail = document.getElementById("blog-category-detail");
+      const all = document.getElementById("blog-opt-all");
+      if (!detail || !all) return;
+      const wide = wideMenu();
+      const toggles = Array.from(panel.querySelectorAll(".blog-category-group-toggle"));
+      if (wide) {
+        let main = document.getElementById("blog-category-main");
+        if (!main) {
+          main = document.createElement("div");
+          main.id = "blog-category-main";
+          main.className = "blog-category-main";
+          panel.insertBefore(main, panel.firstChild);
+        }
+        let allWrap = document.getElementById("blog-category-all");
+        if (!allWrap) {
+          allWrap = document.createElement("div");
+          allWrap.id = "blog-category-all";
+          allWrap.className = "blog-category-all";
+        }
+        allWrap.setAttribute("role", "listbox");
+        allWrap.setAttribute("aria-label", "Categories");
+        if (all.parentNode !== allWrap) allWrap.appendChild(all);
+        if (allWrap.parentNode !== main) main.insertBefore(allWrap, main.firstChild);
+        toggles.forEach(function (toggle) {
+          const group = toggle.closest(".blog-category-group");
+          const sub = subForToggle(toggle);
+          if (group && group.parentNode !== main) main.appendChild(group);
+          if (sub && sub.parentNode !== detail) detail.appendChild(sub);
+          if (sub) {
+            if (!sub.getAttribute("data-label")) sub.setAttribute("data-label", sub.getAttribute("aria-label") || "");
+            sub.setAttribute("role", "presentation");
+            sub.removeAttribute("aria-label");
+          }
+          toggle.setAttribute("aria-controls", "blog-category-detail");
+        });
+        if (detail.parentNode === panel && main.nextSibling !== detail) panel.insertBefore(detail, main.nextSibling);
+        panel.classList.add("is-wide");
+        panel.removeAttribute("role");
+        panel.removeAttribute("aria-labelledby");
+      } else {
+        panel.classList.remove("is-wide");
+        if (all.parentNode !== panel) panel.insertBefore(all, panel.firstChild);
+        toggles.forEach(function (toggle) {
+          const group = toggle.closest(".blog-category-group");
+          const sub = subForToggle(toggle);
+          if (group && group.parentNode !== panel) panel.appendChild(group);
+          if (sub && group && sub.parentNode !== group) group.appendChild(sub);
+          if (sub) {
+            const label = sub.getAttribute("data-label") || sub.getAttribute("aria-label") || "";
+            sub.setAttribute("role", "group");
+            if (label) sub.setAttribute("aria-label", label);
+          }
+          if (sub) toggle.setAttribute("aria-controls", sub.id);
+        });
+        if (detail.parentNode === panel) panel.appendChild(detail);
+        const main = document.getElementById("blog-category-main");
+        if (main && main.parentNode) main.parentNode.removeChild(main);
+        const allWrap = document.getElementById("blog-category-all");
+        if (allWrap && allWrap.parentNode) allWrap.parentNode.removeChild(allWrap);
+        panel.setAttribute("role", "listbox");
+        panel.setAttribute("aria-labelledby", "blog-category-label");
+      }
+      syncDetail();
+    }
+
+    function setToggleOpen(toggle, open) {
+      if (!toggle) return;
+      const sub = subForToggle(toggle);
+      if (!sub) return;
       if (open) {
-        Array.from(panel.querySelectorAll(".blog-category-group")).forEach(function (other) {
-          if (other !== group) setGroupOpen(other, false);
+        Array.from(panel.querySelectorAll(".blog-category-group-toggle")).forEach(function (other) {
+          if (other !== toggle) setToggleOpen(other, false);
         });
       }
       const isOpen = toggle.getAttribute("aria-expanded") === "true";
@@ -911,10 +1064,74 @@
       }
     }
 
-    function toggleGroup(group) {
-      const toggle = group && group.querySelector(".blog-category-group-toggle");
+    function toggleGroup(toggle) {
       if (!toggle) return;
-      setGroupOpen(group, toggle.getAttribute("aria-expanded") !== "true");
+      setToggleOpen(toggle, toggle.getAttribute("aria-expanded") !== "true");
+      syncDetail();
+    }
+
+    function focusRight(toggle) {
+      const sub = subForToggle(toggle);
+      if (!sub) return;
+      const rows = Array.from(sub.querySelectorAll('[role="option"]'));
+      if (!rows.length) return;
+      let target = rows[0];
+      rows.forEach(function (row) {
+        if (row.getAttribute("aria-selected") === "true") target = row;
+      });
+      focusOption(target);
+    }
+
+    function finishFade() {
+      const job = fadeJob;
+      fadeJob = null;
+      fadeTimer = 0;
+      if (!job || !panel) {
+        if (panel) panel.classList.remove("is-fading");
+        return;
+      }
+      setToggleOpen(job.toggle, true);
+      syncDetail();
+      announceGroup(job.toggle);
+      if (job.focus) focusRight(job.toggle);
+      const detail = document.getElementById("blog-category-detail");
+      if (detail) void detail.offsetWidth;
+      window.requestAnimationFrame(function () {
+        if (panel) panel.classList.remove("is-fading");
+      });
+    }
+
+    function activateGroup(toggle, opts) {
+      opts = opts || {};
+      if (!toggle) return;
+      const already = toggle.getAttribute("aria-expanded") === "true";
+      if (already) {
+        if (opts.focus) focusRight(toggle);
+        return;
+      }
+      const instant = opts.instant || !wideMenu() || reduceBlogMotion;
+      if (instant) {
+        window.clearTimeout(fadeTimer);
+        fadeTimer = 0;
+        fadeJob = null;
+        if (panel) {
+          panel.classList.remove("is-fading");
+          panel.classList.add("is-instant");
+        }
+        setToggleOpen(toggle, true);
+        syncDetail();
+        announceGroup(toggle);
+        if (opts.focus) focusRight(toggle);
+        if (panel) {
+          void panel.offsetWidth;
+          panel.classList.remove("is-instant");
+        }
+        return;
+      }
+      fadeJob = { toggle: toggle, focus: !!opts.focus };
+      if (panel.classList.contains("is-fading")) return;
+      panel.classList.add("is-fading");
+      fadeTimer = window.setTimeout(finishFade, 150);
     }
 
     function expandForSelection() {
@@ -922,18 +1139,22 @@
       let match = null;
       const value = categorySelect.value;
       if (value) {
-        const options = menuOptions();
-        for (let i = 0; i < options.length; i += 1) {
-          if ((options[i].getAttribute("data-value") || "") === value) {
-            match = options[i].closest(".blog-category-group");
-            break;
-          }
+        const option = document.getElementById("blog-opt-" + value);
+        const sub = option && option.closest(".blog-category-sub");
+        if (sub && sub.id.indexOf("blog-sub-") === 0) {
+          match = document.getElementById(sub.id.replace("blog-sub-", "blog-group-"));
         }
       }
+      window.clearTimeout(fadeTimer);
+      fadeTimer = 0;
+      fadeJob = null;
+      panel.classList.remove("is-fading");
       panel.classList.add("is-instant");
-      Array.from(panel.querySelectorAll(".blog-category-group")).forEach(function (group) {
-        setGroupOpen(group, group === match);
+      Array.from(panel.querySelectorAll(".blog-category-group-toggle")).forEach(function (toggle) {
+        setToggleOpen(toggle, toggle === match);
       });
+      syncDetail();
+      if (wideMenu()) announceGroup(match);
       void panel.offsetWidth;
       panel.classList.remove("is-instant");
     }
@@ -997,46 +1218,75 @@
       const fieldRect = field.getBoundingClientRect();
       const margin = 16;
       const viewport = window.innerWidth;
-      let width = Math.min(fieldRect.width, 360);
-      if (viewport < 768) width = Math.min(fieldRect.width, viewport - margin * 2);
-      let left = 0;
-      if (fieldRect.left + width > viewport - margin) left -= fieldRect.left + width - (viewport - margin);
+      const wide = wideMenu();
+      let width = wide ? Math.min(620, viewport - margin * 2) : Math.min(fieldRect.width, viewport - margin * 2);
+      let left = triggerRect.left - fieldRect.left;
+      if (fieldRect.left + left + width > viewport - margin) left = triggerRect.right - fieldRect.left - width;
       if (fieldRect.left + left < margin) left = margin - fieldRect.left;
+      if (fieldRect.left + left + width > viewport - margin) {
+        width = Math.max(160, viewport - margin - (fieldRect.left + left));
+      }
       const available = Math.floor(window.innerHeight - triggerRect.bottom - 12);
       const cap = Math.floor(window.innerHeight * 0.6);
       panel.style.top = Math.round(triggerRect.bottom - fieldRect.top + 6) + "px";
       panel.style.left = Math.round(left) + "px";
       panel.style.right = "auto";
       panel.style.width = Math.round(width) + "px";
-      panel.style.maxHeight = Math.max(Math.min(available, cap), 96) + "px";
+      panel.style.setProperty("--blog-menu-cap", Math.max(Math.min(available, cap), 160) + "px");
+      if (wide) panel.style.maxHeight = "";
+      else panel.style.maxHeight = Math.max(Math.min(available, cap), 96) + "px";
     }
 
     function focusOption(option) {
       if (!option || !panel) return;
-      visibleRows().forEach(function (item) {
+      const inRight = wideMenu() && rightRows().indexOf(option) !== -1;
+      const rows = inRight ? rightRows() : wideMenu() ? leftRows() : visibleRows();
+      const others = wideMenu() ? (inRight ? leftRows() : rightRows()) : [];
+      rows.forEach(function (item) {
         item.tabIndex = item === option ? 0 : -1;
       });
+      others.forEach(function (item) {
+        if (item !== option) item.tabIndex = -1;
+      });
       option.focus({ preventScroll: true });
+      const scroller = inRight ? option.closest(".blog-category-sub") || panel : panel;
       const rowRect = option.getBoundingClientRect();
-      const panelRect = panel.getBoundingClientRect();
-      if (rowRect.top < panelRect.top) panel.scrollTop -= panelRect.top - rowRect.top;
-      else if (rowRect.bottom > panelRect.bottom) panel.scrollTop += rowRect.bottom - panelRect.bottom;
+      const scrollerRect = scroller.getBoundingClientRect();
+      if (rowRect.top < scrollerRect.top) scroller.scrollTop -= scrollerRect.top - rowRect.top;
+      else if (rowRect.bottom > scrollerRect.bottom) scroller.scrollTop += rowRect.bottom - scrollerRect.bottom;
     }
 
     function openMenu(where) {
       if (!panel || !trigger || menuOpen) return;
+      layoutColumns();
       expandForSelection();
       panel.hidden = false;
       menuOpen = true;
       trigger.setAttribute("aria-expanded", "true");
       placePanel();
-      const rows = visibleRows();
-      let target = rows[0];
-      if (where === "end") target = rows[rows.length - 1];
-      else {
-        rows.forEach(function (row) {
-          if (row.getAttribute("aria-selected") === "true") target = row;
-        });
+      let target = null;
+      if (wideMenu()) {
+        const left = leftRows();
+        const right = rightRows();
+        if (where === "end") target = right.length ? right[right.length - 1] : left[left.length - 1];
+        else {
+          target = left[0];
+          left.forEach(function (row) {
+            if (row.getAttribute("aria-selected") === "true") target = row;
+          });
+          right.forEach(function (row) {
+            if (row.getAttribute("aria-selected") === "true") target = row;
+          });
+        }
+      } else {
+        const rows = visibleRows();
+        target = rows[0];
+        if (where === "end") target = rows[rows.length - 1];
+        else {
+          rows.forEach(function (row) {
+            if (row.getAttribute("aria-selected") === "true") target = row;
+          });
+        }
       }
       window.requestAnimationFrame(function () {
         window.requestAnimationFrame(function () {
@@ -1052,11 +1302,18 @@
         if (restoreFocus) trigger.focus();
         return;
       }
+      window.clearTimeout(fadeTimer);
+      fadeTimer = 0;
+      fadeJob = null;
       menuOpen = false;
       panel.classList.remove("is-open");
+      panel.classList.remove("is-fading");
       panel.hidden = true;
       trigger.setAttribute("aria-expanded", "false");
       visibleRows().forEach(function (row) {
+        row.tabIndex = -1;
+      });
+      leftRows().forEach(function (row) {
         row.tabIndex = -1;
       });
       menuOptions().forEach(function (option) {
@@ -1102,7 +1359,8 @@
         if (toggle) {
           if (Date.now() - groupKeyToggle < 400) return;
           event.preventDefault();
-          toggleGroup(toggle.closest(".blog-category-group"));
+          if (wideMenu()) activateGroup(toggle, { focus: false });
+          else toggleGroup(toggle);
           return;
         }
         const option = optionFromEvent(event);
@@ -1120,10 +1378,11 @@
           }
           return;
         }
-        const rows = visibleRows();
+        const rows = columnRows(document.activeElement);
         const index = rows.indexOf(document.activeElement);
         const current = index === -1 ? null : rows[index];
         const onGroup = current && current.classList.contains("blog-category-group-toggle");
+        const onRight = wideMenu() && current && rightRows().indexOf(current) !== -1;
         if (event.key === "Escape") {
           event.preventDefault();
           closeMenu(true);
@@ -1131,19 +1390,52 @@
         }
         if (event.target === trigger && (event.key === "ArrowDown" || event.key === "ArrowUp" || event.key === "Home" || event.key === "End")) {
           event.preventDefault();
-          const edge = event.key === "ArrowUp" || event.key === "End" ? rows[rows.length - 1] : rows[0];
+          const edgeRows = wideMenu() ? leftRows() : rows;
+          const edge = event.key === "ArrowUp" || event.key === "End" ? edgeRows[edgeRows.length - 1] : edgeRows[0];
           focusOption(edge);
           return;
         }
-        if (onGroup && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
+        if (!wideMenu() && onGroup && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
           event.preventDefault();
-          setGroupOpen(current.closest(".blog-category-group"), event.key === "ArrowRight");
+          setToggleOpen(current, event.key === "ArrowRight");
+          syncDetail();
           return;
         }
-        if (onGroup && (event.key === "Enter" || event.key === " ")) {
+        if (wideMenu() && onGroup && (event.key === "ArrowRight" || event.key === "Enter" || event.key === " ")) {
           event.preventDefault();
           groupKeyToggle = Date.now();
-          toggleGroup(current.closest(".blog-category-group"));
+          activateGroup(current, { focus: true });
+          return;
+        }
+        if (wideMenu() && onRight && event.key === "ArrowLeft") {
+          event.preventDefault();
+          const back = openToggle();
+          if (back) focusOption(back);
+          return;
+        }
+        if (wideMenu() && onRight && event.key === "ArrowRight") {
+          event.preventDefault();
+          return;
+        }
+        if (wideMenu() && !onRight && event.key === "ArrowLeft") {
+          event.preventDefault();
+          return;
+        }
+        if (wideMenu() && current === document.getElementById("blog-opt-all") && event.key === "ArrowRight") {
+          const right = rightRows();
+          if (!right.length) return;
+          event.preventDefault();
+          let target = right[0];
+          right.forEach(function (row) {
+            if (row.getAttribute("aria-selected") === "true") target = row;
+          });
+          focusOption(target);
+          return;
+        }
+        if (!wideMenu() && onGroup && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          groupKeyToggle = Date.now();
+          toggleGroup(current);
           return;
         }
         if (index === -1) return;
@@ -1201,8 +1493,10 @@
         closeMenu(true);
       });
       window.addEventListener("resize", function () {
+        layoutColumns();
         if (menuOpen) placePanel();
       });
+      layoutColumns();
     }
 
     applyFilter(categoryFromUrl());
