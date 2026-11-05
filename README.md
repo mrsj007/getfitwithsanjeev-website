@@ -69,6 +69,28 @@ That value drives the inline calendar and the "Open the booking calendar in a ne
 
 The public profile currently offers a 15 min meeting and a 30 min meeting. The hint above the calendar uses those names.
 
+## Build
+
+The host only serves finished files. Vercel does not run a build, so run these on your computer and commit the output.
+
+```bash
+npm install
+npm run build:assets   # styles.min.css and script.min.js
+npm run build:images   # WebP, AVIF when it is clearly smaller, and narrower JPEG copies
+npm run build:blog     # runs build:assets, then writes the blog HTML
+npm run build:site     # assets, images, then the blog
+```
+
+`styles.css` and `script.js` stay the files you edit. Pages load `styles.min.css` and `script.min.js`. Source maps are not published.
+
+Running `npm run build:blog` or `npm run build:site` twice in a row should not change the files.
+
+Fonts are self-hosted in `fonts/` (Playfair Display and Inter, Latin only, WOFF2, from the `@fontsource-variable` packages). Do not add a Google Fonts link.
+
+`/fonts/` and `/images/` are cached for one year (`Cache-Control: immutable` in `vercel.json`). If you replace a photo or a font, use a new filename. Do not overwrite a file the live site already uses, or returning visitors can keep the old copy for a year. Then run `npm run build:images` so the sized copies and `images/manifest.json` match.
+
+Original JPEG and PNG files stay in place and are the fallback for older browsers. New article photos go in `images/blog/`. Run `npm run build:images` (or `npm run build:site`) before you publish so the blog HTML can use the sized copies.
+
 ## Preview locally
 
 ```bash
@@ -87,12 +109,18 @@ Files:
 - `index.html` - home page
 - `about.html` - about page
 - `book.html` - booking page
-- `styles.css` - design tokens, layout, responsive rules
-- `script.js` - mobile nav, FAQ accordion, Formspree submit
+- `styles.css` - design tokens, layout, responsive rules (edit this)
+- `styles.min.css` - minified CSS the pages load
+- `script.js` - mobile nav, FAQ accordion, Formspree submit (edit this)
+- `script.min.js` - minified script the pages load
+- `fonts/` - self-hosted Playfair Display and Inter
 - `images/sanjeev-kumar.jpg` - portrait used on the about page and in social cards
+- `images/manifest.json` - widths generated for each photo
 - `content/blog/` - Markdown articles
 - `images/blog/` - article images
 - `scripts/build-blog.js` - turns Markdown into the blog pages
+- `scripts/build-assets.js` - minifies CSS and JavaScript
+- `scripts/build-images.js` - writes the sized image files
 - `docs/how-to-add-a-blog-post.md` - short publishing steps
 
 ## Contact form (Formspree)

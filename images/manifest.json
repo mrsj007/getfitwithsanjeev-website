@@ -1,0 +1,1564 @@
+{
+  "/images/blog/mobility-for-desk-workers.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/mobility-for-desk-workers-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/mobility-for-desk-workers-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/mobility-for-desk-workers-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/mobility-for-desk-workers-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/mobility-for-desk-workers-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/mobility-for-desk-workers-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/mobility-for-desk-workers-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/mobility-for-desk-workers-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/mobility-for-desk-workers-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/mobility-for-desk-workers-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/mobility-for-desk-workers-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/mobility-for-desk-workers.jpg"
+      }
+    ]
+  },
+  "/images/blog/sample-layout.png": {
+    "width": 1200,
+    "height": 675,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/sample-layout-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/sample-layout-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/sample-layout-1200.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 1200,
+        "src": "/images/blog/sample-layout-1200.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 1200,
+        "src": "/images/blog/sample-layout.png"
+      }
+    ]
+  },
+  "/images/blog/strength-training-after-50.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/strength-training-after-50-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/strength-training-after-50-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/strength-training-after-50-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/strength-training-after-50-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/strength-training-after-50-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/strength-training-after-50-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/strength-training-after-50-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/strength-training-after-50-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/strength-training-after-50-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/strength-training-after-50-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/strength-training-after-50-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/strength-training-after-50.jpg"
+      }
+    ]
+  },
+  "/images/blog/your-first-month-of-training.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/your-first-month-of-training-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/your-first-month-of-training-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/your-first-month-of-training-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/your-first-month-of-training-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/your-first-month-of-training-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/your-first-month-of-training-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/your-first-month-of-training-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/your-first-month-of-training-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/your-first-month-of-training-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/your-first-month-of-training-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/your-first-month-of-training-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/your-first-month-of-training.jpg"
+      }
+    ]
+  },
+  "/images/contact/gym.jpg": {
+    "width": 1920,
+    "height": 1438,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/contact/gym-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/contact/gym-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/contact/gym-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/contact/gym-1600.webp"
+      },
+      {
+        "w": 1920,
+        "src": "/images/contact/gym-1920.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/contact/gym-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/contact/gym-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/contact/gym-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/contact/gym-1600.avif"
+      },
+      {
+        "w": 1920,
+        "src": "/images/contact/gym-1920.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/contact/gym-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/contact/gym-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/contact/gym-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/contact/gym-1600.jpg"
+      },
+      {
+        "w": 1920,
+        "src": "/images/contact/gym.jpg"
+      }
+    ]
+  },
+  "/images/guidance/adults-50.jpg": {
+    "width": 1200,
+    "height": 800,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/guidance/adults-50-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/adults-50-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/adults-50-1200.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/guidance/adults-50-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/adults-50-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/adults-50-1200.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/guidance/adults-50-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/adults-50-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/adults-50.jpg"
+      }
+    ]
+  },
+  "/images/guidance/beginners.jpg": {
+    "width": 1200,
+    "height": 800,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/guidance/beginners-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/beginners-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/beginners-1200.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/guidance/beginners-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/beginners-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/beginners-1200.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/guidance/beginners-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/beginners-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/beginners.jpg"
+      }
+    ]
+  },
+  "/images/guidance/mobility.jpg": {
+    "width": 1200,
+    "height": 800,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/guidance/mobility-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/mobility-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/mobility-1200.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/guidance/mobility-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/mobility-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/mobility-1200.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/guidance/mobility-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/mobility-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/mobility.jpg"
+      }
+    ]
+  },
+  "/images/guidance/strength.jpg": {
+    "width": 1200,
+    "height": 800,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/guidance/strength-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/strength-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/strength-1200.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/guidance/strength-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/strength-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/strength-1200.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/guidance/strength-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/strength-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/strength.jpg"
+      }
+    ]
+  },
+  "/images/guidance/stress.jpg": {
+    "width": 1200,
+    "height": 800,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/guidance/stress-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/stress-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/stress-1200.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/guidance/stress-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/stress-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/stress-1200.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/guidance/stress-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/stress-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/stress.jpg"
+      }
+    ]
+  },
+  "/images/guidance/womens-fitness.jpg": {
+    "width": 900,
+    "height": 1350,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/guidance/womens-fitness-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/womens-fitness-768.webp"
+      },
+      {
+        "w": 900,
+        "src": "/images/guidance/womens-fitness-900.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/guidance/womens-fitness-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/womens-fitness-768.avif"
+      },
+      {
+        "w": 900,
+        "src": "/images/guidance/womens-fitness-900.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/guidance/womens-fitness-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/womens-fitness-768.jpg"
+      },
+      {
+        "w": 900,
+        "src": "/images/guidance/womens-fitness.jpg"
+      }
+    ]
+  },
+  "/images/hero/collage-1.jpg": {
+    "width": 1024,
+    "height": 576,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/hero/collage-1-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/hero/collage-1-768.webp"
+      },
+      {
+        "w": 1024,
+        "src": "/images/hero/collage-1-1024.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/hero/collage-1-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/hero/collage-1-768.avif"
+      },
+      {
+        "w": 1024,
+        "src": "/images/hero/collage-1-1024.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/hero/collage-1-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/hero/collage-1-768.jpg"
+      },
+      {
+        "w": 1024,
+        "src": "/images/hero/collage-1.jpg"
+      }
+    ]
+  },
+  "/images/hero/collage-2.jpg": {
+    "width": 1024,
+    "height": 576,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/hero/collage-2-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/hero/collage-2-768.webp"
+      },
+      {
+        "w": 1024,
+        "src": "/images/hero/collage-2-1024.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/hero/collage-2-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/hero/collage-2-768.avif"
+      },
+      {
+        "w": 1024,
+        "src": "/images/hero/collage-2-1024.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/hero/collage-2-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/hero/collage-2-768.jpg"
+      },
+      {
+        "w": 1024,
+        "src": "/images/hero/collage-2.jpg"
+      }
+    ]
+  },
+  "/images/logos/issa.png": {
+    "width": 540,
+    "height": 295,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/logos/issa-480.webp"
+      },
+      {
+        "w": 540,
+        "src": "/images/logos/issa-540.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/logos/issa-480.avif"
+      },
+      {
+        "w": 540,
+        "src": "/images/logos/issa-540.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 540,
+        "src": "/images/logos/issa.png"
+      }
+    ]
+  },
+  "/images/logos/nasm.png": {
+    "width": 984,
+    "height": 358,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/logos/nasm-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/logos/nasm-768.webp"
+      },
+      {
+        "w": 984,
+        "src": "/images/logos/nasm-984.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/logos/nasm-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/logos/nasm-768.avif"
+      },
+      {
+        "w": 984,
+        "src": "/images/logos/nasm-984.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 984,
+        "src": "/images/logos/nasm.png"
+      }
+    ]
+  },
+  "/images/logos/pronatal.png": {
+    "width": 832,
+    "height": 304,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/logos/pronatal-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/logos/pronatal-768.webp"
+      },
+      {
+        "w": 832,
+        "src": "/images/logos/pronatal-832.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/logos/pronatal-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/logos/pronatal-768.avif"
+      },
+      {
+        "w": 832,
+        "src": "/images/logos/pronatal-832.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 832,
+        "src": "/images/logos/pronatal.png"
+      }
+    ]
+  },
+  "/images/sanjeev-kumar.jpg": {
+    "width": 849,
+    "height": 1024,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/sanjeev-kumar-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/sanjeev-kumar-768.webp"
+      },
+      {
+        "w": 849,
+        "src": "/images/sanjeev-kumar-849.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/sanjeev-kumar-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/sanjeev-kumar-768.avif"
+      },
+      {
+        "w": 849,
+        "src": "/images/sanjeev-kumar-849.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/sanjeev-kumar-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/sanjeev-kumar-768.jpg"
+      },
+      {
+        "w": 849,
+        "src": "/images/sanjeev-kumar.jpg"
+      }
+    ]
+  },
+  "/images/transformations/01-after.jpg": {
+    "width": 619,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/01-after-480.webp"
+      },
+      {
+        "w": 619,
+        "src": "/images/transformations/01-after-619.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/01-after-480.avif"
+      },
+      {
+        "w": 619,
+        "src": "/images/transformations/01-after-619.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/01-after-480.jpg"
+      },
+      {
+        "w": 619,
+        "src": "/images/transformations/01-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/01-before.jpg": {
+    "width": 619,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/01-before-480.webp"
+      },
+      {
+        "w": 619,
+        "src": "/images/transformations/01-before-619.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/01-before-480.avif"
+      },
+      {
+        "w": 619,
+        "src": "/images/transformations/01-before-619.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/01-before-480.jpg"
+      },
+      {
+        "w": 619,
+        "src": "/images/transformations/01-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/02-after.jpg": {
+    "width": 669,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/02-after-480.webp"
+      },
+      {
+        "w": 669,
+        "src": "/images/transformations/02-after-669.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/02-after-480.avif"
+      },
+      {
+        "w": 669,
+        "src": "/images/transformations/02-after-669.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/02-after-480.jpg"
+      },
+      {
+        "w": 669,
+        "src": "/images/transformations/02-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/02-before.jpg": {
+    "width": 669,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/02-before-480.webp"
+      },
+      {
+        "w": 669,
+        "src": "/images/transformations/02-before-669.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/02-before-480.avif"
+      },
+      {
+        "w": 669,
+        "src": "/images/transformations/02-before-669.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/02-before-480.jpg"
+      },
+      {
+        "w": 669,
+        "src": "/images/transformations/02-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/03-after.jpg": {
+    "width": 536,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/03-after-480.webp"
+      },
+      {
+        "w": 536,
+        "src": "/images/transformations/03-after-536.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/03-after-480.avif"
+      },
+      {
+        "w": 536,
+        "src": "/images/transformations/03-after-536.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/03-after-480.jpg"
+      },
+      {
+        "w": 536,
+        "src": "/images/transformations/03-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/03-before.jpg": {
+    "width": 536,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/03-before-480.webp"
+      },
+      {
+        "w": 536,
+        "src": "/images/transformations/03-before-536.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/03-before-480.avif"
+      },
+      {
+        "w": 536,
+        "src": "/images/transformations/03-before-536.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/03-before-480.jpg"
+      },
+      {
+        "w": 536,
+        "src": "/images/transformations/03-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/04-after.jpg": {
+    "width": 440,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 440,
+        "src": "/images/transformations/04-after-440.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 440,
+        "src": "/images/transformations/04-after-440.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 440,
+        "src": "/images/transformations/04-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/04-before.jpg": {
+    "width": 440,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 440,
+        "src": "/images/transformations/04-before-440.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 440,
+        "src": "/images/transformations/04-before-440.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 440,
+        "src": "/images/transformations/04-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/06-after.jpg": {
+    "width": 638,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/06-after-480.webp"
+      },
+      {
+        "w": 638,
+        "src": "/images/transformations/06-after-638.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/06-after-480.avif"
+      },
+      {
+        "w": 638,
+        "src": "/images/transformations/06-after-638.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/06-after-480.jpg"
+      },
+      {
+        "w": 638,
+        "src": "/images/transformations/06-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/06-before.jpg": {
+    "width": 644,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/06-before-480.webp"
+      },
+      {
+        "w": 644,
+        "src": "/images/transformations/06-before-644.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/06-before-480.avif"
+      },
+      {
+        "w": 644,
+        "src": "/images/transformations/06-before-644.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/06-before-480.jpg"
+      },
+      {
+        "w": 644,
+        "src": "/images/transformations/06-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/07-after.jpg": {
+    "width": 445,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 445,
+        "src": "/images/transformations/07-after-445.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 445,
+        "src": "/images/transformations/07-after-445.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 445,
+        "src": "/images/transformations/07-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/07-before.jpg": {
+    "width": 424,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 424,
+        "src": "/images/transformations/07-before-424.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 424,
+        "src": "/images/transformations/07-before-424.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 424,
+        "src": "/images/transformations/07-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/08-after.jpg": {
+    "width": 502,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/08-after-480.webp"
+      },
+      {
+        "w": 502,
+        "src": "/images/transformations/08-after-502.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/08-after-480.avif"
+      },
+      {
+        "w": 502,
+        "src": "/images/transformations/08-after-502.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/08-after-480.jpg"
+      },
+      {
+        "w": 502,
+        "src": "/images/transformations/08-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/08-before.jpg": {
+    "width": 502,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/08-before-480.webp"
+      },
+      {
+        "w": 502,
+        "src": "/images/transformations/08-before-502.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/08-before-480.avif"
+      },
+      {
+        "w": 502,
+        "src": "/images/transformations/08-before-502.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/08-before-480.jpg"
+      },
+      {
+        "w": 502,
+        "src": "/images/transformations/08-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/09-after.jpg": {
+    "width": 662,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/09-after-480.webp"
+      },
+      {
+        "w": 662,
+        "src": "/images/transformations/09-after-662.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/09-after-480.avif"
+      },
+      {
+        "w": 662,
+        "src": "/images/transformations/09-after-662.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/09-after-480.jpg"
+      },
+      {
+        "w": 662,
+        "src": "/images/transformations/09-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/09-before.jpg": {
+    "width": 662,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/09-before-480.webp"
+      },
+      {
+        "w": 662,
+        "src": "/images/transformations/09-before-662.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/09-before-480.avif"
+      },
+      {
+        "w": 662,
+        "src": "/images/transformations/09-before-662.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/09-before-480.jpg"
+      },
+      {
+        "w": 662,
+        "src": "/images/transformations/09-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/10-after.jpg": {
+    "width": 652,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/10-after-480.webp"
+      },
+      {
+        "w": 652,
+        "src": "/images/transformations/10-after-652.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/10-after-480.avif"
+      },
+      {
+        "w": 652,
+        "src": "/images/transformations/10-after-652.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/10-after-480.jpg"
+      },
+      {
+        "w": 652,
+        "src": "/images/transformations/10-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/10-before.jpg": {
+    "width": 652,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/10-before-480.webp"
+      },
+      {
+        "w": 652,
+        "src": "/images/transformations/10-before-652.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/10-before-480.avif"
+      },
+      {
+        "w": 652,
+        "src": "/images/transformations/10-before-652.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/10-before-480.jpg"
+      },
+      {
+        "w": 652,
+        "src": "/images/transformations/10-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/11-after.jpg": {
+    "width": 685,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/11-after-480.webp"
+      },
+      {
+        "w": 685,
+        "src": "/images/transformations/11-after-685.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/11-after-480.avif"
+      },
+      {
+        "w": 685,
+        "src": "/images/transformations/11-after-685.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/11-after-480.jpg"
+      },
+      {
+        "w": 685,
+        "src": "/images/transformations/11-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/11-before.jpg": {
+    "width": 685,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/11-before-480.webp"
+      },
+      {
+        "w": 685,
+        "src": "/images/transformations/11-before-685.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/11-before-480.avif"
+      },
+      {
+        "w": 685,
+        "src": "/images/transformations/11-before-685.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/11-before-480.jpg"
+      },
+      {
+        "w": 685,
+        "src": "/images/transformations/11-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/12-after.jpg": {
+    "width": 611,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/12-after-480.webp"
+      },
+      {
+        "w": 611,
+        "src": "/images/transformations/12-after-611.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/12-after-480.avif"
+      },
+      {
+        "w": 611,
+        "src": "/images/transformations/12-after-611.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/12-after-480.jpg"
+      },
+      {
+        "w": 611,
+        "src": "/images/transformations/12-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/12-before.jpg": {
+    "width": 611,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/12-before-480.webp"
+      },
+      {
+        "w": 611,
+        "src": "/images/transformations/12-before-611.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/12-before-480.avif"
+      },
+      {
+        "w": 611,
+        "src": "/images/transformations/12-before-611.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/12-before-480.jpg"
+      },
+      {
+        "w": 611,
+        "src": "/images/transformations/12-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/13-after.jpg": {
+    "width": 610,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/13-after-480.webp"
+      },
+      {
+        "w": 610,
+        "src": "/images/transformations/13-after-610.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/13-after-480.avif"
+      },
+      {
+        "w": 610,
+        "src": "/images/transformations/13-after-610.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/13-after-480.jpg"
+      },
+      {
+        "w": 610,
+        "src": "/images/transformations/13-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/13-before.jpg": {
+    "width": 610,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/13-before-480.webp"
+      },
+      {
+        "w": 610,
+        "src": "/images/transformations/13-before-610.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/13-before-480.avif"
+      },
+      {
+        "w": 610,
+        "src": "/images/transformations/13-before-610.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/13-before-480.jpg"
+      },
+      {
+        "w": 610,
+        "src": "/images/transformations/13-before.jpg"
+      }
+    ]
+  }
+}

@@ -48,55 +48,9 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <script>
-      (function (C, A, L) {
-        const queue = function (target, args) {
-          target.q.push(args);
-        };
-        const doc = C.document;
-        C.Cal =
-          C.Cal ||
-          function () {
-            const cal = C.Cal;
-            const args = arguments;
-            if (!cal.loaded) {
-              cal.ns = {};
-              cal.q = cal.q || [];
-              const script = doc.createElement("script");
-              script.src = A;
-              script.async = true;
-              script.onerror = function () {
-                doc.dispatchEvent(new CustomEvent("cal-embed-error"));
-              };
-              doc.head.appendChild(script);
-              cal.loaded = true;
-            }
-            if (args[0] === L) {
-              const api = function () {
-                queue(api, arguments);
-              };
-              const namespace = args[1];
-              api.q = api.q || [];
-              if (typeof namespace === "string") {
-                cal.ns[namespace] = cal.ns[namespace] || api;
-                queue(cal.ns[namespace], args);
-                queue(cal, ["initNamespace", namespace]);
-              } else {
-                queue(cal, args);
-              }
-              return;
-            }
-            queue(cal, args);
-          };
-      })(window, "https://app.cal.com/embed/embed.js", "init");
-    </script>
+    <link rel="preload" href="fonts/playfair-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />
+    <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />
+    <link rel="stylesheet" href="styles.min.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -338,6 +292,47 @@
     </footer>
 
     <script>
+      (function (C, A, L) {
+        const queue = function (target, args) {
+          target.q.push(args);
+        };
+        const doc = C.document;
+        C.Cal =
+          C.Cal ||
+          function () {
+            const cal = C.Cal;
+            const args = arguments;
+            if (!cal.loaded) {
+              cal.ns = {};
+              cal.q = cal.q || [];
+              const script = doc.createElement("script");
+              script.src = A;
+              script.async = true;
+              script.onerror = function () {
+                doc.dispatchEvent(new CustomEvent("cal-embed-error"));
+              };
+              doc.head.appendChild(script);
+              cal.loaded = true;
+            }
+            if (args[0] === L) {
+              const api = function () {
+                queue(api, arguments);
+              };
+              const namespace = args[1];
+              api.q = api.q || [];
+              if (typeof namespace === "string") {
+                cal.ns[namespace] = cal.ns[namespace] || api;
+                queue(cal.ns[namespace], args);
+                queue(cal, ["initNamespace", namespace]);
+              } else {
+                queue(cal, args);
+              }
+              return;
+            }
+            queue(cal, args);
+          };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
       /* Cal.com profile. Change CAL_LINK if the username changes. */
       const CAL_LINK = "sanjeev-kumar-rge18l";
       const CAL_EVENTS = { quick: "15min", full: "30min" };
@@ -645,6 +640,6 @@
         if (document.hidden) document.documentElement.classList.add("is-paused");
       })();
     </script>
-    <script src="script.js"></script>
+    <script src="script.min.js" defer></script>
   </body>
 </html>

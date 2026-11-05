@@ -3,6 +3,73 @@
    Mobile-first custom CSS. Breakpoints: 480 / 768 / 1024 / 1280
    ========================================================================== */
 
+/* Latin variable fonts, self-hosted. One file covers the weights in use. */
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("fonts/playfair-display-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("fonts/playfair-display-latin-wght-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/inter-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched fallbacks so the swap does not move the line.
+   The same unicode-range as the web fonts, so arrows, stars and other
+   glyphs the files do not include still come from the system font. */
+@font-face {
+  font-family: "Playfair Fallback";
+  src: local("Times New Roman");
+  font-style: normal;
+  font-weight: 400 900;
+  size-adjust: 110.87%;
+  ascent-override: 97.59%;
+  descent-override: 22.64%;
+  line-gap-override: 0%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Playfair Fallback";
+  src: local("Times New Roman Italic"), local("Times New Roman");
+  font-style: italic;
+  font-weight: 400 900;
+  size-adjust: 110.87%;
+  ascent-override: 97.59%;
+  descent-override: 22.64%;
+  line-gap-override: 0%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  font-style: normal;
+  font-weight: 100 900;
+  size-adjust: 109.56%;
+  ascent-override: 88.42%;
+  descent-override: 22.02%;
+  line-gap-override: 0%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --green: #1f3a2e;
   --green-deep: #16261e;
@@ -11,8 +78,8 @@
   --white: #ffffff;
   --text: #1a1a1a;
   --muted: #5c5c5c;
-  --serif: "Playfair Display", Georgia, "Times New Roman", serif;
-  --sans: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+  --serif: "Playfair Display", "Playfair Fallback", Georgia, "Times New Roman", serif;
+  --sans: Inter, "Inter Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
   --radius: 14px;
   --shadow: 0 8px 24px rgba(31, 58, 46, 0.08);
   --header-pad-top: 0.75rem;
@@ -405,6 +472,21 @@ section[id],
   background-position: center;
 }
 
+picture {
+  display: contents;
+}
+
+.contact-bg {
+  overflow: hidden;
+}
+
+.contact-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .hero-bg {
   overflow: hidden;
 }
@@ -735,7 +817,16 @@ section[id],
   animation-duration: 44s;
 }
 
-html.is-paused .booking-blob {
+html.is-paused .booking-blob,
+html.is-paused .hero-pan-track,
+.hero-pan-track.is-offscreen,
+.booking-atmosphere.is-offscreen .booking-blob,
+html.is-paused .cal-skel-header::after,
+html.is-paused .cal-skel-grid span::after,
+html.is-paused .cal-skel-slots span::after,
+.cal-stage.is-offscreen .cal-skel-header::after,
+.cal-stage.is-offscreen .cal-skel-grid span::after,
+.cal-stage.is-offscreen .cal-skel-slots span::after {
   animation-play-state: paused;
 }
 
@@ -924,8 +1015,19 @@ html.is-paused .booking-blob {
 .cal-skel-header,
 .cal-skel-grid span,
 .cal-skel-slots span {
-  background: linear-gradient(100deg, #efeae2 20%, #f8f5f0 45%, #efeae2 70%);
-  background-size: 200% 100%;
+  position: relative;
+  overflow: hidden;
+  background: #efeae2;
+}
+
+.cal-skel-header::after,
+.cal-skel-grid span::after,
+.cal-skel-slots span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, #f8f5f0 50%, transparent 80%);
+  transform: translate3d(100%, 0, 0);
   animation: cal-shimmer 1.5s ease-in-out infinite;
 }
 
@@ -963,8 +1065,8 @@ html.is-paused .booking-blob {
 }
 
 @keyframes cal-shimmer {
-  0% { background-position: 100% 0; }
-  100% { background-position: -100% 0; }
+  0% { transform: translate3d(100%, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
 }
 
 .cal-panel {
@@ -2753,7 +2855,10 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 
   .cal-skel-header,
   .cal-skel-grid span,
-  .cal-skel-slots span {
+  .cal-skel-slots span,
+  .cal-skel-header::after,
+  .cal-skel-grid span::after,
+  .cal-skel-slots span::after {
     animation: none;
   }
 

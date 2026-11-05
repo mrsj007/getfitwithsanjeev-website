@@ -284,7 +284,7 @@
     }
 
     function step(delta) {
-      if (reduceMotion || !visible || paused || active || holdPause) {
+      if (reduceMotion || document.hidden || !visible || paused || active || holdPause) {
         setMovingClass();
         return false;
       }
@@ -640,6 +640,7 @@
     let holdTimer = null;
     let slideTimer = null;
     let sliding = false;
+    let heroOnScreen = true;
 
     function clearHeroTimers() {
       if (holdTimer) {
@@ -685,7 +686,7 @@
     }
 
     function startSlide() {
-      if (sliding || motionMq.matches) return;
+      if (sliding || motionMq.matches || !heroOnScreen || document.hidden) return;
       sliding = true;
       index += 1;
       applyOffset(true);
@@ -693,6 +694,11 @@
     }
 
     function scheduleHold() {
+      if (holdTimer) {
+        window.clearTimeout(holdTimer);
+        holdTimer = null;
+      }
+      if (!heroOnScreen || document.hidden || motionMq.matches) return;
       holdTimer = window.setTimeout(startSlide, HOLD_MS);
     }
 
@@ -727,10 +733,63 @@
         sliding = false;
         if (index >= LAST_INDEX) index = 0;
         applyOffset(false);
-      } else {
+      } else if (heroOnScreen) {
         startHeroCycle();
       }
     });
+
+    if ("IntersectionObserver" in window) {
+      const cycleWatch = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          heroOnScreen = entry.isIntersecting;
+          if (!heroOnScreen) {
+            clearHeroTimers();
+            sliding = false;
+          } else if (!document.hidden && !motionMq.matches) {
+            scheduleHold();
+          }
+        });
+      });
+      cycleWatch.observe(heroCycle);
+    }
+  }
+
+  /* Pause continuous motion when the tab is hidden or the piece is off screen. */
+  document.documentElement.classList.toggle("is-paused", document.hidden);
+  document.addEventListener("visibilitychange", function () {
+    document.documentElement.classList.toggle("is-paused", document.hidden);
+    if (!document.hidden) startMarqueeTicker();
+  });
+
+  const heroPan = document.querySelector(".hero-pan-track");
+  const heroEl = document.querySelector(".hero");
+  if (heroPan && heroEl && "IntersectionObserver" in window) {
+    const panWatch = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        heroPan.classList.toggle("is-offscreen", !entry.isIntersecting);
+      });
+    });
+    panWatch.observe(heroEl);
+  }
+
+  const atmosphere = document.querySelector(".booking-atmosphere");
+  if (atmosphere && "IntersectionObserver" in window) {
+    const blobWatch = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        atmosphere.classList.toggle("is-offscreen", !entry.isIntersecting);
+      });
+    });
+    blobWatch.observe(atmosphere);
+  }
+
+  const calStage = document.getElementById("cal-stage");
+  if (calStage && "IntersectionObserver" in window) {
+    const calWatch = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        calStage.classList.toggle("is-offscreen", !entry.isIntersecting);
+      });
+    });
+    calWatch.observe(calStage);
   }
 
   /* Blog: reading progress, table of contents, category filters, card fade-in. */

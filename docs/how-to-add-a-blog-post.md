@@ -15,7 +15,7 @@ This is the short version. You do not need to know how to code. You copy a templ
    - **categories**: 1 to 3 entries written as `Group > Topic`, using the exact names from `content/blog/categories.json`. The first is the primary topic. It shows on the card and under the post title as `Group - Topic`, for example `Workout - Strength`. Related articles prefer the same primary topic. Posts may mix groups. Example: `["Workout > Strength", "Workout > Beginner / Getting Started"]`.
    - **featured**: optional. Set this to `true` to use the post as the large card on the blog index when All categories is selected. If more than one published post is featured, the newest is used. If the dates match, the title that comes first alphabetically is used. If none are featured, the newest post is the large card. A category filter keeps every matching card at the normal size.
    - **tags**: a few short labels. These are optional.
-   - **image**: optional. Put the picture in `images/blog/` and set this to `/images/blog/your-photo.jpg`.
+   - **image**: optional. Put the picture in `images/blog/` and set this to `/images/blog/your-photo.jpg`. After you add a new file, run `npm run build:images` so the sized copies exist. `npm run build:site` does that and then builds the blog.
    - **imageAlt**: a short description of what is in the picture.
    - **status**: leave this as `draft` until Sanjeev has approved the article.
    - **keyTakeaways**: 3 to 5 short bullets. These show in a box under the byline and hero image, before the opening paragraphs.

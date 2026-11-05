@@ -135,13 +135,12 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="preload" href="fonts/playfair-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />
+    <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />
+    <!-- LCP:PRELOAD:START -->
+    <link rel="preload" as="image" href="images/hero/collage-1-1024.avif" imagesrcset="images/hero/collage-1-480.avif 480w, images/hero/collage-1-768.avif 768w, images/hero/collage-1-1024.avif 1024w" imagesizes="82rem" type="image/avif" fetchpriority="high" />
+    <!-- LCP:PRELOAD:END -->
+    <link rel="stylesheet" href="styles.min.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -195,30 +194,15 @@
     <main id="main">
       <!-- ========== HERO ========== -->
       <section class="hero" aria-labelledby="hero-heading">
-        <!-- Previous static hero, kept for rollback:
-             https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1920&q=80 -->
         <div class="hero-bg" aria-hidden="true">
           <div class="hero-pan-track">
             <div class="hero-pan-set">
-              <img
-                src="images/hero/collage-1.jpg"
-                alt=""
-                width="1024"
-                height="576"
-                fetchpriority="high"
-                decoding="async"
-              >
-              <img
-                src="images/hero/collage-2.jpg"
-                alt=""
-                width="1024"
-                height="576"
-                decoding="async"
-              >
+              <picture><source type="image/avif" srcset="images/hero/collage-1-480.avif 480w, images/hero/collage-1-768.avif 768w, images/hero/collage-1-1024.avif 1024w" sizes="82rem"><source type="image/webp" srcset="images/hero/collage-1-480.webp 480w, images/hero/collage-1-768.webp 768w, images/hero/collage-1-1024.webp 1024w" sizes="82rem"><img src="images/hero/collage-1.jpg" srcset="images/hero/collage-1-480.jpg 480w, images/hero/collage-1-768.jpg 768w, images/hero/collage-1.jpg 1024w" sizes="82rem" alt="" width="1024" height="576" fetchpriority="high" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="images/hero/collage-2-480.avif 480w, images/hero/collage-2-768.avif 768w, images/hero/collage-2-1024.avif 1024w" sizes="82rem"><source type="image/webp" srcset="images/hero/collage-2-480.webp 480w, images/hero/collage-2-768.webp 768w, images/hero/collage-2-1024.webp 1024w" sizes="82rem"><img src="images/hero/collage-2.jpg" srcset="images/hero/collage-2-480.jpg 480w, images/hero/collage-2-768.jpg 768w, images/hero/collage-2.jpg 1024w" sizes="82rem" alt="" width="1024" height="576" loading="lazy" fetchpriority="low" decoding="async"></picture>
             </div>
             <div class="hero-pan-set" aria-hidden="true">
-              <img src="images/hero/collage-1.jpg" alt="" width="1024" height="576" decoding="async">
-              <img src="images/hero/collage-2.jpg" alt="" width="1024" height="576" decoding="async">
+              <picture><source type="image/avif" srcset="images/hero/collage-1-480.avif 480w, images/hero/collage-1-768.avif 768w, images/hero/collage-1-1024.avif 1024w" sizes="82rem"><source type="image/webp" srcset="images/hero/collage-1-480.webp 480w, images/hero/collage-1-768.webp 768w, images/hero/collage-1-1024.webp 1024w" sizes="82rem"><img src="images/hero/collage-1.jpg" srcset="images/hero/collage-1-480.jpg 480w, images/hero/collage-1-768.jpg 768w, images/hero/collage-1.jpg 1024w" sizes="82rem" alt="" width="1024" height="576" loading="lazy" fetchpriority="low" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="images/hero/collage-2-480.avif 480w, images/hero/collage-2-768.avif 768w, images/hero/collage-2-1024.avif 1024w" sizes="82rem"><source type="image/webp" srcset="images/hero/collage-2-480.webp 480w, images/hero/collage-2-768.webp 768w, images/hero/collage-2-1024.webp 1024w" sizes="82rem"><img src="images/hero/collage-2.jpg" srcset="images/hero/collage-2-480.jpg 480w, images/hero/collage-2-768.jpg 768w, images/hero/collage-2.jpg 1024w" sizes="82rem" alt="" width="1024" height="576" loading="lazy" fetchpriority="low" decoding="async"></picture>
             </div>
           </div>
         </div>
@@ -326,14 +310,7 @@
           <div class="photo-grid">
             <article class="photo-card">
               <!-- TODO: replace with client's real photos -->
-              <img
-                src="images/guidance/adults-50.jpg"
-                alt="An older couple training together with dumbbells, looking engaged and active"
-                width="1200"
-                height="800"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture><source type="image/avif" srcset="images/guidance/adults-50-480.avif 480w, images/guidance/adults-50-768.avif 768w, images/guidance/adults-50-1200.avif 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/guidance/adults-50-480.webp 480w, images/guidance/adults-50-768.webp 768w, images/guidance/adults-50-1200.webp 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><img src="images/guidance/adults-50.jpg" srcset="images/guidance/adults-50-480.jpg 480w, images/guidance/adults-50-768.jpg 768w, images/guidance/adults-50.jpg 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)" alt="An older couple training together with dumbbells, looking engaged and active" width="1200" height="800" loading="lazy" fetchpriority="low" decoding="async"></picture>
               <div class="photo-card-overlay">
                 <h3>Adults 50+</h3>
                 <p>Build strength, mobility, balance and confidence to stay active and independent.</p>
@@ -341,14 +318,7 @@
             </article>
             <article class="photo-card">
               <!-- TODO: replace with client's real photos -->
-              <img
-                src="images/guidance/mobility.jpg"
-                alt="Person seated on a gym mat in olive athletic wear, twisting through an active mobility stretch"
-                width="1200"
-                height="800"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture><source type="image/avif" srcset="images/guidance/mobility-480.avif 480w, images/guidance/mobility-768.avif 768w, images/guidance/mobility-1200.avif 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/guidance/mobility-480.webp 480w, images/guidance/mobility-768.webp 768w, images/guidance/mobility-1200.webp 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><img src="images/guidance/mobility.jpg" srcset="images/guidance/mobility-480.jpg 480w, images/guidance/mobility-768.jpg 768w, images/guidance/mobility.jpg 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)" alt="Person seated on a gym mat in olive athletic wear, twisting through an active mobility stretch" width="1200" height="800" loading="lazy" fetchpriority="low" decoding="async"></picture>
               <div class="photo-card-overlay">
                 <h3>Joint &amp; Mobility Concerns</h3>
                 <p>Thoughtful guidance for joint limitations, arthritis, osteoporosis or mobility challenges.</p>
@@ -356,14 +326,7 @@
             </article>
             <article class="photo-card">
               <!-- TODO: replace with client's real photos -->
-              <img
-                src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=900&q=80"
-                alt="A woman training with a coach during a workout"
-                width="900"
-                height="1350"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture><source type="image/avif" srcset="images/guidance/womens-fitness-480.avif 480w, images/guidance/womens-fitness-768.avif 768w, images/guidance/womens-fitness-900.avif 900w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/guidance/womens-fitness-480.webp 480w, images/guidance/womens-fitness-768.webp 768w, images/guidance/womens-fitness-900.webp 900w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><img src="images/guidance/womens-fitness.jpg" srcset="images/guidance/womens-fitness-480.jpg 480w, images/guidance/womens-fitness-768.jpg 768w, images/guidance/womens-fitness.jpg 900w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)" alt="A woman training with a coach during a workout" width="900" height="1350" loading="lazy" fetchpriority="low" decoding="async"></picture>
               <div class="photo-card-overlay">
                 <h3>Women’s Fitness</h3>
                 <p>Supportive guidance through prenatal, postpartum, menopause and beyond.</p>
@@ -371,14 +334,7 @@
             </article>
             <article class="photo-card">
               <!-- TODO: replace with client's real photos -->
-              <img
-                src="images/guidance/beginners.jpg"
-                alt="A new gym-goer learning a medicine-ball squat alongside a more experienced training partner"
-                width="1200"
-                height="800"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture><source type="image/avif" srcset="images/guidance/beginners-480.avif 480w, images/guidance/beginners-768.avif 768w, images/guidance/beginners-1200.avif 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/guidance/beginners-480.webp 480w, images/guidance/beginners-768.webp 768w, images/guidance/beginners-1200.webp 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><img src="images/guidance/beginners.jpg" srcset="images/guidance/beginners-480.jpg 480w, images/guidance/beginners-768.jpg 768w, images/guidance/beginners.jpg 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)" alt="A new gym-goer learning a medicine-ball squat alongside a more experienced training partner" width="1200" height="800" loading="lazy" fetchpriority="low" decoding="async"></picture>
               <div class="photo-card-overlay">
                 <h3>Beginners</h3>
                 <p>Start with the fundamentals, build confidence and progress at a pace that works for you.</p>
@@ -386,14 +342,7 @@
             </article>
             <article class="photo-card">
               <!-- TODO: replace with client's real photos -->
-              <img
-                src="images/guidance/strength.jpg"
-                alt="An athlete in a dark gym lifting a loaded barbell off the floor with visible effort"
-                width="1200"
-                height="800"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture><source type="image/avif" srcset="images/guidance/strength-480.avif 480w, images/guidance/strength-768.avif 768w, images/guidance/strength-1200.avif 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/guidance/strength-480.webp 480w, images/guidance/strength-768.webp 768w, images/guidance/strength-1200.webp 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><img src="images/guidance/strength.jpg" srcset="images/guidance/strength-480.jpg 480w, images/guidance/strength-768.jpg 768w, images/guidance/strength.jpg 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)" alt="An athlete in a dark gym lifting a loaded barbell off the floor with visible effort" width="1200" height="800" loading="lazy" fetchpriority="low" decoding="async"></picture>
               <div class="photo-card-overlay">
                 <h3>Strength &amp; Functional Fitness</h3>
                 <p>Build practical strength that carries over into everyday life.</p>
@@ -401,14 +350,7 @@
             </article>
             <article class="photo-card">
               <!-- TODO: replace with client's real photos -->
-              <img
-                src="images/guidance/stress.jpg"
-                alt="A woman seated outdoors in a calm yoga pose at sunset, hands raised in a restorative stretch"
-                width="1200"
-                height="800"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture><source type="image/avif" srcset="images/guidance/stress-480.avif 480w, images/guidance/stress-768.avif 768w, images/guidance/stress-1200.avif 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/guidance/stress-480.webp 480w, images/guidance/stress-768.webp 768w, images/guidance/stress-1200.webp 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)"><img src="images/guidance/stress.jpg" srcset="images/guidance/stress-480.jpg 480w, images/guidance/stress-768.jpg 768w, images/guidance/stress.jpg 1200w" sizes="(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)" alt="A woman seated outdoors in a calm yoga pose at sunset, hands raised in a restorative stretch" width="1200" height="800" loading="lazy" fetchpriority="low" decoding="async"></picture>
               <div class="photo-card-overlay">
                 <h3>Stress &amp; Lifestyle</h3>
                 <p>Build sustainable movement and healthier daily habits.</p>
@@ -432,12 +374,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/01-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="619" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/01-before-480.avif 480w, images/transformations/01-before-619.avif 619w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/01-before-480.webp 480w, images/transformations/01-before-619.webp 619w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/01-before.jpg" srcset="images/transformations/01-before-480.jpg 480w, images/transformations/01-before.jpg 619w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="619" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/01-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="619" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/01-after-480.avif 480w, images/transformations/01-after-619.avif 619w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/01-after-480.webp 480w, images/transformations/01-after-619.webp 619w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/01-after.jpg" srcset="images/transformations/01-after-480.jpg 480w, images/transformations/01-after.jpg 619w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="619" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -446,12 +388,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/02-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="669" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/02-before-480.avif 480w, images/transformations/02-before-669.avif 669w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/02-before-480.webp 480w, images/transformations/02-before-669.webp 669w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/02-before.jpg" srcset="images/transformations/02-before-480.jpg 480w, images/transformations/02-before.jpg 669w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="669" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/02-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="669" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/02-after-480.avif 480w, images/transformations/02-after-669.avif 669w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/02-after-480.webp 480w, images/transformations/02-after-669.webp 669w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/02-after.jpg" srcset="images/transformations/02-after-480.jpg 480w, images/transformations/02-after.jpg 669w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="669" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -460,12 +402,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/03-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="536" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/03-before-480.avif 480w, images/transformations/03-before-536.avif 536w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/03-before-480.webp 480w, images/transformations/03-before-536.webp 536w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/03-before.jpg" srcset="images/transformations/03-before-480.jpg 480w, images/transformations/03-before.jpg 536w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="536" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/03-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="536" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/03-after-480.avif 480w, images/transformations/03-after-536.avif 536w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/03-after-480.webp 480w, images/transformations/03-after-536.webp 536w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/03-after.jpg" srcset="images/transformations/03-after-480.jpg 480w, images/transformations/03-after.jpg 536w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="536" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -474,12 +416,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/04-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="440" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/04-before-440.avif 440w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/04-before-440.webp 440w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/04-before.jpg" srcset="images/transformations/04-before.jpg 440w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="440" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/04-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="440" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/04-after-440.avif 440w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/04-after-440.webp 440w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/04-after.jpg" srcset="images/transformations/04-after.jpg 440w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="440" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -488,12 +430,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/07-before.jpg" alt="Before photo from a client fitness transformation" width="424" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/07-before-424.avif 424w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/07-before-424.webp 424w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/07-before.jpg" srcset="images/transformations/07-before.jpg 424w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation" width="424" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/07-after.jpg" alt="After photo from a client fitness transformation" width="445" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/07-after-445.avif 445w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/07-after-445.webp 445w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/07-after.jpg" srcset="images/transformations/07-after.jpg 445w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation" width="445" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -502,12 +444,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/06-before.jpg" alt="Before photo from a client fitness transformation" width="644" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/06-before-480.avif 480w, images/transformations/06-before-644.avif 644w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/06-before-480.webp 480w, images/transformations/06-before-644.webp 644w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/06-before.jpg" srcset="images/transformations/06-before-480.jpg 480w, images/transformations/06-before.jpg 644w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation" width="644" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/06-after.jpg" alt="After photo from a client fitness transformation" width="638" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/06-after-480.avif 480w, images/transformations/06-after-638.avif 638w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/06-after-480.webp 480w, images/transformations/06-after-638.webp 638w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/06-after.jpg" srcset="images/transformations/06-after-480.jpg 480w, images/transformations/06-after.jpg 638w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation" width="638" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -516,12 +458,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/08-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="502" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/08-before-480.avif 480w, images/transformations/08-before-502.avif 502w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/08-before-480.webp 480w, images/transformations/08-before-502.webp 502w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/08-before.jpg" srcset="images/transformations/08-before-480.jpg 480w, images/transformations/08-before.jpg 502w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="502" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/08-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="502" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/08-after-480.avif 480w, images/transformations/08-after-502.avif 502w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/08-after-480.webp 480w, images/transformations/08-after-502.webp 502w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/08-after.jpg" srcset="images/transformations/08-after-480.jpg 480w, images/transformations/08-after.jpg 502w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="502" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -530,12 +472,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/09-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="662" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/09-before-480.avif 480w, images/transformations/09-before-662.avif 662w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/09-before-480.webp 480w, images/transformations/09-before-662.webp 662w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/09-before.jpg" srcset="images/transformations/09-before-480.jpg 480w, images/transformations/09-before.jpg 662w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="662" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/09-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="662" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/09-after-480.avif 480w, images/transformations/09-after-662.avif 662w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/09-after-480.webp 480w, images/transformations/09-after-662.webp 662w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/09-after.jpg" srcset="images/transformations/09-after-480.jpg 480w, images/transformations/09-after.jpg 662w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="662" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -544,12 +486,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/10-before.jpg" alt="Before photo from a client fitness transformation" width="652" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/10-before-480.avif 480w, images/transformations/10-before-652.avif 652w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/10-before-480.webp 480w, images/transformations/10-before-652.webp 652w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/10-before.jpg" srcset="images/transformations/10-before-480.jpg 480w, images/transformations/10-before.jpg 652w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation" width="652" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/10-after.jpg" alt="After photo from a client fitness transformation" width="652" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/10-after-480.avif 480w, images/transformations/10-after-652.avif 652w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/10-after-480.webp 480w, images/transformations/10-after-652.webp 652w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/10-after.jpg" srcset="images/transformations/10-after-480.jpg 480w, images/transformations/10-after.jpg 652w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation" width="652" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -558,12 +500,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/11-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="685" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/11-before-480.avif 480w, images/transformations/11-before-685.avif 685w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/11-before-480.webp 480w, images/transformations/11-before-685.webp 685w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/11-before.jpg" srcset="images/transformations/11-before-480.jpg 480w, images/transformations/11-before.jpg 685w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="685" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/11-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="685" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/11-after-480.avif 480w, images/transformations/11-after-685.avif 685w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/11-after-480.webp 480w, images/transformations/11-after-685.webp 685w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/11-after.jpg" srcset="images/transformations/11-after-480.jpg 480w, images/transformations/11-after.jpg 685w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="685" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -572,12 +514,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/12-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="611" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/12-before-480.avif 480w, images/transformations/12-before-611.avif 611w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/12-before-480.webp 480w, images/transformations/12-before-611.webp 611w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/12-before.jpg" srcset="images/transformations/12-before-480.jpg 480w, images/transformations/12-before.jpg 611w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="611" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/12-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="611" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/12-after-480.avif 480w, images/transformations/12-after-611.avif 611w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/12-after-480.webp 480w, images/transformations/12-after-611.webp 611w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/12-after.jpg" srcset="images/transformations/12-after-480.jpg 480w, images/transformations/12-after.jpg 611w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="611" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -586,12 +528,12 @@
             <figure class="transform-card">
               <div class="ba-pair">
                 <div class="ba-shot">
-                  <img src="images/transformations/13-before.jpg" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="610" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/13-before-480.avif 480w, images/transformations/13-before-610.avif 610w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/13-before-480.webp 480w, images/transformations/13-before-610.webp 610w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/13-before.jpg" srcset="images/transformations/13-before-480.jpg 480w, images/transformations/13-before.jpg 610w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="Before photo from a client fitness transformation, face softly blurred for privacy" width="610" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">Before</span>
                 </div>
                 <span class="ba-arrow" aria-hidden="true">→</span>
                 <div class="ba-shot">
-                  <img src="images/transformations/13-after.jpg" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="610" height="1100" loading="lazy" decoding="async" />
+                  <picture><source type="image/avif" srcset="images/transformations/13-after-480.avif 480w, images/transformations/13-after-610.avif 610w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><source type="image/webp" srcset="images/transformations/13-after-480.webp 480w, images/transformations/13-after-610.webp 610w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw"><img src="images/transformations/13-after.jpg" srcset="images/transformations/13-after-480.jpg 480w, images/transformations/13-after.jpg 610w" sizes="(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw" alt="After photo from a client fitness transformation, face softly blurred for privacy" width="610" height="1100" loading="lazy" fetchpriority="low" decoding="async"></picture>
                   <span class="ba-tag">After</span>
                 </div>
               </div>
@@ -931,9 +873,9 @@
             <p>Short articles on strength, mobility and training for real life, written by Sanjeev Kumar.</p>
           </header>
           <div class="blog-card-grid">
-            <article class="blog-card" data-blog-card data-categories="workout workout-stress-management-healthy-lifestyle"><a class="blog-card-link" href="blog/mobility-for-desk-workers.html" aria-labelledby="blog-card-mobility-for-desk-workers-home"><span class="blog-card-media"><img src="images/blog/mobility-for-desk-workers.jpg" alt="A woman in a grey top stretches a hand behind her head beside a bright window." width="1600" height="1067" loading="lazy" decoding="async"></span><span class="blog-card-copy"><p class="blog-card-category"><span class="category-prefix">Workout</span> - Stress Management / Healthy Lifestyle</p><h3 class="blog-card-title" id="blog-card-mobility-for-desk-workers-home">Mobility for Desk Workers: A 10-Minute Routine</h3><p class="blog-card-excerpt">Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks and a 10-minute mobility routine.</p><p class="blog-card-meta"><time datetime="2026-11-03">November 3, 2026</time><span aria-hidden="true"> · </span><span>4 min read</span></p></span></a></article>
-            <article class="blog-card" data-blog-card data-categories="workout workout-beginner-getting-started"><a class="blog-card-link" href="blog/your-first-month-of-training.html" aria-labelledby="blog-card-your-first-month-of-training-home"><span class="blog-card-media"><img src="images/blog/your-first-month-of-training.jpg" alt="A trainer watches a woman lift a light dumbbell in a gym." width="1600" height="1067" loading="lazy" decoding="async"></span><span class="blog-card-copy"><p class="blog-card-category"><span class="category-prefix">Workout</span> - Beginner / Getting Started</p><h3 class="blog-card-title" id="blog-card-your-first-month-of-training-home">Starting From Zero: Your First Month of Training</h3><p class="blog-card-excerpt">New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working.</p><p class="blog-card-meta"><time datetime="2026-11-03">November 3, 2026</time><span aria-hidden="true"> · </span><span>4 min read</span></p></span></a></article>
-            <article class="blog-card" data-blog-card data-categories="workout workout-strength workout-beginner-getting-started"><a class="blog-card-link" href="blog/strength-training-after-50.html" aria-labelledby="blog-card-strength-training-after-50-home"><span class="blog-card-media"><img src="images/blog/strength-training-after-50.jpg" alt="Older adults seated in a bright room, raising resistance bands with an instructor." width="1600" height="1067" loading="lazy" decoding="async"></span><span class="blog-card-copy"><p class="blog-card-category"><span class="category-prefix">Workout</span> - Strength</p><h3 class="blog-card-title" id="blog-card-strength-training-after-50-home">Strength Training After 50: Where to Start</h3><p class="blog-card-excerpt">A plain-language guide to starting strength training after 50: the basic movements, a simple weekly plan, and how to progress safely.</p><p class="blog-card-meta"><time datetime="2026-11-03">November 3, 2026</time><span aria-hidden="true"> · </span><span>4 min read</span></p></span></a></article>
+            <article class="blog-card" data-blog-card data-categories="workout workout-stress-management-healthy-lifestyle"><a class="blog-card-link" href="blog/mobility-for-desk-workers.html" aria-labelledby="blog-card-mobility-for-desk-workers-home"><span class="blog-card-media"><picture><source type="image/avif" srcset="images/blog/mobility-for-desk-workers-480.avif 480w, images/blog/mobility-for-desk-workers-768.avif 768w, images/blog/mobility-for-desk-workers-1200.avif 1200w, images/blog/mobility-for-desk-workers-1600.avif 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/blog/mobility-for-desk-workers-480.webp 480w, images/blog/mobility-for-desk-workers-768.webp 768w, images/blog/mobility-for-desk-workers-1200.webp 1200w, images/blog/mobility-for-desk-workers-1600.webp 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)"><img src="images/blog/mobility-for-desk-workers.jpg" srcset="images/blog/mobility-for-desk-workers-480.jpg 480w, images/blog/mobility-for-desk-workers-768.jpg 768w, images/blog/mobility-for-desk-workers-1200.jpg 1200w, images/blog/mobility-for-desk-workers.jpg 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)" alt="A woman in a grey top stretches a hand behind her head beside a bright window." width="1600" height="1067" loading="lazy" fetchpriority="low" decoding="async"></picture></span><span class="blog-card-copy"><p class="blog-card-category"><span class="category-prefix">Workout</span> - Stress Management / Healthy Lifestyle</p><h3 class="blog-card-title" id="blog-card-mobility-for-desk-workers-home">Mobility for Desk Workers: A 10-Minute Routine</h3><p class="blog-card-excerpt">Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks and a 10-minute mobility routine.</p><p class="blog-card-meta"><time datetime="2026-11-03">November 3, 2026</time><span aria-hidden="true"> · </span><span>4 min read</span></p></span></a></article>
+            <article class="blog-card" data-blog-card data-categories="workout workout-beginner-getting-started"><a class="blog-card-link" href="blog/your-first-month-of-training.html" aria-labelledby="blog-card-your-first-month-of-training-home"><span class="blog-card-media"><picture><source type="image/avif" srcset="images/blog/your-first-month-of-training-480.avif 480w, images/blog/your-first-month-of-training-768.avif 768w, images/blog/your-first-month-of-training-1200.avif 1200w, images/blog/your-first-month-of-training-1600.avif 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/blog/your-first-month-of-training-480.webp 480w, images/blog/your-first-month-of-training-768.webp 768w, images/blog/your-first-month-of-training-1200.webp 1200w, images/blog/your-first-month-of-training-1600.webp 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)"><img src="images/blog/your-first-month-of-training.jpg" srcset="images/blog/your-first-month-of-training-480.jpg 480w, images/blog/your-first-month-of-training-768.jpg 768w, images/blog/your-first-month-of-training-1200.jpg 1200w, images/blog/your-first-month-of-training.jpg 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)" alt="A trainer watches a woman lift a light dumbbell in a gym." width="1600" height="1067" loading="lazy" fetchpriority="low" decoding="async"></picture></span><span class="blog-card-copy"><p class="blog-card-category"><span class="category-prefix">Workout</span> - Beginner / Getting Started</p><h3 class="blog-card-title" id="blog-card-your-first-month-of-training-home">Starting From Zero: Your First Month of Training</h3><p class="blog-card-excerpt">New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working.</p><p class="blog-card-meta"><time datetime="2026-11-03">November 3, 2026</time><span aria-hidden="true"> · </span><span>4 min read</span></p></span></a></article>
+            <article class="blog-card" data-blog-card data-categories="workout workout-strength workout-beginner-getting-started"><a class="blog-card-link" href="blog/strength-training-after-50.html" aria-labelledby="blog-card-strength-training-after-50-home"><span class="blog-card-media"><picture><source type="image/avif" srcset="images/blog/strength-training-after-50-480.avif 480w, images/blog/strength-training-after-50-768.avif 768w, images/blog/strength-training-after-50-1200.avif 1200w, images/blog/strength-training-after-50-1600.avif 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)"><source type="image/webp" srcset="images/blog/strength-training-after-50-480.webp 480w, images/blog/strength-training-after-50-768.webp 768w, images/blog/strength-training-after-50-1200.webp 1200w, images/blog/strength-training-after-50-1600.webp 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)"><img src="images/blog/strength-training-after-50.jpg" srcset="images/blog/strength-training-after-50-480.jpg 480w, images/blog/strength-training-after-50-768.jpg 768w, images/blog/strength-training-after-50-1200.jpg 1200w, images/blog/strength-training-after-50.jpg 1600w" sizes="(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)" alt="Older adults seated in a bright room, raising resistance bands with an instructor." width="1600" height="1067" loading="lazy" fetchpriority="low" decoding="async"></picture></span><span class="blog-card-copy"><p class="blog-card-category"><span class="category-prefix">Workout</span> - Strength</p><h3 class="blog-card-title" id="blog-card-strength-training-after-50-home">Strength Training After 50: Where to Start</h3><p class="blog-card-excerpt">A plain-language guide to starting strength training after 50: the basic movements, a simple weekly plan, and how to progress safely.</p><p class="blog-card-meta"><time datetime="2026-11-03">November 3, 2026</time><span aria-hidden="true"> · </span><span>4 min read</span></p></span></a></article>
           </div>
           <p class="blog-latest-more"><a class="btn btn-outline" href="blog/index.html">Read all articles</a></p>
         </div>
@@ -1186,14 +1128,9 @@
       <!-- ========== CONTACT ========== -->
       <section class="contact" id="guidance" aria-labelledby="contact-heading">
         <!-- TODO: replace with client's real photos -->
-        <div
-          class="contact-bg"
-          role="img"
-          aria-hidden="true"
-          style="
-            background-image: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1920&q=80');
-          "
-        ></div>
+        <div class="contact-bg" aria-hidden="true">
+          <picture><source type="image/avif" srcset="images/contact/gym-480.avif 480w, images/contact/gym-768.avif 768w, images/contact/gym-1200.avif 1200w, images/contact/gym-1600.avif 1600w, images/contact/gym-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="images/contact/gym-480.webp 480w, images/contact/gym-768.webp 768w, images/contact/gym-1200.webp 1200w, images/contact/gym-1600.webp 1600w, images/contact/gym-1920.webp 1920w" sizes="100vw"><img src="images/contact/gym.jpg" srcset="images/contact/gym-480.jpg 480w, images/contact/gym-768.jpg 768w, images/contact/gym-1200.jpg 1200w, images/contact/gym-1600.jpg 1600w, images/contact/gym.jpg 1920w" sizes="100vw" alt="" width="1920" height="1438" loading="lazy" fetchpriority="low" decoding="async"></picture>
+        </div>
         <div class="contact-overlay"></div>
         <div class="container contact-grid">
           <div class="contact-copy">
@@ -1322,6 +1259,6 @@
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.min.js" defer></script>
   </body>
 </html>

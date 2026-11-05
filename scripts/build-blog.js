@@ -14,6 +14,7 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 const { marked } = require("marked");
+const { renderPicture, preloadTag, BLOG_CARD_SIZES, BLOG_HERO_SIZES } = require("./picture");
 
 const ROOT = path.join(__dirname, "..");
 const CONTENT_DIR = path.join(ROOT, "content", "blog");
@@ -671,14 +672,14 @@ function withFeaturedFirst(posts) {
 function cardHtml(post, options) {
   const media = !post.image || post.imageMissing
     ? '<span class="blog-card-fallback" aria-hidden="true"></span>'
-    : '<img src="' +
-      escapeHtml(options.img) +
-      '" alt="' +
-      escapeHtml(post.imageAlt) +
-      '"' +
-      (post.imageWidth ? ' width="' + post.imageWidth + '" height="' + post.imageHeight + '"' : "") +
-      (options.eager ? ' fetchpriority="high"' : ' loading="lazy"') +
-      ' decoding="async">';
+    : renderPicture({
+        src: options.img,
+        alt: post.imageAlt,
+        width: post.imageWidth,
+        height: post.imageHeight,
+        eager: options.eager,
+        sizes: options.sizes || BLOG_CARD_SIZES,
+      });
   const titleId = "blog-card-" + post.slug + (options.idSuffix || "");
   return (
     '<article class="blog-card' +
@@ -823,7 +824,10 @@ function headHtml(options) {
       '" />\n'
     : "";
   const preload = options.preload
-    ? '    <link rel="preload" as="image" href="' + escapeHtml(options.preload) + '" fetchpriority="high" />\n'
+    ? "    " +
+      (preloadTag(options.preload, options.preloadSizes || BLOG_HERO_SIZES) ||
+        '<link rel="preload" as="image" href="' + escapeHtml(options.preload) + '" fetchpriority="high" />') +
+      "\n"
     : "";
   return (
     "    <meta charset=\"UTF-8\" />\n" +
@@ -876,10 +880,9 @@ function headHtml(options) {
     '    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />\n' +
     '    <link rel="icon" type="image/x-icon" href="../favicon.ico" />\n' +
     '    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />\n' +
-    '    <link rel="preconnect" href="https://fonts.googleapis.com" />\n' +
-    '    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n' +
-    '    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,500;1,600;1,700&display=swap" rel="stylesheet" />\n' +
-    '    <link rel="stylesheet" href="../styles.css" />'
+    '    <link rel="preload" href="../fonts/playfair-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />\n' +
+    '    <link rel="preload" href="../fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />\n' +
+    '    <link rel="stylesheet" href="../styles.min.css" />'
   );
 }
 
@@ -970,7 +973,7 @@ function footerHtml() {
         </div>
       </div>
     </footer>
-    <script src="../script.js"></script>`;
+    <script src="../script.min.js" defer></script>`;
 }
 
 function renderPost(post, posts) {
@@ -979,13 +982,16 @@ function renderPost(post, posts) {
   const related = relatedPosts(post, posts);
   const url = SITE + "/blog/" + post.slug + ".html";
   const hero = post.image && !post.imageMissing
-    ? '<figure class="post-hero"><img src="' +
-      escapeHtml("../" + post.image.replace(/^\//, "")) +
-      '" alt="' +
-      escapeHtml(post.imageAlt) +
-      '"' +
-      (post.imageWidth ? ' width="' + post.imageWidth + '" height="' + post.imageHeight + '"' : "") +
-      ' fetchpriority="high" decoding="async"></figure>'
+    ? '<figure class="post-hero">' +
+      renderPicture({
+        src: "../" + post.image.replace(/^\//, ""),
+        alt: post.imageAlt,
+        width: post.imageWidth,
+        height: post.imageHeight,
+        eager: true,
+        sizes: BLOG_HERO_SIZES,
+      }) +
+      "</figure>"
     : "";
   const updated = post.updated !== post.date
     ? '<li>Updated <time datetime="' + post.updated + '">' + escapeHtml(formatDate(post.updated)) + "</time></li>"
@@ -1265,6 +1271,7 @@ ${headHtml({
   type: "website",
   robots: publishedCount === 0 ? "noindex" : "",
   preload: ordered[0] && ordered[0].image && !ordered[0].imageMissing ? "../" + ordered[0].image.replace(/^\//, "") : "",
+  preloadSizes: BLOG_CARD_SIZES,
   json: [collectionJson(ordered)],
 })}
   </head>

@@ -149,13 +149,12 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="preload" href="fonts/playfair-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />
+    <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low" />
+    <!-- LCP:PRELOAD:START -->
+    <link rel="preload" as="image" href="images/sanjeev-kumar-849.avif" imagesrcset="images/sanjeev-kumar-480.avif 480w, images/sanjeev-kumar-768.avif 768w, images/sanjeev-kumar-849.avif 849w" imagesizes="(min-width: 768px) 34rem, calc(100vw - 2rem)" type="image/avif" fetchpriority="high" />
+    <!-- LCP:PRELOAD:END -->
+    <link rel="stylesheet" href="styles.min.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -208,13 +207,7 @@
       <section class="section section-white" id="meet-sanjeev" aria-labelledby="about-heading">
         <div class="container about-grid">
           <figure class="about-photo">
-            <img
-              src="images/sanjeev-kumar.jpg"
-              alt="Sanjeev Kumar, personal trainer, photographed in a gym"
-              width="849"
-              height="1024"
-              decoding="async"
-            />
+            <picture><source type="image/avif" srcset="images/sanjeev-kumar-480.avif 480w, images/sanjeev-kumar-768.avif 768w, images/sanjeev-kumar-849.avif 849w" sizes="(min-width: 768px) 34rem, calc(100vw - 2rem)"><source type="image/webp" srcset="images/sanjeev-kumar-480.webp 480w, images/sanjeev-kumar-768.webp 768w, images/sanjeev-kumar-849.webp 849w" sizes="(min-width: 768px) 34rem, calc(100vw - 2rem)"><img src="images/sanjeev-kumar.jpg" srcset="images/sanjeev-kumar-480.jpg 480w, images/sanjeev-kumar-768.jpg 768w, images/sanjeev-kumar.jpg 849w" sizes="(min-width: 768px) 34rem, calc(100vw - 2rem)" alt="Sanjeev Kumar, personal trainer, photographed in a gym" width="849" height="1024" fetchpriority="high" decoding="async"></picture>
           </figure>
           <div class="about-copy">
             <h1 class="eyebrow" id="about-heading">Meet Sanjeev</h1>
@@ -279,7 +272,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <!-- Replace .cert-wordmark with <img class="cert-logo" src="images/logos/hypervolt.png" alt="Hypervolt certification badge" loading="lazy" decoding="async" draggable="false"> when a logo file is available. -->
+                    <!-- Replace .cert-wordmark with <img src="images/logos/hypervolt.png" alt="Hypervolt certification badge" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"> when a logo file is available. -->
                     <span class="cert-wordmark">Hypervolt</span>
                   </span>
                   <span class="cert-name">Hypervolt for Self-Administration Course</span>
@@ -298,7 +291,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Fueling the Vegetarian Athlete</span>
                   <span class="cert-desc">Nutrition strategies for plant-based athletes.</span>
@@ -316,7 +309,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Movement Enhancement Course</span>
                   <span class="cert-desc">Coaching cleaner movement quality and performance.</span>
@@ -334,7 +327,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Busting Myths About the OPT Model</span>
                   <span class="cert-desc">Evidence-based progressions instead of gym folklore.</span>
@@ -352,7 +345,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Creativity in Corrective Exercise</span>
                   <span class="cert-desc">Practical ways to restore safer movement patterns.</span>
@@ -370,7 +363,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Menopause Unlocked: Coaching through the Mid-life Shift and Evidence-Based Programming for Menopause and Beyond</span>
                   <span class="cert-desc">Training and coaching through mid-life hormonal change.</span>
@@ -388,7 +381,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Functional Training for the Prenatal and Postpartum Client</span>
                   <span class="cert-desc">Supportive training around pregnancy and postpartum.</span>
@@ -406,7 +399,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Myofascial Intervention Series - Part 4: An Evidence-Based Update on Floss Bands, Myofascial Cupping and Kinesiology Tape</span>
                   <span class="cert-desc">Floss bands, cupping, and kinesiology tape, explained.</span>
@@ -424,7 +417,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/nasm.png" alt="NASM certification badge" width="984" height="358" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/nasm-480.avif 480w, images/logos/nasm-768.avif 768w, images/logos/nasm-984.avif 984w" sizes="8rem"><source type="image/webp" srcset="images/logos/nasm-480.webp 480w, images/logos/nasm-768.webp 768w, images/logos/nasm-984.webp 984w" sizes="8rem"><img src="images/logos/nasm.png" srcset="images/logos/nasm.png 984w" sizes="8rem" alt="NASM certification badge" width="984" height="358" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">NASM Physical Activity, Healthy Lifestyle and Depression: An Evidence-Based Review</span>
                   <span class="cert-desc">How movement and lifestyle can support mental health.</span>
@@ -442,7 +435,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/pronatal.png" alt="ProNatal certification badge" width="832" height="304" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/pronatal-480.avif 480w, images/logos/pronatal-768.avif 768w, images/logos/pronatal-832.avif 832w" sizes="8rem"><source type="image/webp" srcset="images/logos/pronatal-480.webp 480w, images/logos/pronatal-768.webp 768w, images/logos/pronatal-832.webp 832w" sizes="8rem"><img src="images/logos/pronatal.png" srcset="images/logos/pronatal.png 832w" sizes="8rem" alt="ProNatal certification badge" width="832" height="304" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">ProNatal Fitness: How to Train Your Pregnant Clients Like a Pro</span>
                   <span class="cert-desc">Practical prenatal coaching methods for safer sessions.</span>
@@ -460,7 +453,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/issa.png" alt="ISSA certification badge" width="540" height="295" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/issa-480.avif 480w, images/logos/issa-540.avif 540w" sizes="8rem"><source type="image/webp" srcset="images/logos/issa-480.webp 480w, images/logos/issa-540.webp 540w" sizes="8rem"><img src="images/logos/issa.png" srcset="images/logos/issa.png 540w" sizes="8rem" alt="ISSA certification badge" width="540" height="295" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">ISSA Specialist in Strength and Conditioning</span>
                   <span class="cert-desc">Programming for strength, power, and athletic capacity.</span>
@@ -478,7 +471,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/issa.png" alt="ISSA certification badge" width="540" height="295" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/issa-480.avif 480w, images/logos/issa-540.avif 540w" sizes="8rem"><source type="image/webp" srcset="images/logos/issa-480.webp 480w, images/logos/issa-540.webp 540w" sizes="8rem"><img src="images/logos/issa.png" srcset="images/logos/issa.png 540w" sizes="8rem" alt="ISSA certification badge" width="540" height="295" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">ISSA Nutritionist</span>
                   <span class="cert-desc">Practical nutrition coaching for everyday clients.</span>
@@ -496,7 +489,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/issa.png" alt="ISSA certification badge" width="540" height="295" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/issa-480.avif 480w, images/logos/issa-540.avif 540w" sizes="8rem"><source type="image/webp" srcset="images/logos/issa-480.webp 480w, images/logos/issa-540.webp 540w" sizes="8rem"><img src="images/logos/issa.png" srcset="images/logos/issa.png 540w" sizes="8rem" alt="ISSA certification badge" width="540" height="295" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">ISSA Certified Personal Trainer</span>
                   <span class="cert-desc">Foundational coaching, assessment, and program design.</span>
@@ -514,7 +507,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/issa.png" alt="ISSA certification badge" width="540" height="295" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/issa-480.avif 480w, images/logos/issa-540.avif 540w" sizes="8rem"><source type="image/webp" srcset="images/logos/issa-480.webp 480w, images/logos/issa-540.webp 540w" sizes="8rem"><img src="images/logos/issa.png" srcset="images/logos/issa.png 540w" sizes="8rem" alt="ISSA certification badge" width="540" height="295" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">ISSA Transformation Specialist</span>
                   <span class="cert-desc">Sustainable body-composition change over the long term.</span>
@@ -532,7 +525,7 @@
                       <path class="ribbon-tail" d="M32 108h22l3 18-14-8-14 8 3-18z"/>
                       <path class="ribbon-tail" d="M100 108H78l-3 18 14-8 14 8-3-18z"/>
                     </svg>
-                    <img class="cert-logo" src="images/logos/issa.png" alt="ISSA certification badge" width="540" height="295" loading="lazy" decoding="async" draggable="false" />
+                    <picture><source type="image/avif" srcset="images/logos/issa-480.avif 480w, images/logos/issa-540.avif 540w" sizes="8rem"><source type="image/webp" srcset="images/logos/issa-480.webp 480w, images/logos/issa-540.webp 540w" sizes="8rem"><img src="images/logos/issa.png" srcset="images/logos/issa.png 540w" sizes="8rem" alt="ISSA certification badge" width="540" height="295" class="cert-logo" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></picture>
                   </span>
                   <span class="cert-name">ISSA CPR and AED</span>
                   <span class="cert-desc">Emergency response: CPR and defibrillator use.</span>
@@ -989,14 +982,9 @@
       <!-- ========== CONTACT ========== -->
       <section class="contact" id="guidance" aria-labelledby="contact-heading">
         <!-- TODO: replace with client's real photos -->
-        <div
-          class="contact-bg"
-          role="img"
-          aria-hidden="true"
-          style="
-            background-image: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1920&q=80');
-          "
-        ></div>
+        <div class="contact-bg" aria-hidden="true">
+          <picture><source type="image/avif" srcset="images/contact/gym-480.avif 480w, images/contact/gym-768.avif 768w, images/contact/gym-1200.avif 1200w, images/contact/gym-1600.avif 1600w, images/contact/gym-1920.avif 1920w" sizes="100vw"><source type="image/webp" srcset="images/contact/gym-480.webp 480w, images/contact/gym-768.webp 768w, images/contact/gym-1200.webp 1200w, images/contact/gym-1600.webp 1600w, images/contact/gym-1920.webp 1920w" sizes="100vw"><img src="images/contact/gym.jpg" srcset="images/contact/gym-480.jpg 480w, images/contact/gym-768.jpg 768w, images/contact/gym-1200.jpg 1200w, images/contact/gym-1600.jpg 1600w, images/contact/gym.jpg 1920w" sizes="100vw" alt="" width="1920" height="1438" loading="lazy" fetchpriority="low" decoding="async"></picture>
+        </div>
         <div class="contact-overlay"></div>
         <div class="container contact-grid">
           <div class="contact-copy">
@@ -1125,6 +1113,6 @@
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.min.js" defer></script>
   </body>
 </html>
