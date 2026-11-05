@@ -10,6 +10,8 @@ tags: ["strength training", "over 50", "beginners", "longevity"]
 image: "/images/blog/strength-training-after-50.jpg"
 imageAlt: "Older adults seated in a bright room, raising resistance bands with an instructor."
 status: published
+reviewedBy: "Sanjeev Kumar"
+reviewedOn: 2026-11-03
 keyTakeaways:
   - "It is not too late to start. The body responds to strength training at any age."
   - "Begin with six basic movements: sit-to-stand, hinge, push, pull, carry and balance."

@@ -2970,6 +2970,10 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   font-size: 0.92rem;
 }
 
+.post-meta time {
+  white-space: nowrap;
+}
+
 .post-hero {
   margin: 1.25rem 0 0;
 }

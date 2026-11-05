@@ -9,6 +9,8 @@ tags: ["mobility", "desk work", "posture", "stretching"]
 image: "/images/blog/mobility-for-desk-workers.jpg"
 imageAlt: "A woman in a grey top stretches a hand behind her head beside a bright window."
 status: published
+reviewedBy: "Sanjeev Kumar"
+reviewedOn: 2026-11-03
 keyTakeaways:
   - "The problem is not sitting itself. It is staying in one position for hours."
   - "Short movement breaks every 30 to 60 minutes matter more than one long stretch."

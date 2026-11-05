@@ -9,6 +9,8 @@ tags: ["beginners", "habits", "first month", "consistency"]
 image: "/images/blog/your-first-month-of-training.jpg"
 imageAlt: "A trainer watches a woman lift a light dumbbell in a gym."
 status: published
+reviewedBy: "Sanjeev Kumar"
+reviewedOn: 2026-11-03
 keyTakeaways:
   - "Your first month is about building the habit and learning the movements, not about intensity."
   - "Two to three short sessions a week is plenty to begin."
