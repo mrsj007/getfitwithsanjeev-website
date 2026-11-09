@@ -96,6 +96,10 @@ git push
 
 Run the normal `npm run build:blog` before `git add`. Do not commit the extra files that `--drafts` creates. Those are preview pages, and drafts should not go on the live site.
 
+The build also adds a short line at the end of every article, above the booking box: "Was this helpful? Spotted something unclear?" with a Send feedback button. It opens the feedback page with that article's title filled in. You do not add this by hand.
+
+Those messages go to Sanjeev by email. They are not posted on the site. The form uses the same Formspree address as the contact form (`https://formspree.io/f/maeywvbo`) unless you change `FEEDBACK_FORM_ENDPOINT` in `script.js` and the form action in `feedback.html`. Feedback and contact messages share the free-plan monthly limit.
+
 Only `status: published` articles show on the live site. With no published articles, the Blog link stays hidden and the home page does not show a blog section.
 
 ## Review checklist

@@ -216,7 +216,8 @@ h1.eyebrow {
 .hero-lede a:focus-visible,
 .cal-tab:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid #c4a574;
   outline-offset: 3px;
 }
@@ -3260,6 +3261,23 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   margin-top: 1.15rem;
 }
 
+.post-feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  margin: 1.75rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(31, 58, 46, 0.12);
+}
+
+.post-feedback p {
+  margin: 0;
+  flex: 1 1 12rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
 .post-cta .btn-primary {
   background: var(--cream);
   color: var(--green);
@@ -4110,6 +4128,238 @@ html.blog-motion .blog-card.is-inview {
     transform: none;
     transition: none;
     animation: none;
+  }
+}
+
+/* Feedback page */
+.feedback-section h1 {
+  font-size: clamp(2rem, 5vw, 3.15rem);
+}
+
+.feedback-panel {
+  width: min(100%, 36rem);
+  margin: 0 auto;
+}
+
+.feedback-form,
+.feedback-success {
+  display: grid;
+  gap: 1rem;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.1rem 0.9rem 1.2rem;
+}
+
+.feedback-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.feedback-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.feedback-req,
+.feedback-optional {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.feedback-req {
+  color: var(--green);
+}
+
+.feedback-optional {
+  color: var(--muted);
+}
+
+.feedback-select {
+  position: relative;
+}
+
+.feedback-select::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: -0.34rem;
+  border-right: 1.5px solid var(--green);
+  border-bottom: 1.5px solid var(--green);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.feedback-form input[type="text"],
+.feedback-form input[type="email"],
+.feedback-form select,
+.feedback-form textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 58, 46, 0.28);
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.feedback-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.6rem;
+  cursor: pointer;
+}
+
+.feedback-form textarea {
+  min-height: 8.5rem;
+  resize: vertical;
+}
+
+.feedback-form [aria-invalid="true"] {
+  border-color: #7a2e22;
+}
+
+.feedback-count {
+  margin: 0;
+  font-size: 0.78rem;
+  text-align: right;
+  color: var(--muted);
+}
+
+.feedback-field-error {
+  margin: 0;
+  color: #7a2e22;
+  font-size: 0.85rem;
+}
+
+.feedback-check {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.feedback-check input {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-height: 1.25rem;
+  accent-color: var(--green);
+  flex: 0 0 auto;
+}
+
+.feedback-hp {
+  display: none;
+}
+
+.feedback-form .form-error {
+  color: var(--text);
+}
+
+.feedback-form .form-error a {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.feedback-form .btn {
+  width: 100%;
+}
+
+.feedback-form .btn:disabled {
+  opacity: 0.72;
+  cursor: wait;
+  transform: none;
+}
+
+.feedback-caution {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.feedback-success p:first-child {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.feedback-next {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+}
+
+.feedback-next a,
+.feedback-prompt a {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.feedback-next a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.feedback-prompt {
+  margin: 1.5rem 0 0;
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+.feedback-prompt-faq {
+  text-align: left;
+  margin: 1.25rem 0 0;
+}
+
+.feedback-panel a:focus-visible,
+.feedback-prompt a:focus-visible,
+.post-feedback a:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .feedback-form,
+  .feedback-success {
+    padding: 1.5rem 1.4rem 1.45rem;
+  }
+
+  .faq-grid .feedback-prompt-faq {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  html.page-feedback {
+    --header-h: 4.6625rem;
+  }
+
+  html.page-feedback .site-header {
+    padding-bottom: calc(1rem - 1px);
+  }
+
+  html.page-feedback .header-inner {
+    grid-template-areas: "brand primary cta";
+    min-height: 0;
   }
 }
 

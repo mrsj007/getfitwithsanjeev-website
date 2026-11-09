@@ -604,6 +604,18 @@ function takeawaysHtml(items) {
   );
 }
 
+function feedbackBlock(post) {
+  const params = new URLSearchParams();
+  params.set("page", post.slug);
+  params.set("title", post.title);
+  params.set("article", post.slug);
+  return (
+    '<div class="post-feedback"><p>Was this helpful? Spotted something unclear?</p><a class="btn btn-outline" href="' +
+    escapeHtml("../feedback.html?" + params.toString()) +
+    '">Send feedback</a></div>'
+  );
+}
+
 function faqHtml(items) {
   if (!items.length) return "";
   const blocks = items
@@ -932,6 +944,7 @@ function footerHtml() {
             <li><a href="../about.html#approach">The Sanjeev Method</a></li>
             <li><a href="../index.html#faq">FAQ</a></li>
             <li><a href="../index.html#guidance">Personalized Guidance</a></li>
+            <li><a href="../feedback.html">Feedback</a></li>
           </ul>
         </div>
         <div>
@@ -1052,6 +1065,7 @@ ${headerHtml()}
         ${takeawaysHtml(post.keyTakeaways)}
         ${articleBody}
         ${faqHtml(post.faq)}
+        ${feedbackBlock(post)}
         <aside class="post-cta" aria-labelledby="post-cta-heading">
           <h2 id="post-cta-heading">Want guidance built around you?</h2>
           <p>Tell Sanjeev where you are today and what you want to understand.</p>
@@ -1278,7 +1292,7 @@ ${headerHtml().replace('      <div class="reading-progress" id="reading-progress
             <h1 id="blog-heading">${INDEX_H1}</h1>
             <p>${INDEX_INTRO}</p>
           </header>
-          ${[filters, filterStatus, filterEmpty, grid, empty].filter(Boolean).join("\n          ")}
+          ${[filters, filterStatus, filterEmpty, grid, empty, '<p class="feedback-prompt"><a href="../feedback.html">Have a question or a topic idea? Send feedback</a></p>'].filter(Boolean).join("\n          ")}
         </div>
       </section>
     </main>
@@ -1319,6 +1333,20 @@ function assertPost(html, post) {
   if (h1s.length !== 1) fail(post.file + " must have exactly one h1.");
   if (!html.includes(DISCLAIMER)) fail(post.file + " is missing the medical disclaimer.");
   if (!html.includes("Want guidance built around you?")) fail(post.file + " is missing the consultation card.");
+  const feedbackAt = html.indexOf('class="post-feedback"');
+  const ctaAt = html.indexOf('class="post-cta"');
+  if (feedbackAt === -1 || ctaAt === -1 || feedbackAt > ctaAt) {
+    fail(post.file + " is missing the feedback prompt above the consultation card.");
+  }
+  if (!html.includes("Was this helpful? Spotted something unclear?")) {
+    fail(post.file + " is missing the feedback prompt.");
+  }
+  if (!html.includes("feedback.html?page=" + post.slug)) {
+    fail(post.file + " feedback link must include the post slug.");
+  }
+  if (!html.includes('href="../feedback.html">Feedback</a>')) {
+    fail(post.file + " footer is missing the Feedback link.");
+  }
   post.keyTakeaways.forEach((item) => {
     if (!html.includes(escapeHtml(item))) fail(post.file + " is missing a key takeaway on the page.");
   });
@@ -1386,6 +1414,16 @@ function assertIndex(html, posts, publishedCount) {
   }
   if (!posts.length && !html.includes("First articles are coming soon")) {
     fail("The blog index is missing the empty state.");
+  }
+  const feedbackPromptAt = html.indexOf("Have a question or a topic idea? Send feedback");
+  if (feedbackPromptAt === -1 || !html.includes('class="feedback-prompt"><a href="../feedback.html">')) {
+    fail("The blog index is missing the feedback link.");
+  }
+  if (posts.length && feedbackPromptAt < html.indexOf('id="blog-card-grid"')) {
+    fail("The blog index feedback link must sit below the article list.");
+  }
+  if (!html.includes('href="../feedback.html">Feedback</a>')) {
+    fail("The blog index footer is missing the Feedback link.");
   }
   if (posts.length && !html.includes('<option value="" data-label="All categories" selected>All categories</option>')) {
     fail("The blog index filter must default to All categories.");
@@ -1620,6 +1658,7 @@ function assertSourceMarkers() {
     ],
     "about.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "book.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
+    "feedback.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
   };
   Object.keys(required).forEach((file) => {
     const text = fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -1692,6 +1731,7 @@ function writeOutputs(live, published) {
   applyMarkers(path.join(ROOT, "index.html"), "home", live);
   applyMarkers(path.join(ROOT, "about.html"), "about", live);
   applyMarkers(path.join(ROOT, "book.html"), "book", live);
+  applyMarkers(path.join(ROOT, "feedback.html"), "feedback", live);
   applyMarkers(path.join(BLOG_DIR, "index.html"), "blog-index", live);
   live.forEach((post) => applyMarkers(path.join(BLOG_DIR, post.slug + ".html"), "blog-post", live));
   updateLlms(published);

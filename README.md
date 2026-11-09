@@ -9,6 +9,7 @@ Blog articles are written in Markdown and turned into static HTML on your comput
 - `index.html` - home: free guidance, client transformations, training packages, testimonials, FAQ, and the contact form
 - `about.html` - Sanjeev's story, certifications, method, specialized knowledge, FAQ, and the same contact form
 - `book.html` - booking page with a Cal.com calendar embed
+- `feedback.html` - private feedback and questions form. Marked `noindex`, and not listed in the sitemap
 - `blog/index.html` - blog index. While nothing is published it shows a short "coming soon" message and is marked `noindex`
 
 Every "Book a Consultation" and "Book an Online Consultation" button links to `book.html`.
@@ -88,7 +89,7 @@ Files:
 - `about.html` - about page
 - `book.html` - booking page
 - `styles.css` - design tokens, layout, responsive rules
-- `script.js` - mobile nav, FAQ accordion, Formspree submit
+- `script.js` - mobile nav, FAQ accordion, Formspree submit for the contact and feedback forms
 - `images/sanjeev-kumar.jpg` - portrait used on the about page and in social cards
 - `content/blog/` - Markdown articles
 - `images/blog/` - article images
@@ -99,11 +100,15 @@ Files:
 
 The home and about pages post the same form to [Formspree](https://formspree.io/f/maeywvbo), which delivers messages to **getfitwithsk007@gmail.com**. People can ask for free guidance or send a message to find a time to talk about training. After a successful send, the form shows "Thanks, I'll be in touch." The booking page links back to that form and does not replace it.
 
+The feedback page (`feedback.html`) posts to the same Formspree form. The script sets the subject to `Website feedback - <topic>` and includes the page the visitor came from, so those emails are easy to tell apart from consultation requests. Nothing is posted on the site. The form is linked from the footer, the end of each blog post, the blog index, and the home FAQ. It is not in the top navigation, the sitemap, or `llms.txt`.
+
+Both forms share Formspree's free-plan allowance, about 50 submissions a month for the project, not 50 each. A second form would split the inbox, but it would not raise that cap. To point feedback at a different form, change `FEEDBACK_FORM_ENDPOINT` in `script.js` and the `action` on `feedback.html` to the new URL.
+
 Serve the site over HTTP (for example `npx serve` or `python3 -m http.server`) rather than opening the file directly, so the browser can reach Formspree.
 
 ## SEO files
 
-- `sitemap.xml` - lists `/`, `/about.html`, and `/book.html`. The blog build adds `/blog/` and each published article.
+- `sitemap.xml` - lists `/`, `/about.html`, and `/book.html`. The blog build adds `/blog/` and each published article. `feedback.html` stays out of the sitemap.
 - `robots.txt` - allows crawling and points to the sitemap
 - `llms.txt` - a short plain-text summary for answer engines. Published articles are listed between the `BLOG` markers.
 

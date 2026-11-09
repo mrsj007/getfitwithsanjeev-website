@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en-CA" class="page-feedback">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback and Questions | Sanjeev Kumar</title>
+    <meta
+      name="description"
+      content="Send Sanjeev Kumar feedback, a question about a technique, or a topic idea. He reads every message. Nothing is posted publicly."
+    />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://www.getfitwithsanjeev.com/feedback.html" />
+    <meta property="og:title" content="Feedback and Questions | Sanjeev Kumar" />
+    <meta
+      property="og:description"
+      content="Send Sanjeev Kumar feedback, a question about a technique, or a topic idea. He reads every message. Nothing is posted publicly."
+    />
+    <meta property="og:url" content="https://www.getfitwithsanjeev.com/feedback.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.getfitwithsanjeev.com/images/sanjeev-kumar.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.getfitwithsanjeev.com/feedback.html" />
+    <meta name="twitter:title" content="Feedback and Questions | Sanjeev Kumar" />
+    <meta
+      name="twitter:description"
+      content="Send Sanjeev Kumar feedback, a question about a technique, or a topic idea. He reads every message. Nothing is posted publicly."
+    />
+    <meta name="twitter:image" content="https://www.getfitwithsanjeev.com/images/sanjeev-kumar.jpg" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header is-simple" id="top">
+      <div class="header-inner">
+        <a class="brand" href="index.html">
+          <span class="brand-name">SANJEEV KUMAR</span>
+          <span class="brand-tag">Personal Trainer • Vancouver and South Surrey</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+
+        <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+          <ul class="nav-list nav-primary">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <!-- BLOG:NAV:START -->
+            <li><a href="blog/index.html">Blog</a></li>
+            <!-- BLOG:NAV:END -->
+          </ul>
+          <a class="btn btn-primary header-cta" href="book.html">Book a Consultation</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="section section-cream feedback-section" aria-labelledby="feedback-heading">
+        <div class="container">
+          <header class="section-intro">
+            <p class="eyebrow">Feedback and questions</p>
+            <h1 id="feedback-heading">Tell Sanjeev What You Think.</h1>
+            <p>
+              Spotted something unclear, have a question about a technique, or want a topic covered? Send it here and Sanjeev will read it personally.
+            </p>
+          </header>
+
+          <div class="feedback-panel">
+            <!-- FEEDBACK_FORM_ENDPOINT: keep this action in sync with the constant in script.js -->
+            <form
+              class="feedback-form"
+              id="feedback-form"
+              action="https://formspree.io/f/maeywvbo"
+              method="POST"
+              accept-charset="UTF-8"
+            >
+              <div class="feedback-field">
+                <label class="feedback-label" for="feedback-topic">
+                  <span>What is this about?</span>
+                  <span class="feedback-req">Required</span>
+                </label>
+                <div class="feedback-select">
+                  <select id="feedback-topic" name="topic" required aria-describedby="feedback-topic-error">
+                    <option value="">Select one</option>
+                    <option>Feedback on a page or article</option>
+                    <option>Question about a technique or training</option>
+                    <option>Suggest a topic</option>
+                    <option>Problem with the website</option>
+                    <option>Something else</option>
+                  </select>
+                </div>
+                <p class="feedback-field-error" id="feedback-topic-error" hidden role="alert"></p>
+              </div>
+
+              <div class="feedback-field">
+                <label class="feedback-label" for="feedback-page">
+                  <span>Which page or article?</span>
+                  <span class="feedback-optional">Optional</span>
+                </label>
+                <input id="feedback-page" type="text" name="page" maxlength="300" autocomplete="off" />
+              </div>
+
+              <div class="feedback-field">
+                <label class="feedback-label" for="feedback-message">
+                  <span>Your message</span>
+                  <span class="feedback-req">Required</span>
+                </label>
+                <textarea
+                  id="feedback-message"
+                  name="message"
+                  rows="5"
+                  maxlength="2000"
+                  required
+                  aria-describedby="feedback-count feedback-message-error"
+                ></textarea>
+                <p class="feedback-count" id="feedback-count">0 / 2000</p>
+                <p class="feedback-field-error" id="feedback-message-error" hidden role="alert"></p>
+              </div>
+
+              <div class="feedback-field">
+                <label class="feedback-label" for="feedback-name">
+                  <span>Name</span>
+                  <span class="feedback-optional">Optional</span>
+                </label>
+                <input id="feedback-name" type="text" name="name" autocomplete="name" maxlength="200" />
+              </div>
+
+              <div class="feedback-field">
+                <label class="feedback-label" for="feedback-email">
+                  <span>Email</span>
+                  <span class="feedback-req" id="feedback-email-req" hidden>Required</span>
+                  <span class="feedback-optional" id="feedback-email-opt">Optional</span>
+                </label>
+                <input
+                  id="feedback-email"
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  maxlength="200"
+                  aria-required="false"
+                  aria-describedby="feedback-email-error"
+                />
+                <p class="feedback-field-error" id="feedback-email-error" hidden role="alert"></p>
+              </div>
+
+              <label class="feedback-check" for="feedback-reply">
+                <input id="feedback-reply" type="checkbox" name="reply" value="yes" />
+                <span>I would like a reply</span>
+              </label>
+
+              <p class="feedback-hp">
+                <label for="feedback-company">Company</label>
+                <input id="feedback-company" type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+              </p>
+
+              <input type="hidden" name="_subject" id="feedback-subject" value="Website feedback" />
+              <input type="hidden" name="page_url" id="feedback-source" value="" />
+              <input type="hidden" name="_replyto" id="feedback-replyto" value="" disabled />
+
+              <p class="form-error" id="feedback-alert" hidden role="alert" tabindex="-1"></p>
+              <p class="form-error" id="feedback-error" hidden role="alert" tabindex="-1">
+                Something went wrong, and your message was not sent. Please email
+                <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a> directly.
+              </p>
+
+              <button class="btn btn-primary" type="submit">Send feedback</button>
+              <p class="feedback-caution">
+                For anything urgent or medical, please contact your doctor or local emergency services. Please do not include personal health details here.
+              </p>
+            </form>
+
+            <div class="feedback-success" id="feedback-success" hidden role="status" aria-live="polite" tabindex="-1">
+              <p>Thank you. Sanjeev has your message.</p>
+              <p class="feedback-next">
+                <a href="blog/index.html">Blog</a>
+                <a href="index.html">Home</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <p class="brand-name footer-brand">SANJEEV KUMAR</p>
+          <p class="footer-place">Personal Trainer - South Surrey</p>
+          <p class="footer-tagline">Guidance for longevity, mobility and endurance.</p>
+        </div>
+        <div>
+          <p class="footer-heading">Explore</p>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Sanjeev Kumar</a></li>
+            <!-- BLOG:FOOTER:START -->
+            <li><a href="blog/index.html">Blog</a></li>
+            <!-- BLOG:FOOTER:END -->
+            <li><a href="book.html">Book a Consultation</a></li>
+            <li><a href="index.html#packages">In-person training in South Surrey</a></li>
+            <li><a href="index.html#transformations">Real Results</a></li>
+            <li><a href="index.html#testimonials">Social Proof</a></li>
+            <li><a href="about.html#approach">The Sanjeev Method</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+            <li><a href="index.html#guidance">Personalized Guidance</a></li>
+            <li><a href="feedback.html" aria-current="page">Feedback</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Contact</p>
+          <ul>
+            <li>
+              <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Follow</p>
+          <ul class="social-list">
+            <li>
+              <a
+                href="https://www.linkedin.com/in/sanjeev-kumar-0387b6207"
+                aria-label="Sanjeev Kumar on LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M8 10v7M8 7.5v.01M12 17v-4.5a2.5 2.5 0 0 1 5 0V17" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/_sam.001___?stkn=NXowMmVoNnc1Nndo"
+                aria-label="Sanjeev Kumar on Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <p>
+            Fitness and nutrition information provided on this website is for educational purposes only
+            and does not constitute medical advice. Individual results vary.
+          </p>
+          <p>© 2026 GetFitWithSanjeev. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
