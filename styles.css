@@ -279,6 +279,26 @@ textarea:focus-visible {
   color: var(--muted);
 }
 
+/* The longer tagline wraps to an orphan word on the narrowest phones.
+   A fixed measure keeps two even lines and leaves the menu button in place. */
+@media (max-width: 420px) {
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-tag {
+    display: block;
+    max-width: 11.75rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+  }
+
+  .nav-toggle {
+    flex-shrink: 0;
+  }
+}
+
 .nav-toggle {
   width: 44px;
   height: 44px;

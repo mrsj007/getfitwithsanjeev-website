@@ -890,7 +890,7 @@ function headerHtml() {
       <div class="header-inner">
         <a class="brand" href="../index.html">
           <span class="brand-name">SANJEEV KUMAR</span>
-          <span class="brand-tag">Personal Trainer • South Surrey</span>
+          <span class="brand-tag">Personal Trainer • Vancouver and South Surrey</span>
         </a>
         <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
