@@ -789,8 +789,9 @@
         });
       }
       function updateActiveToc() {
-        const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 84;
-        const line = header + 24;
+        const bar = document.querySelector(".site-header");
+        const header = bar ? bar.getBoundingClientRect().height : 84;
+        const line = header + 12;
         let current = tocIds[0];
         tocIds.forEach(function (id) {
           const el = document.getElementById(id);

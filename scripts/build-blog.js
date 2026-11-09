@@ -885,8 +885,8 @@ function headHtml(options) {
 
 function headerHtml() {
   return `    <a class="skip-link" href="#main">Skip to main content</a>
-    <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
     <header class="site-header is-simple" id="top">
+      <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
       <div class="header-inner">
         <a class="brand" href="../index.html">
           <span class="brand-name">SANJEEV KUMAR</span>
@@ -1269,7 +1269,7 @@ ${headHtml({
 })}
   </head>
   <body class="blog-index">
-${headerHtml().replace('    <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>\n', "")}
+${headerHtml().replace('      <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>\n', "")}
     <main id="main">
       <section class="section section-cream blog-index" aria-labelledby="blog-heading">
         <div class="container">
