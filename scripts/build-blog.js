@@ -604,6 +604,16 @@ function takeawaysHtml(items) {
   );
 }
 
+function feedbackCardHtml(href, id) {
+  return (
+    '<aside class="feedback-card" id="' +
+    id +
+    '"><div class="feedback-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M8 18.5 5 21v-3.2A7.2 7.2 0 1 1 8.4 18.2" /><path d="M9 10.5h6" /><path d="M9 13.5h3.5" /></svg></div><div class="feedback-card-copy"><p class="feedback-card-title">Got a question or a topic idea?</p><p>Tell Sanjeev what to explain next, or what was unclear. He reads every message.</p></div><a class="btn btn-outline" href="' +
+    href +
+    '">Send feedback</a></aside>'
+  );
+}
+
 function feedbackBlock(post) {
   const params = new URLSearchParams();
   params.set("page", post.slug);
@@ -1249,6 +1259,7 @@ function renderIndex(posts, publishedCount) {
   const grid = ordered.length
     ? '<div class="blog-card-grid" id="blog-card-grid">' +
       ordered.map((post, index) => cardHtml(post, cardOptions(post, "blog", "h2", index === 0))).join("") +
+      feedbackCardHtml("../feedback.html?page=Blog", "blog-feedback-card") +
       "</div>"
     : "";
   const filterEmpty = posts.length
@@ -1292,7 +1303,7 @@ ${headerHtml().replace('      <div class="reading-progress" id="reading-progress
             <h1 id="blog-heading">${INDEX_H1}</h1>
             <p>${INDEX_INTRO}</p>
           </header>
-          ${[filters, filterStatus, filterEmpty, grid, empty, '<p class="feedback-prompt"><a href="../feedback.html">Have a question or a topic idea? Send feedback</a></p>'].filter(Boolean).join("\n          ")}
+          ${[filters, filterStatus, filterEmpty, grid, empty].filter(Boolean).join("\n          ")}
         </div>
       </section>
     </main>
@@ -1415,12 +1426,22 @@ function assertIndex(html, posts, publishedCount) {
   if (!posts.length && !html.includes("First articles are coming soon")) {
     fail("The blog index is missing the empty state.");
   }
-  const feedbackPromptAt = html.indexOf("Have a question or a topic idea? Send feedback");
-  if (feedbackPromptAt === -1 || !html.includes('class="feedback-prompt"><a href="../feedback.html">')) {
-    fail("The blog index is missing the feedback link.");
+  if (html.includes("Have a question or a topic idea?")) {
+    fail("The blog index still has the old feedback text link.");
   }
-  if (posts.length && feedbackPromptAt < html.indexOf('id="blog-card-grid"')) {
-    fail("The blog index feedback link must sit below the article list.");
+  if (posts.length) {
+    const gridAt = html.indexOf('id="blog-card-grid"');
+    const cardAt = html.indexOf('id="blog-feedback-card"');
+    const gridClose = html.indexOf("</div>", cardAt);
+    if (gridAt === -1 || cardAt < gridAt || gridClose === -1) {
+      fail("The blog index feedback card must be the last item inside the article grid.");
+    }
+    if (!html.includes('href="../feedback.html?page=Blog"')) {
+      fail("The blog index feedback card must link to the feedback page.");
+    }
+    if (!html.includes("Got a question or a topic idea?")) {
+      fail("The blog index feedback card is missing its heading.");
+    }
   }
   if (!html.includes('href="../feedback.html">Feedback</a>')) {
     fail("The blog index footer is missing the Feedback link.");

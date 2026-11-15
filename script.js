@@ -71,6 +71,34 @@
     });
   });
 
+  /* Keep the FAQ feedback card with the sticky intro, unless that column is taller than the viewport. */
+  function placeFaqCards() {
+    const wide = window.matchMedia("(min-width: 768px)").matches;
+    document.querySelectorAll(".faq-sticky").forEach(function (sticky) {
+      const grid = sticky.parentElement;
+      if (!grid || !grid.classList.contains("faq-grid")) return;
+      const accordion = grid.querySelector(".accordion");
+      let card = sticky.querySelector(".feedback-card");
+      if (!card && grid.nextElementSibling && grid.nextElementSibling.classList.contains("feedback-card")) {
+        card = grid.nextElementSibling;
+      }
+      if (!card || !accordion) return;
+      if (card.parentElement !== sticky) sticky.appendChild(card);
+      card.classList.remove("is-parked", "is-banner");
+      if (!wide) return;
+      const header = document.querySelector(".site-header");
+      const headerH = header ? header.getBoundingClientRect().height : 0;
+      const available = window.innerHeight - headerH - 24;
+      if (sticky.offsetHeight > available) {
+        grid.insertAdjacentElement("afterend", card);
+        card.classList.add("is-parked", "is-banner");
+      }
+    });
+  }
+
+  placeFaqCards();
+  window.addEventListener("resize", placeFaqCards);
+
   /* Contact form - Formspree POST, then local success state */
   const form = document.getElementById("contact-form");
   const success = document.getElementById("form-success");
@@ -1405,6 +1433,17 @@
       if (statusEl) statusEl.hidden = !active;
       if (selectionEl) selectionEl.textContent = active ? selectionLabel() : "";
       syncMenu();
+      syncFeedbackCard(shown);
+    }
+
+    function syncFeedbackCard(shown) {
+      const slot = document.getElementById("blog-feedback-card");
+      if (!slot || !grid) return;
+      const cols = window.matchMedia("(min-width: 1024px)").matches ? 3 : window.matchMedia("(min-width: 768px)").matches ? 2 : 1;
+      const featuredVisible = !grid.classList.contains("is-filtered") && grid.querySelector(".blog-card-feature:not([hidden])");
+      const flow = featuredVisible ? Math.max(0, shown - 1) : shown;
+      const alone = cols === 1 || (shown > 0 && flow % cols === 0);
+      slot.classList.toggle("is-banner", alone && shown > 0);
     }
 
     function categoryFromUrl() {
@@ -1711,6 +1750,11 @@
       window.addEventListener("resize", function () {
         layoutColumns();
         if (menuOpen) placePanel();
+        let shown = 0;
+        cards.forEach(function (card) {
+          if (!card.hidden) shown += 1;
+        });
+        syncFeedbackCard(shown);
       });
       layoutColumns();
     }

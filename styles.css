@@ -2142,6 +2142,14 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   gap: 2rem;
 }
 
+.faq-sticky {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
 .accordion-item {
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
@@ -2475,7 +2483,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
     align-items: start;
   }
 
-  .faq-intro {
+  .faq-sticky {
     position: sticky;
     top: calc(var(--header-h) + 1.5rem);
   }
@@ -4307,8 +4315,7 @@ html.blog-motion .blog-card.is-inview {
   margin: 0;
 }
 
-.feedback-next a,
-.feedback-prompt a {
+.feedback-next a {
   color: var(--green);
   font-weight: 600;
 }
@@ -4319,22 +4326,95 @@ html.blog-motion .blog-card.is-inview {
   min-height: 44px;
 }
 
-.feedback-prompt {
-  margin: 1.5rem 0 0;
-  font-size: 0.92rem;
-  text-align: center;
-}
-
-.feedback-prompt-faq {
-  text-align: left;
-  margin: 1.25rem 0 0;
-}
-
 .feedback-panel a:focus-visible,
-.feedback-prompt a:focus-visible,
-.post-feedback a:focus-visible {
+.post-feedback a:focus-visible,
+.feedback-card .btn:focus-visible {
   outline: 2px solid #c4a574;
   outline-offset: 3px;
+}
+
+.feedback-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.85rem;
+  min-width: 0;
+  margin: 0;
+  padding: 1.15rem 1.2rem;
+  border: 1px solid rgba(31, 58, 46, 0.14);
+  border-radius: var(--radius);
+  background: #eef3ef;
+  box-shadow: var(--shadow);
+}
+
+.feedback-card-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 999px;
+  background: var(--green);
+  color: var(--cream);
+}
+
+.feedback-card-icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.feedback-card-copy {
+  min-width: 0;
+}
+
+.feedback-card-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.feedback-card-copy p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.feedback-card .btn {
+  flex: 0 0 auto;
+  min-height: 44px;
+}
+
+.blog-card-grid > .feedback-card {
+  align-self: stretch;
+  height: auto;
+}
+
+.feedback-card.is-banner {
+  flex-direction: row;
+  align-items: center;
+  min-height: 7.5rem;
+  height: auto;
+}
+
+.feedback-card.is-banner .feedback-card-copy {
+  flex: 1 1 auto;
+}
+
+.feedback-card.is-banner .btn {
+  margin-left: auto;
+}
+
+.blog-card-grid > .feedback-card.is-banner {
+  grid-column: 1 / -1;
+}
+
+.faq-grid + .feedback-card.is-parked {
+  margin-top: 1.5rem;
 }
 
 @media (min-width: 768px) {
@@ -4343,8 +4423,63 @@ html.blog-motion .blog-card.is-inview {
     padding: 1.5rem 1.4rem 1.45rem;
   }
 
-  .faq-grid .feedback-prompt-faq {
-    grid-column: 1 / -1;
+}
+
+@media (max-width: 767px) {
+  .faq-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-sticky {
+    display: contents;
+  }
+
+  .faq-intro {
+    order: 1;
+  }
+
+  .faq-grid > .accordion {
+    order: 2;
+  }
+
+  .faq-sticky > .feedback-card,
+  .faq-grid > .feedback-card {
+    order: 3;
+    width: 100%;
+  }
+
+  .feedback-card.is-banner,
+  .blog-card-grid > .feedback-card,
+  .faq-grid .feedback-card {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 0;
+  }
+
+  .feedback-card.is-banner .btn,
+  .blog-card-grid > .feedback-card .btn {
+    margin-left: 0;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .feedback-card {
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .feedback-card:hover {
+    transform: translateY(-3px);
+    background: #e7efe9;
+    box-shadow: 0 16px 32px rgba(31, 58, 46, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback-card,
+  .feedback-card:hover {
+    transform: none;
+    transition: none;
   }
 }
 

@@ -100,7 +100,7 @@ Files:
 
 The home and about pages post the same form to [Formspree](https://formspree.io/f/maeywvbo), which delivers messages to **getfitwithsk007@gmail.com**. People can ask for free guidance or send a message to find a time to talk about training. After a successful send, the form shows "Thanks, I'll be in touch." The booking page links back to that form and does not replace it.
 
-The feedback page (`feedback.html`) posts to the same Formspree form. The script sets the subject to `Website feedback - <topic>` and includes the page the visitor came from, so those emails are easy to tell apart from consultation requests. Nothing is posted on the site. The form is linked from the footer, the end of each blog post, the blog index, and the home FAQ. It is not in the top navigation, the sitemap, or `llms.txt`.
+The feedback page (`feedback.html`) posts to the same Formspree form. The script sets the subject to `Website feedback - <topic>` and includes the page the visitor came from, so those emails are easy to tell apart from consultation requests. Nothing is posted on the site. The form is linked from the footer, the end of each blog post, and a feedback card on the home FAQ, the about FAQ, and the blog index. It is not in the top navigation, the sitemap, or `llms.txt`.
 
 Both forms share Formspree's free-plan allowance, about 50 submissions a month for the project, not 50 each. A second form would split the inbox, but it would not raise that cap. To point feedback at a different form, change `FEEDBACK_FORM_ENDPOINT` in `script.js` and the `action` on `feedback.html` to the new URL.
 
