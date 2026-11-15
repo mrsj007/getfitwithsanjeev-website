@@ -1,4 +1,4 @@
-/* Sanjeev Kumar site interactions: mobile nav, FAQ accordion, contact form. */
+/* Sanjeev Kumar site interactions: mobile nav, FAQ accordion, contact and feedback forms. */
 
 (function () {
   const header = document.querySelector(".site-header");
@@ -71,6 +71,34 @@
     });
   });
 
+  /* Keep the FAQ feedback card with the sticky intro, unless that column is taller than the viewport. */
+  function placeFaqCards() {
+    const wide = window.matchMedia("(min-width: 768px)").matches;
+    document.querySelectorAll(".faq-sticky").forEach(function (sticky) {
+      const grid = sticky.parentElement;
+      if (!grid || !grid.classList.contains("faq-grid")) return;
+      const accordion = grid.querySelector(".accordion");
+      let card = sticky.querySelector(".feedback-card");
+      if (!card && grid.nextElementSibling && grid.nextElementSibling.classList.contains("feedback-card")) {
+        card = grid.nextElementSibling;
+      }
+      if (!card || !accordion) return;
+      if (card.parentElement !== sticky) sticky.appendChild(card);
+      card.classList.remove("is-parked", "is-banner");
+      if (!wide) return;
+      const header = document.querySelector(".site-header");
+      const headerH = header ? header.getBoundingClientRect().height : 0;
+      const available = window.innerHeight - headerH - 24;
+      if (sticky.offsetHeight > available) {
+        grid.insertAdjacentElement("afterend", card);
+        card.classList.add("is-parked", "is-banner");
+      }
+    });
+  }
+
+  placeFaqCards();
+  window.addEventListener("resize", placeFaqCards);
+
   /* Contact form - Formspree POST, then local success state */
   const form = document.getElementById("contact-form");
   const success = document.getElementById("form-success");
@@ -103,6 +131,221 @@
         })
         .finally(function () {
           if (submitBtn) submitBtn.disabled = false;
+        });
+    });
+  }
+
+  /* Feedback form. Same Formspree POST as the contact form.
+     FEEDBACK_FORM_ENDPOINT is the only URL the script posts to.
+     It matches the contact form, so both count toward Formspree's
+     free-plan allowance (about 50 submissions a month for the project).
+     To use a separate form, paste its URL here and in the action on feedback.html. */
+  const FEEDBACK_FORM_ENDPOINT = "https://formspree.io/f/maeywvbo";
+  const feedbackForm = document.getElementById("feedback-form");
+
+  if (feedbackForm) {
+    const MIN_TIME_MS = 3000;
+    const openedAt = Date.now();
+    const topic = document.getElementById("feedback-topic");
+    const pageField = document.getElementById("feedback-page");
+    const message = document.getElementById("feedback-message");
+    const email = document.getElementById("feedback-email");
+    const reply = document.getElementById("feedback-reply");
+    const count = document.getElementById("feedback-count");
+    const success = document.getElementById("feedback-success");
+    const errorBox = document.getElementById("feedback-error");
+    const alertBox = document.getElementById("feedback-alert");
+    const source = document.getElementById("feedback-source");
+    const subject = document.getElementById("feedback-subject");
+    const replyTo = document.getElementById("feedback-replyto");
+    const emailReq = document.getElementById("feedback-email-req");
+    const emailOpt = document.getElementById("feedback-email-opt");
+    const honeypot = feedbackForm.querySelector('[name="_gotcha"]');
+    const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+    const submitLabel = submitBtn ? submitBtn.textContent : "Send feedback";
+
+    feedbackForm.noValidate = true;
+    feedbackForm.action = FEEDBACK_FORM_ENDPOINT;
+
+    function pageUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const article = params.get("article") || "";
+      if (/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article)) {
+        return "https://www.getfitwithsanjeev.com/blog/" + article + ".html";
+      }
+      if (document.referrer) return document.referrer;
+      return window.location.href;
+    }
+
+    function prefillPage() {
+      if (!pageField) return;
+      const params = new URLSearchParams(window.location.search);
+      const fromTitle = params.get("title");
+      const fromPage = params.get("page");
+      const value = fromTitle || fromPage || "";
+      if (value) pageField.value = value;
+    }
+
+    function updateCount() {
+      if (!message || !count) return;
+      count.textContent = message.value.length + " / 2000";
+    }
+
+    function syncReply() {
+      const wants = !!(reply && reply.checked);
+      if (email) email.setAttribute("aria-required", wants ? "true" : "false");
+      if (emailReq) emailReq.hidden = !wants;
+      if (emailOpt) emailOpt.hidden = wants;
+    }
+
+    function showFieldError(input, errorId, text) {
+      const error = document.getElementById(errorId);
+      if (!input || !error) return false;
+      if (!text) {
+        error.hidden = true;
+        error.textContent = "";
+        input.removeAttribute("aria-invalid");
+        return false;
+      }
+      error.hidden = false;
+      error.textContent = text;
+      input.setAttribute("aria-invalid", "true");
+      return true;
+    }
+
+    function hideBanners() {
+      if (alertBox) alertBox.hidden = true;
+      if (errorBox) errorBox.hidden = true;
+    }
+
+    function showSuccess() {
+      hideBanners();
+      feedbackForm.hidden = true;
+      if (success) {
+        success.hidden = false;
+        success.focus();
+      }
+    }
+
+    function validate() {
+      let first = null;
+      function mark(input, errorId, text) {
+        const invalid = showFieldError(input, errorId, text);
+        if (invalid && !first) first = input;
+        return invalid;
+      }
+
+      mark(topic, "feedback-topic-error", topic && topic.value ? "" : "Choose what this is about.");
+      mark(
+        message,
+        "feedback-message-error",
+        message && message.value.trim()
+          ? message.value.length > 2000
+            ? "Keep the message to 2000 characters."
+            : ""
+          : "Write your message before sending."
+      );
+
+      let emailMessage = "";
+      if (email) {
+        email.value = email.value.trim();
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+        if (reply && reply.checked && !email.value) {
+          emailMessage = "Add an email address if you would like a reply.";
+        } else if (email.value && (!emailOk || !email.checkValidity())) {
+          emailMessage = "Enter an email address like name@example.com.";
+        }
+      }
+      mark(email, "feedback-email-error", emailMessage);
+
+      if (first && typeof first.focus === "function") first.focus();
+      return !first;
+    }
+
+    prefillPage();
+    if (source) source.value = pageUrl();
+    updateCount();
+    syncReply();
+
+    if (message) message.addEventListener("input", updateCount);
+    if (reply) {
+      reply.addEventListener("change", function () {
+        syncReply();
+        const emailError = document.getElementById("feedback-email-error");
+        if (!email || !emailError || emailError.hidden) return;
+        email.value = email.value.trim();
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+        let emailMessage = "";
+        if (reply.checked && !email.value) {
+          emailMessage = "Add an email address if you would like a reply.";
+        } else if (email.value && (!emailOk || !email.checkValidity())) {
+          emailMessage = "Enter an email address like name@example.com.";
+        }
+        showFieldError(email, "feedback-email-error", emailMessage);
+      });
+    }
+
+    feedbackForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      hideBanners();
+      if (submitBtn && submitBtn.disabled) return;
+      if (!validate()) return;
+
+      if (honeypot && honeypot.value) {
+        showSuccess();
+        return;
+      }
+
+      if (Date.now() - openedAt < MIN_TIME_MS) {
+        if (alertBox) {
+          alertBox.textContent = "Please wait a moment, then send it again.";
+          alertBox.hidden = false;
+          alertBox.focus();
+        }
+        return;
+      }
+
+      if (subject && topic) {
+        const selected = topic.options[topic.selectedIndex];
+        const topicText = selected ? selected.text : topic.value;
+        subject.value = "Website feedback - " + topicText;
+      }
+      if (source) source.value = pageUrl();
+      if (replyTo) {
+        if (reply && reply.checked && email && email.value) {
+          replyTo.disabled = false;
+          replyTo.value = email.value;
+        } else {
+          replyTo.value = "";
+          replyTo.disabled = true;
+        }
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+      }
+      feedbackForm.setAttribute("aria-busy", "true");
+
+      fetch(FEEDBACK_FORM_ENDPOINT, {
+        method: "POST",
+        body: new FormData(feedbackForm),
+        headers: { Accept: "application/json" },
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("Formspree request failed");
+          showSuccess();
+        })
+        .catch(function () {
+          feedbackForm.removeAttribute("aria-busy");
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = submitLabel;
+          }
+          if (errorBox) {
+            errorBox.hidden = false;
+            errorBox.focus();
+          }
         });
     });
   }
@@ -848,8 +1091,9 @@
         });
       }
       function updateActiveToc() {
-        const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 84;
-        const line = header + 24;
+        const bar = document.querySelector(".site-header");
+        const header = bar ? bar.getBoundingClientRect().height : 84;
+        const line = header + 12;
         let current = tocIds[0];
         tocIds.forEach(function (id) {
           const el = document.getElementById(id);
@@ -1248,6 +1492,17 @@
       if (statusEl) statusEl.hidden = !active;
       if (selectionEl) selectionEl.textContent = active ? selectionLabel() : "";
       syncMenu();
+      syncFeedbackCard(shown);
+    }
+
+    function syncFeedbackCard(shown) {
+      const slot = document.getElementById("blog-feedback-card");
+      if (!slot || !grid) return;
+      const cols = window.matchMedia("(min-width: 1024px)").matches ? 3 : window.matchMedia("(min-width: 768px)").matches ? 2 : 1;
+      const featuredVisible = !grid.classList.contains("is-filtered") && grid.querySelector(".blog-card-feature:not([hidden])");
+      const flow = featuredVisible ? Math.max(0, shown - 1) : shown;
+      const alone = cols === 1 || (shown > 0 && flow % cols === 0);
+      slot.classList.toggle("is-banner", alone && shown > 0);
     }
 
     function categoryFromUrl() {
@@ -1554,6 +1809,11 @@
       window.addEventListener("resize", function () {
         layoutColumns();
         if (menuOpen) placePanel();
+        let shown = 0;
+        cards.forEach(function (card) {
+          if (!card.hidden) shown += 1;
+        });
+        syncFeedbackCard(shown);
       });
       layoutColumns();
     }

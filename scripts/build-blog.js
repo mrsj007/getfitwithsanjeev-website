@@ -605,6 +605,28 @@ function takeawaysHtml(items) {
   );
 }
 
+function feedbackCardHtml(href, id) {
+  return (
+    '<aside class="feedback-card" id="' +
+    id +
+    '"><div class="feedback-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M8 18.5 5 21v-3.2A7.2 7.2 0 1 1 8.4 18.2" /><path d="M9 10.5h6" /><path d="M9 13.5h3.5" /></svg></div><div class="feedback-card-copy"><p class="feedback-card-title">Got a question or a topic idea?</p><p>Tell Sanjeev what to explain next, or what was unclear. He reads every message.</p></div><a class="btn btn-outline" href="' +
+    href +
+    '">Send feedback</a></aside>'
+  );
+}
+
+function feedbackBlock(post) {
+  const params = new URLSearchParams();
+  params.set("page", post.slug);
+  params.set("title", post.title);
+  params.set("article", post.slug);
+  return (
+    '<div class="post-feedback"><p>Was this helpful? Spotted something unclear?</p><a class="btn btn-outline" href="' +
+    escapeHtml("../feedback.html?" + params.toString()) +
+    '">Send feedback</a></div>'
+  );
+}
+
 function faqHtml(items) {
   if (!items.length) return "";
   const blocks = items
@@ -888,12 +910,12 @@ function headHtml(options) {
 
 function headerHtml() {
   return `    <a class="skip-link" href="#main">Skip to main content</a>
-    <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
     <header class="site-header is-simple" id="top">
+      <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
       <div class="header-inner">
         <a class="brand" href="../index.html">
           <span class="brand-name">SANJEEV KUMAR</span>
-          <span class="brand-tag">Personal Trainer • South Surrey</span>
+          <span class="brand-tag">Personal Trainer • Vancouver and South Surrey</span>
         </a>
         <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -919,6 +941,7 @@ function footerHtml() {
         <div>
           <p class="brand-name footer-brand">SANJEEV KUMAR</p>
           <p class="footer-place">Personal Trainer - South Surrey</p>
+          <p class="footer-address">1715 152 St #120, Surrey, BC V4A 4N3, Canada</p>
           <p class="footer-tagline">Guidance for longevity, mobility and endurance.</p>
         </div>
         <div>
@@ -935,6 +958,7 @@ function footerHtml() {
             <li><a href="../about.html#approach">The Sanjeev Method</a></li>
             <li><a href="../index.html#faq">FAQ</a></li>
             <li><a href="../index.html#guidance">Personalized Guidance</a></li>
+            <li><a href="../feedback.html">Feedback</a></li>
           </ul>
         </div>
         <div>
@@ -1058,6 +1082,7 @@ ${headerHtml()}
         ${takeawaysHtml(post.keyTakeaways)}
         ${articleBody}
         ${faqHtml(post.faq)}
+        ${feedbackBlock(post)}
         <aside class="post-cta" aria-labelledby="post-cta-heading">
           <h2 id="post-cta-heading">Want guidance built around you?</h2>
           <p>Tell Sanjeev where you are today and what you want to understand.</p>
@@ -1241,6 +1266,7 @@ function renderIndex(posts, publishedCount) {
   const grid = ordered.length
     ? '<div class="blog-card-grid" id="blog-card-grid">' +
       ordered.map((post, index) => cardHtml(post, cardOptions(post, "blog", "h2", index === 0))).join("") +
+      feedbackCardHtml("../feedback.html?page=Blog", "blog-feedback-card") +
       "</div>"
     : "";
   const filterEmpty = posts.length
@@ -1276,7 +1302,7 @@ ${headHtml({
 })}
   </head>
   <body class="blog-index">
-${headerHtml().replace('    <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>\n', "")}
+${headerHtml().replace('      <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>\n', "")}
     <main id="main">
       <section class="section section-cream blog-index" aria-labelledby="blog-heading">
         <div class="container">
@@ -1326,6 +1352,20 @@ function assertPost(html, post) {
   if (h1s.length !== 1) fail(post.file + " must have exactly one h1.");
   if (!html.includes(DISCLAIMER)) fail(post.file + " is missing the medical disclaimer.");
   if (!html.includes("Want guidance built around you?")) fail(post.file + " is missing the consultation card.");
+  const feedbackAt = html.indexOf('class="post-feedback"');
+  const ctaAt = html.indexOf('class="post-cta"');
+  if (feedbackAt === -1 || ctaAt === -1 || feedbackAt > ctaAt) {
+    fail(post.file + " is missing the feedback prompt above the consultation card.");
+  }
+  if (!html.includes("Was this helpful? Spotted something unclear?")) {
+    fail(post.file + " is missing the feedback prompt.");
+  }
+  if (!html.includes("feedback.html?page=" + post.slug)) {
+    fail(post.file + " feedback link must include the post slug.");
+  }
+  if (!html.includes('href="../feedback.html">Feedback</a>')) {
+    fail(post.file + " footer is missing the Feedback link.");
+  }
   post.keyTakeaways.forEach((item) => {
     if (!html.includes(escapeHtml(item))) fail(post.file + " is missing a key takeaway on the page.");
   });
@@ -1393,6 +1433,26 @@ function assertIndex(html, posts, publishedCount) {
   }
   if (!posts.length && !html.includes("First articles are coming soon")) {
     fail("The blog index is missing the empty state.");
+  }
+  if (html.includes("Have a question or a topic idea?")) {
+    fail("The blog index still has the old feedback text link.");
+  }
+  if (posts.length) {
+    const gridAt = html.indexOf('id="blog-card-grid"');
+    const cardAt = html.indexOf('id="blog-feedback-card"');
+    const gridClose = html.indexOf("</div>", cardAt);
+    if (gridAt === -1 || cardAt < gridAt || gridClose === -1) {
+      fail("The blog index feedback card must be the last item inside the article grid.");
+    }
+    if (!html.includes('href="../feedback.html?page=Blog"')) {
+      fail("The blog index feedback card must link to the feedback page.");
+    }
+    if (!html.includes("Got a question or a topic idea?")) {
+      fail("The blog index feedback card is missing its heading.");
+    }
+  }
+  if (!html.includes('href="../feedback.html">Feedback</a>')) {
+    fail("The blog index footer is missing the Feedback link.");
   }
   if (posts.length && !html.includes('<option value="" data-label="All categories" selected>All categories</option>')) {
     fail("The blog index filter must default to All categories.");
@@ -1627,6 +1687,7 @@ function assertSourceMarkers() {
     ],
     "about.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "book.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
+    "feedback.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
   };
   Object.keys(required).forEach((file) => {
     const text = fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -1699,6 +1760,7 @@ function writeOutputs(live, published) {
   applyMarkers(path.join(ROOT, "index.html"), "home", live);
   applyMarkers(path.join(ROOT, "about.html"), "about", live);
   applyMarkers(path.join(ROOT, "book.html"), "book", live);
+  applyMarkers(path.join(ROOT, "feedback.html"), "feedback", live);
   applyMarkers(path.join(BLOG_DIR, "index.html"), "blog-index", live);
   live.forEach((post) => applyMarkers(path.join(BLOG_DIR, post.slug + ".html"), "blog-post", live));
   updateLlms(published);

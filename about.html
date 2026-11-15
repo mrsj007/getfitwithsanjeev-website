@@ -28,6 +28,41 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Sanjeev Kumar - Personal Training",
+        "url": "https://www.getfitwithsanjeev.com/",
+        "image": "https://www.getfitwithsanjeev.com/images/sanjeev-kumar.jpg",
+        "email": "getfitwithsk007@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1715 152 St #120",
+          "addressLocality": "Surrey",
+          "addressRegion": "BC",
+          "postalCode": "V4A 4N3",
+          "addressCountry": "CA"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "South Surrey, British Columbia, Canada"
+        },
+        "sameAs": ["https://www.linkedin.com/in/sanjeev-kumar-0387b6207"],
+        "founder": {
+          "@type": "Person",
+          "name": "Sanjeev Kumar",
+          "jobTitle": "Personal Trainer",
+          "url": "https://www.getfitwithsanjeev.com/about.html"
+        },
+        "employee": {
+          "@type": "Person",
+          "name": "Sanjeev Kumar",
+          "jobTitle": "Personal Trainer",
+          "url": "https://www.getfitwithsanjeev.com/about.html"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
         "@type": "Person",
         "name": "Sanjeev Kumar",
         "jobTitle": "Personal Trainer",
@@ -35,7 +70,15 @@
         "image": "https://www.getfitwithsanjeev.com/images/sanjeev-kumar.jpg",
         "workLocation": {
           "@type": "Place",
-          "name": "South Surrey, British Columbia, Canada"
+          "name": "South Surrey, British Columbia, Canada",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1715 152 St #120",
+            "addressLocality": "Surrey",
+            "addressRegion": "BC",
+            "postalCode": "V4A 4N3",
+            "addressCountry": "CA"
+          }
         },
         "knowsAbout": [
           "mobility",
@@ -164,7 +207,7 @@
       <div class="header-inner">
         <a class="brand" href="index.html">
           <span class="brand-name">SANJEEV KUMAR</span>
-          <span class="brand-tag">Personal Trainer • South Surrey</span>
+          <span class="brand-tag">Personal Trainer • Vancouver and South Surrey</span>
         </a>
 
         <button
@@ -784,12 +827,29 @@
       </section>
       <!-- ========== FAQ ========== -->
       <section class="section section-white" id="faq" aria-labelledby="faq-heading">
-        <div class="container faq-grid">
-          <header class="faq-intro">
-            <p class="eyebrow">FAQ</p>
-            <h2 id="faq-heading">Questions? Let’s Make Getting Started Easier.</h2>
-            <p>These are short answers about starting, safety, life stages, nutrition and how to book time with Sanjeev.</p>
-          </header>
+        <div class="container">
+        <div class="faq-grid">
+          <div class="faq-sticky">
+            <header class="faq-intro">
+              <p class="eyebrow">FAQ</p>
+              <h2 id="faq-heading">Questions? Let’s Make Getting Started Easier.</h2>
+              <p>These are short answers about starting, safety, life stages, nutrition and how to book time with Sanjeev.</p>
+            </header>
+            <aside class="feedback-card">
+              <div class="feedback-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  <path d="M8 18.5 5 21v-3.2A7.2 7.2 0 1 1 8.4 18.2" />
+                  <path d="M9 10.5h6" />
+                  <path d="M9 13.5h3.5" />
+                </svg>
+              </div>
+              <div class="feedback-card-copy">
+                <p class="feedback-card-title">Got a question or a topic idea?</p>
+                <p>Tell Sanjeev what to explain next, or what was unclear. He reads every message.</p>
+              </div>
+              <a class="btn btn-outline" href="feedback.html?page=About">Send feedback</a>
+            </aside>
+          </div>
           <div class="accordion">
             <div class="accordion-item">
               <h3>
@@ -978,6 +1038,7 @@
             </div>
           </div>
         </div>
+        </div>
       </section>
       <!-- ========== CONTACT ========== -->
       <section class="contact" id="guidance" aria-labelledby="contact-heading">
@@ -996,6 +1057,15 @@
             </p>
             <p class="contact-details">
               <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a>
+              <span class="contact-location-label">Location</span>
+              <span class="contact-address">1715 152 St #120<br />Surrey, BC V4A 4N3, Canada</span>
+              <a
+                class="contact-directions"
+                href="https://www.google.com/maps/search/?api=1&amp;query=1715+152+St+%23120+Surrey+BC+V4A+4N3+Canada"
+                target="_blank"
+                rel="noopener"
+                >Get directions</a
+              >
             </p>
           </div>
           <form
@@ -1042,6 +1112,7 @@
         <div>
           <p class="brand-name footer-brand">SANJEEV KUMAR</p>
           <p class="footer-place">Personal Trainer - South Surrey</p>
+          <p class="footer-address">1715 152 St #120, Surrey, BC V4A 4N3, Canada</p>
           <p class="footer-tagline">Guidance for longevity, mobility and endurance.</p>
         </div>
         <div>
@@ -1059,6 +1130,7 @@
             <li><a href="about.html#approach">The Sanjeev Method</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#guidance">Personalized Guidance</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
           </ul>
         </div>
         <div>

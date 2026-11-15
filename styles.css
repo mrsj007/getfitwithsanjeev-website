@@ -283,7 +283,8 @@ h1.eyebrow {
 .hero-lede a:focus-visible,
 .cal-tab:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid #c4a574;
   outline-offset: 3px;
 }
@@ -344,6 +345,26 @@ textarea:focus-visible {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+/* The longer tagline wraps to an orphan word on the narrowest phones.
+   A fixed measure keeps two even lines and leaves the menu button in place. */
+@media (max-width: 420px) {
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-tag {
+    display: block;
+    max-width: 11.75rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+  }
+
+  .nav-toggle {
+    flex-shrink: 0;
+  }
 }
 
 .nav-toggle {
@@ -918,6 +939,14 @@ html.is-paused .cal-skel-slots span::after,
   font-size: 0.98rem;
   font-weight: 600;
   color: var(--green);
+}
+
+.booking-location-note {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--muted);
 }
 
 .cal-toggle {
@@ -2223,6 +2252,14 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   gap: 2rem;
 }
 
+.faq-sticky {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
 .accordion-item {
   border-bottom: 1px solid rgba(26, 26, 26, 0.12);
 }
@@ -2320,6 +2357,31 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   flex-direction: column;
   gap: 0.35rem;
   margin-top: 1rem;
+}
+
+.contact-location-label {
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.contact-address {
+  color: var(--cream);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.contact-directions {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  width: fit-content;
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .form-error {
@@ -2427,6 +2489,17 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .footer-place {
   color: var(--cream);
   margin: 0;
+}
+
+.footer-address {
+  color: var(--cream);
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.82;
+  max-width: 16.5rem;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .footer-tagline {
@@ -2556,7 +2629,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
     align-items: start;
   }
 
-  .faq-intro {
+  .faq-sticky {
     position: sticky;
     top: calc(var(--header-h) + 1.5rem);
   }
@@ -2788,12 +2861,20 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
     gap: 1rem;
   }
 
+  /* No in-page section nav, so the bar is Home's top row only.
+     The 1rem padding is the row gap Home keeps above that nav.
+     The 1px keeps the border from making this bar taller than Home's. */
   html.page-book {
-    --header-h: 5.4rem;
+    --header-h: 4.6625rem;
+  }
+
+  html.page-book .site-header {
+    padding-bottom: calc(1rem - 1px);
   }
 
   html.page-book .header-inner {
     grid-template-areas: "brand primary cta";
+    min-height: 0;
   }
 
 }
@@ -2938,14 +3019,18 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
     height: 100%;
   }
 
-  .hero-pan-set img:first-child {
+  /* picture wrappers mean img is not :first-child/:last-child of the set */
+  .hero-pan-set > picture:first-child img,
+  .hero-pan-set > img:first-child {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
+    display: block;
   }
 
-  .hero-pan-set img:last-child {
+  .hero-pan-set > picture:not(:first-child),
+  .hero-pan-set > img:not(:first-child) {
     display: none;
   }
 }
@@ -2955,15 +3040,15 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
    ========================================================================== */
 
 .reading-progress {
-  position: fixed;
-  top: 0;
+  position: absolute;
   left: 0;
+  bottom: -1px;
   width: 100%;
   height: 3px;
   background: var(--green);
   transform: scaleX(0);
   transform-origin: 0 50%;
-  z-index: 80;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -3335,6 +3420,23 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.15rem;
+}
+
+.post-feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  margin: 1.75rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(31, 58, 46, 0.12);
+}
+
+.post-feedback p {
+  margin: 0;
+  flex: 1 1 12rem;
+  font-size: 0.95rem;
+  color: var(--muted);
 }
 
 .post-cta .btn-primary {
@@ -4091,11 +4193,16 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 
 @media (min-width: 1024px) {
   html.page-blog {
-    --header-h: 5.4rem;
+    --header-h: 4.6625rem;
+  }
+
+  html.page-blog .site-header {
+    padding-bottom: calc(1rem - 1px);
   }
 
   html.page-blog .header-inner {
     grid-template-areas: "brand primary cta";
+    min-height: 0;
   }
 
   .blog-card-grid {
@@ -4182,6 +4289,365 @@ html.blog-motion .blog-card.is-inview {
     transform: none;
     transition: none;
     animation: none;
+  }
+}
+
+/* Feedback page */
+.feedback-section h1 {
+  font-size: clamp(2rem, 5vw, 3.15rem);
+}
+
+.feedback-panel {
+  width: min(100%, 36rem);
+  margin: 0 auto;
+}
+
+.feedback-form,
+.feedback-success {
+  display: grid;
+  gap: 1rem;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.1rem 0.9rem 1.2rem;
+}
+
+.feedback-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.feedback-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.feedback-req,
+.feedback-optional {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.feedback-req {
+  color: var(--green);
+}
+
+.feedback-optional {
+  color: var(--muted);
+}
+
+.feedback-select {
+  position: relative;
+}
+
+.feedback-select::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: -0.34rem;
+  border-right: 1.5px solid var(--green);
+  border-bottom: 1.5px solid var(--green);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.feedback-form input[type="text"],
+.feedback-form input[type="email"],
+.feedback-form select,
+.feedback-form textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 58, 46, 0.28);
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.feedback-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.6rem;
+  cursor: pointer;
+}
+
+.feedback-form textarea {
+  min-height: 8.5rem;
+  resize: vertical;
+}
+
+.feedback-form [aria-invalid="true"] {
+  border-color: #7a2e22;
+}
+
+.feedback-count {
+  margin: 0;
+  font-size: 0.78rem;
+  text-align: right;
+  color: var(--muted);
+}
+
+.feedback-field-error {
+  margin: 0;
+  color: #7a2e22;
+  font-size: 0.85rem;
+}
+
+.feedback-check {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.feedback-check input {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-height: 1.25rem;
+  accent-color: var(--green);
+  flex: 0 0 auto;
+}
+
+.feedback-hp {
+  display: none;
+}
+
+.feedback-form .form-error {
+  color: var(--text);
+}
+
+.feedback-form .form-error a {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.feedback-form .btn {
+  width: 100%;
+}
+
+.feedback-form .btn:disabled {
+  opacity: 0.72;
+  cursor: wait;
+  transform: none;
+}
+
+.feedback-caution {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.feedback-success p:first-child {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.feedback-next {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+}
+
+.feedback-next a {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.feedback-next a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.feedback-panel a:focus-visible,
+.post-feedback a:focus-visible,
+.feedback-card .btn:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
+}
+
+.feedback-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.85rem;
+  min-width: 0;
+  margin: 0;
+  padding: 1.15rem 1.2rem;
+  border: 1px solid rgba(31, 58, 46, 0.14);
+  border-radius: var(--radius);
+  background: #eef3ef;
+  box-shadow: var(--shadow);
+}
+
+.feedback-card-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 999px;
+  background: var(--green);
+  color: var(--cream);
+}
+
+.feedback-card-icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.feedback-card-copy {
+  min-width: 0;
+}
+
+.feedback-card-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.feedback-card-copy p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.feedback-card .btn {
+  flex: 0 0 auto;
+  min-height: 44px;
+}
+
+.blog-card-grid > .feedback-card {
+  align-self: stretch;
+  height: auto;
+}
+
+.feedback-card.is-banner {
+  flex-direction: row;
+  align-items: center;
+  min-height: 7.5rem;
+  height: auto;
+}
+
+.feedback-card.is-banner .feedback-card-copy {
+  flex: 1 1 auto;
+}
+
+.feedback-card.is-banner .btn {
+  margin-left: auto;
+}
+
+.blog-card-grid > .feedback-card.is-banner {
+  grid-column: 1 / -1;
+}
+
+.faq-grid + .feedback-card.is-parked {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .feedback-form,
+  .feedback-success {
+    padding: 1.5rem 1.4rem 1.45rem;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .faq-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-sticky {
+    display: contents;
+  }
+
+  .faq-intro {
+    order: 1;
+  }
+
+  .faq-grid > .accordion {
+    order: 2;
+  }
+
+  .faq-sticky > .feedback-card,
+  .faq-grid > .feedback-card {
+    order: 3;
+    width: 100%;
+  }
+
+  .feedback-card.is-banner,
+  .blog-card-grid > .feedback-card,
+  .faq-grid .feedback-card {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 0;
+  }
+
+  .feedback-card.is-banner .btn,
+  .blog-card-grid > .feedback-card .btn {
+    margin-left: 0;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .feedback-card {
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .feedback-card:hover {
+    transform: translateY(-3px);
+    background: #e7efe9;
+    box-shadow: 0 16px 32px rgba(31, 58, 46, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback-card,
+  .feedback-card:hover {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  html.page-feedback {
+    --header-h: 4.6625rem;
+  }
+
+  html.page-feedback .site-header {
+    padding-bottom: calc(1rem - 1px);
+  }
+
+  html.page-feedback .header-inner {
+    grid-template-areas: "brand primary cta";
+    min-height: 0;
   }
 }
 

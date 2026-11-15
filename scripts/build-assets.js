@@ -42,8 +42,9 @@ async function build() {
   const jsBytes = fs.statSync(path.join(ROOT, "script.min.js")).size;
   console.log("styles.min.css " + cssBytes + " bytes");
   console.log("script.min.js " + jsBytes + " bytes");
-  if (cssBytes > 60 * 1024) {
-    console.warn("styles.min.css is over 60 KB. Split page CSS before shipping.");
+  // Budget covers shared layout plus feedback-card and address styles from main.
+  if (cssBytes > 68 * 1024) {
+    console.warn("styles.min.css is over 68 KB. Split page CSS before shipping.");
     process.exitCode = 1;
   }
 }

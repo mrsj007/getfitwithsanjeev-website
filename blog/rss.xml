@@ -6,13 +6,34 @@
     <description>Practical articles on longevity, mobility and endurance from Sanjeev Kumar, a Level 3 personal trainer in South Surrey.</description>
     <language>en-ca</language>
     <item>
-      <title>Mobility for Desk Workers: A 10-Minute Routine</title>
-      <link>https://www.getfitwithsanjeev.com/blog/mobility-for-desk-workers.html</link>
-      <description>Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks and a 10-minute mobility routine.</description>
-      <pubDate>Tue, 03 Nov 2026 16:00:00 GMT</pubDate>
+      <title>A Vegetarian Plate Built for Strength</title>
+      <link>https://www.getfitwithsanjeev.com/blog/vegetarian-plate-for-strength.html</link>
+      <description>How to get enough protein, iron and other key nutrients on a vegetarian diet while you train, with simple meal ideas and common pitfalls.</description>
+      <pubDate>Mon, 09 Nov 2026 16:00:00 GMT</pubDate>
+      <category>Nutrition</category>
+      <category>Vegetarian Diet</category>
+      <category>Athletic Performance</category>
+      <guid isPermaLink="true">https://www.getfitwithsanjeev.com/blog/vegetarian-plate-for-strength.html</guid>
+    </item>
+    <item>
+      <title>Fat Loss Without the Crash: Habits That Last</title>
+      <link>https://www.getfitwithsanjeev.com/blog/fat-loss-without-the-crash.html</link>
+      <description>Skip the crash diets. Learn the simple habits behind sustainable fat loss: protein, strength training, steps, sleep and a realistic pace.</description>
+      <pubDate>Mon, 09 Nov 2026 16:00:00 GMT</pubDate>
       <category>Workout</category>
-      <category>Stress Management / Healthy Lifestyle</category>
-      <guid isPermaLink="true">https://www.getfitwithsanjeev.com/blog/mobility-for-desk-workers.html</guid>
+      <category>Fat Loss</category>
+      <category>Nutrition</category>
+      <category>Fat / Weight Loss</category>
+      <guid isPermaLink="true">https://www.getfitwithsanjeev.com/blog/fat-loss-without-the-crash.html</guid>
+    </item>
+    <item>
+      <title>Staying Active During Pregnancy: A Plain-Language Guide</title>
+      <link>https://www.getfitwithsanjeev.com/blog/staying-active-during-pregnancy.html</link>
+      <description>What current guidelines say about exercise during pregnancy, simple ways to stay active, warning signs to stop, and how to ease back after birth.</description>
+      <pubDate>Mon, 09 Nov 2026 16:00:00 GMT</pubDate>
+      <category>Workout</category>
+      <category>Prenatal / Postnatal</category>
+      <guid isPermaLink="true">https://www.getfitwithsanjeev.com/blog/staying-active-during-pregnancy.html</guid>
     </item>
     <item>
       <title>Starting From Zero: Your First Month of Training</title>
@@ -22,6 +43,15 @@
       <category>Workout</category>
       <category>Beginner / Getting Started</category>
       <guid isPermaLink="true">https://www.getfitwithsanjeev.com/blog/your-first-month-of-training.html</guid>
+    </item>
+    <item>
+      <title>Mobility for Desk Workers: A 10-Minute Routine</title>
+      <link>https://www.getfitwithsanjeev.com/blog/mobility-for-desk-workers.html</link>
+      <description>Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks and a 10-minute mobility routine.</description>
+      <pubDate>Tue, 03 Nov 2026 16:00:00 GMT</pubDate>
+      <category>Workout</category>
+      <category>Stress Management / Healthy Lifestyle</category>
+      <guid isPermaLink="true">https://www.getfitwithsanjeev.com/blog/mobility-for-desk-workers.html</guid>
     </item>
     <item>
       <title>Strength Training After 50: Where to Start</title>

@@ -1,4 +1,62 @@
 {
+  "/images/blog/fat-loss-without-the-crash.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/fat-loss-without-the-crash-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/fat-loss-without-the-crash-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/fat-loss-without-the-crash-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/fat-loss-without-the-crash-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/fat-loss-without-the-crash-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/fat-loss-without-the-crash-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/fat-loss-without-the-crash-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/fat-loss-without-the-crash-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/fat-loss-without-the-crash-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/fat-loss-without-the-crash-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/fat-loss-without-the-crash-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/fat-loss-without-the-crash.jpg"
+      }
+    ]
+  },
   "/images/blog/mobility-for-desk-workers.jpg": {
     "width": 1600,
     "height": 1067,
@@ -87,6 +145,64 @@
       }
     ]
   },
+  "/images/blog/staying-active-during-pregnancy.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/staying-active-during-pregnancy-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/staying-active-during-pregnancy-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/staying-active-during-pregnancy-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/staying-active-during-pregnancy-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/staying-active-during-pregnancy-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/staying-active-during-pregnancy-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/staying-active-during-pregnancy-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/staying-active-during-pregnancy-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/staying-active-during-pregnancy-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/staying-active-during-pregnancy-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/staying-active-during-pregnancy-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/staying-active-during-pregnancy.jpg"
+      }
+    ]
+  },
   "/images/blog/strength-training-after-50.jpg": {
     "width": 1600,
     "height": 1067,
@@ -142,6 +258,64 @@
       {
         "w": 1600,
         "src": "/images/blog/strength-training-after-50.jpg"
+      }
+    ]
+  },
+  "/images/blog/vegetarian-plate-for-strength.jpg": {
+    "width": 1600,
+    "height": 1065,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/vegetarian-plate-for-strength-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/vegetarian-plate-for-strength-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/vegetarian-plate-for-strength-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/vegetarian-plate-for-strength-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/vegetarian-plate-for-strength-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/vegetarian-plate-for-strength-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/vegetarian-plate-for-strength-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/vegetarian-plate-for-strength-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/vegetarian-plate-for-strength-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/vegetarian-plate-for-strength-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/vegetarian-plate-for-strength-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/vegetarian-plate-for-strength.jpg"
       }
     ]
   },

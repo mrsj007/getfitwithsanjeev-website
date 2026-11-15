@@ -11,3 +11,4 @@ node_modules/
 *.swo
 *~
 .cursor/
+.wt-main-baseline/

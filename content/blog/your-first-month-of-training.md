@@ -3,7 +3,7 @@ title: "Starting From Zero: Your First Month of Training"
 slug: your-first-month-of-training
 description: "New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working."
 date: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-09
 categories: ["Workout > Beginner / Getting Started"]
 tags: ["beginners", "habits", "first month", "consistency"]
 image: "/images/blog/your-first-month-of-training.jpg"
@@ -20,7 +20,7 @@ faq:
   - q: "How many days a week should a beginner train?"
     a: "Two to three sessions a week is a good start for most people. Add walking or other easy activity on the days in between if you feel like it."
   - q: "How long should each session be?"
-    a: "Twenty to forty minutes, including a warm-up, is enough. Shorter sessions done regularly beat long ones you cannot keep up."
+    a: "Plan for about 45 minutes to 2 hours, including a warm-up and rest between sets. Choose a length you can repeat each week, since consistency matters more than any single long session."
   - q: "Is it normal to be sore?"
     a: "Mild muscle soreness that shows up a day or two after a new workout is normal and usually fades within a few days. Sharp pain or pain in a joint is different and worth checking."
   - q: "Do I need a trainer?"
