@@ -1,6 +1,6 @@
 # Sanjeev Kumar - Personal Trainer Website
 
-Site for Sanjeev Kumar, a Level 3 personal trainer in South Surrey. Free fitness guidance stays on the site, alongside in-person training packages (the main offer), online consultations, and a blog. Built with plain HTML, CSS, and vanilla JavaScript so it can be hosted on Netlify, Vercel, GitHub Pages, or any static host.
+Site for Sanjeev Kumar, a Level 3 personal trainer in South Surrey (1715 152 St #120, Surrey, BC V4A 4N3, Canada). Free fitness guidance stays on the site, alongside in-person training packages (the main offer), online consultations, and a blog. Built with plain HTML, CSS, and vanilla JavaScript so it can be hosted on Netlify, Vercel, GitHub Pages, or any static host.
 
 Blog articles are written in Markdown and turned into static HTML on your computer with `npm run build:blog`. The host only serves the finished files. `package.json` is private and has no `build` script, so Vercel will not try to compile the site.
 

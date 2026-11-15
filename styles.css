@@ -850,6 +850,14 @@ html.is-paused .booking-blob {
   color: var(--green);
 }
 
+.booking-location-note {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
 .cal-toggle {
   position: relative;
   display: grid;
@@ -2249,6 +2257,31 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   margin-top: 1rem;
 }
 
+.contact-location-label {
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.contact-address {
+  color: var(--cream);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.contact-directions {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  width: fit-content;
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .form-error {
   background: rgba(232, 201, 160, 0.18);
   border-radius: 10px;
@@ -2354,6 +2387,17 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .footer-place {
   color: var(--cream);
   margin: 0;
+}
+
+.footer-address {
+  color: var(--cream);
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.82;
+  max-width: 16.5rem;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .footer-tagline {

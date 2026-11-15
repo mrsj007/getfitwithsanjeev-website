@@ -938,6 +938,7 @@ function footerHtml() {
         <div>
           <p class="brand-name footer-brand">SANJEEV KUMAR</p>
           <p class="footer-place">Personal Trainer - South Surrey</p>
+          <p class="footer-address">1715 152 St #120, Surrey, BC V4A 4N3, Canada</p>
           <p class="footer-tagline">Guidance for longevity, mobility and endurance.</p>
         </div>
         <div>
