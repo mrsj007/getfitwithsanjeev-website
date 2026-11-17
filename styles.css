@@ -200,6 +200,7 @@ ul {
 
 .section-tan {
   background: var(--tan);
+  --muted: #575757; /* >=4.5:1 on tan for body copy */
 }
 
 .section-white {
@@ -1674,25 +1675,31 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .love-dots {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.2rem;
   margin: 0 0.15rem;
 }
 
 .love-dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 999px;
+  background: transparent;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.love-dot::before {
+  content: "";
   width: 0.42rem;
   height: 0.42rem;
   border-radius: 999px;
   background: rgba(31, 58, 46, 0.28);
-  position: relative;
 }
 
-.love-dot::after {
-  content: "";
-  position: absolute;
-  inset: -0.55rem;
-}
-
-.love-dot.is-on {
+.love-dot.is-on::before {
   width: 1.05rem;
   background: var(--green);
 }
@@ -1704,11 +1711,11 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   border-color: rgba(244, 239, 230, 0.35);
 }
 
-.love-ink .love-dot {
+.love-ink .love-dot::before {
   background: rgba(244, 239, 230, 0.35);
 }
 
-.love-ink .love-dot.is-on {
+.love-ink .love-dot.is-on::before {
   background: #c4a574;
 }
 
@@ -2415,7 +2422,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .contact-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(16, 28, 22, 0.94), rgba(22, 38, 30, 0.88));
+  background: linear-gradient(90deg, rgba(16, 28, 22, 0.96), rgba(22, 38, 30, 0.93));
 }
 
 .contact-grid {
@@ -2440,8 +2447,21 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   color: var(--cream);
 }
 
-.contact a {
+/* Dark surfaces: cream links (add .on-dark on the section). */
+.on-dark a {
   color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.on-dark a:hover {
+  color: #fff;
+}
+
+.on-dark a:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+  color: #fff;
 }
 
 .contact-details {
@@ -2549,6 +2569,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .contact-form.is-sent label,
 .contact-form.is-sent .btn,
 .contact-form.is-sent .form-note,
+.contact-form.is-sent .form-legal-note,
 .contact-form.is-sent .form-error,
 .contact-form.is-sent .form-intro {
   display: none;
@@ -2562,8 +2583,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 }
 
 .site-footer p,
-.site-footer li,
-.site-footer a {
+.site-footer li {
   color: var(--cream);
 }
 
@@ -2612,11 +2632,13 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   font-weight: 600;
 }
 
-.site-footer a {
+/* Explore/social links: underline on hover; legal links stay underlined via .footer-legal. */
+.site-footer .footer-grid a {
   text-decoration: none;
 }
 
-.site-footer a:hover {
+.site-footer .footer-grid a:hover,
+.site-footer .footer-grid a:focus-visible {
   text-decoration: underline;
 }
 
@@ -4784,14 +4806,11 @@ html.blog-motion .blog-card.is-inview {
 }
 
 .footer-legal a {
-  color: #f4efe6;
-  text-decoration: underline;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  padding: 0.15rem 0.2rem;
-  font-size: inherit;
-  font-weight: 400;
+  padding: 0.15rem 0.35rem;
+  white-space: nowrap;
 }
 
 .footer-legal-sep {
@@ -4799,27 +4818,50 @@ html.blog-motion .blog-card.is-inview {
   opacity: 0.7;
 }
 
-.form-legal-note {
-  margin: 0.65rem 0 0;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.form-legal-note a {
-  color: var(--green);
-  text-decoration: underline;
-}
-
+/* Light surfaces: dark green legal links. Dark surfaces inherit .on-dark / .contact. */
+.form-legal-note,
 .booking-legal-note {
   margin: 1rem 0 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--muted);
   max-width: 40rem;
 }
 
+.form-legal-note a,
 .booking-legal-note a {
   color: var(--green);
   text-decoration: underline;
+  text-underline-offset: 0.15em;
+  white-space: nowrap;
+}
+
+.form-legal-note a:hover,
+.booking-legal-note a:hover {
+  color: var(--green-deep);
+}
+
+.form-legal-note a:focus-visible,
+.booking-legal-note a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.on-dark .form-legal-note {
+  color: var(--cream);
+}
+
+.on-dark .form-legal-note a {
+  color: var(--cream);
+}
+
+.on-dark .form-legal-note a:hover,
+.on-dark .form-legal-note a:focus-visible {
+  color: #fff;
+}
+
+.on-dark .form-legal-note a:focus-visible {
+  outline-color: var(--cream);
 }
 
 html.page-legal .legal-page {

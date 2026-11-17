@@ -960,7 +960,7 @@ function headerHtml() {
 }
 
 function footerHtml() {
-  return `    <footer class="site-footer">
+  return `    <footer class="site-footer on-dark">
       <div class="container footer-grid">
         <div>
           <p class="brand-name footer-brand">SANJEEV KUMAR</p>
