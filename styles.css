@@ -1084,6 +1084,21 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   min-height: 16rem;
   border-radius: var(--radius);
   overflow: hidden;
+  background: var(--tan);
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.photo-card-link {
+  display: block;
+  position: absolute;
+  inset: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.photo-card-link:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
 }
 
 .photo-card img {
@@ -1092,6 +1107,8 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   object-fit: cover;
   position: absolute;
   inset: 0;
+  transform: scale(1);
+  transition: transform 300ms ease;
 }
 
 .photo-card-overlay {
@@ -1101,18 +1118,68 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.25rem;
-  background: linear-gradient(180deg, transparent 35%, rgba(18, 32, 26, 0.88) 100%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 58%,
+    rgba(18, 32, 26, 0.42) 78%,
+    rgba(18, 32, 26, 0.88) 100%
+  );
+  pointer-events: none;
 }
 
 .photo-card h3,
-.photo-card p {
+.photo-card p,
+.photo-card-cta {
   color: var(--white);
   position: relative;
 }
 
 .photo-card p {
   font-size: 0.9rem;
-  opacity: 0.9;
+  opacity: 0.95;
+  margin: 0;
+}
+
+.photo-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+.photo-card-cta span[aria-hidden="true"] {
+  display: inline-block;
+  transition: transform 300ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(31, 58, 46, 0.16);
+  }
+
+  .photo-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .photo-card:hover .photo-card-cta span[aria-hidden="true"] {
+    transform: translateX(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-card,
+  .photo-card img,
+  .photo-card-cta span[aria-hidden="true"] {
+    transition: none;
+  }
 }
 
 /* About */
