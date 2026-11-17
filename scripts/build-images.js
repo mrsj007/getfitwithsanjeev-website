@@ -9,7 +9,7 @@
 const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");
-const picture = require("./picture");
+let picture = require("./picture");
 
 const ROOT = path.join(__dirname, "..");
 const IMAGES = path.join(ROOT, "images");
@@ -19,10 +19,12 @@ const JPEG_QUALITY = 80;
 const AVIF_QUALITY = 50;
 const AVIF_KEEP_RATIO = 0.8;
 
-const PAGES = [
-  { file: "index.html", lcp: "images/hero/collage-1.jpg", sizes: picture.HERO_SIZES },
-  { file: "about.html", lcp: "images/sanjeev-kumar.jpg", sizes: picture.PORTRAIT_SIZES },
-];
+function pageSpecs() {
+  return [
+    { file: "index.html", lcp: "images/hero/collage-1.jpg", sizes: picture.HERO_SIZES },
+    { file: "about.html", lcp: "images/sanjeev-kumar.jpg", sizes: picture.PORTRAIT_SIZES },
+  ];
+}
 
 function walk(dir, found) {
   for (const name of fs.readdirSync(dir)) {
@@ -127,35 +129,54 @@ function parseAttrs(tag) {
   return attrs;
 }
 
+function rewriteImgTag(tag, heroEagerUsed) {
+  const attrs = parseAttrs(tag);
+  const src = attrs.src || "";
+  if (!src || /^https?:/i.test(src) || src.startsWith("data:")) {
+    return { html: tag, heroEagerUsed };
+  }
+  if (!/(^|\/)images\//.test(src)) {
+    return { html: tag, heroEagerUsed };
+  }
+  const key = picture.absKey(src);
+  let nextHero = heroEagerUsed;
+  const isFirstHero = key.endsWith("/images/hero/collage-1.jpg") && !heroEagerUsed;
+  if (isFirstHero) nextHero = true;
+  const eager =
+    isFirstHero ||
+    key.endsWith("/images/sanjeev-kumar.jpg") ||
+    attrs.fetchpriority === "high";
+  const extra = attrs.draggable ? ' draggable="' + attrs.draggable + '"' : "";
+  return {
+    html: picture.renderPicture({
+      src,
+      alt: attrs.alt || "",
+      width: attrs.width || "",
+      height: attrs.height || "",
+      className: attrs.class || "",
+      eager,
+      sizes: picture.sizesFor(key),
+      extra,
+    }),
+    heroEagerUsed: nextHero,
+  };
+}
+
 function rewriteHtml(html) {
   let heroEagerUsed = false;
-  const parts = html.split(/(<picture\b[\s\S]*?<\/picture>)/gi);
-  return parts
-    .map((part, index) => {
-      if (index % 2 === 1) return part;
-      return part.replace(/<img\b[\s\S]*?>/gi, (tag) => {
-        const attrs = parseAttrs(tag);
-        const src = attrs.src || "";
-        if (!src || /^https?:/i.test(src) || src.startsWith("data:")) return tag;
-        if (!/(^|\/)images\//.test(src)) return tag;
-        const key = picture.absKey(src);
-        const isFirstHero = key.endsWith("/images/hero/collage-1.jpg") && !heroEagerUsed;
-        if (isFirstHero) heroEagerUsed = true;
-        const eager = isFirstHero || key.endsWith("/images/sanjeev-kumar.jpg") || attrs.fetchpriority === "high";
-        const extra = attrs.draggable ? ' draggable="' + attrs.draggable + '"' : "";
-        return picture.renderPicture({
-          src,
-          alt: attrs.alt || "",
-          width: attrs.width || "",
-          height: attrs.height || "",
-          className: attrs.class || "",
-          eager,
-          sizes: picture.sizesFor(key),
-          extra,
-        });
-      });
-    })
-    .join("");
+  // Re-render bare <img> and existing <picture> blocks so sizes/srcset stay current.
+  return html.replace(/<picture\b[\s\S]*?<\/picture>|<img\b[\s\S]*?>/gi, (tag) => {
+    if (tag.toLowerCase().startsWith("<picture")) {
+      const img = tag.match(/<img\b[\s\S]*?>/i);
+      if (!img) return tag;
+      const result = rewriteImgTag(img[0], heroEagerUsed);
+      heroEagerUsed = result.heroEagerUsed;
+      return result.html;
+    }
+    const result = rewriteImgTag(tag, heroEagerUsed);
+    heroEagerUsed = result.heroEagerUsed;
+    return result.html;
+  });
 }
 
 function injectPreload(html, src, sizes) {
@@ -184,13 +205,13 @@ async function main() {
     });
   fs.writeFileSync(path.join(IMAGES, "manifest.json"), JSON.stringify(ordered, null, 2) + "\n");
   delete require.cache[require.resolve("./picture")];
-  const fresh = require("./picture");
+  picture = require("./picture");
 
-  for (const page of PAGES) {
+  for (const page of pageSpecs()) {
     const file = path.join(ROOT, page.file);
     let html = fs.readFileSync(file, "utf8");
     html = rewriteHtml(html);
-    const tag = fresh.preloadTag(page.lcp, page.sizes);
+    const tag = picture.preloadTag(page.lcp, page.sizes);
     const start = "<!-- LCP:PRELOAD:START -->";
     const end = "<!-- LCP:PRELOAD:END -->";
     if (html.includes(start) && html.includes(end)) {

@@ -1186,14 +1186,32 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   min-height: 16rem;
   border-radius: var(--radius);
   overflow: hidden;
+  background: var(--tan);
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.photo-card-link {
+  display: block;
+  position: absolute;
+  inset: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.photo-card-link:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
 }
 
 .photo-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 28%;
   position: absolute;
   inset: 0;
+  transform: scale(1);
+  transition: transform 300ms ease;
 }
 
 .photo-card-overlay {
@@ -1203,18 +1221,85 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.25rem;
-  background: linear-gradient(180deg, transparent 35%, rgba(18, 32, 26, 0.88) 100%);
+  /* Top ~40% stays clear; transparent near 55%, then a dense scrim under the text */
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(20, 42, 32, 0) 54%,
+    rgba(20, 42, 32, 0.55) 58%,
+    rgba(20, 42, 32, 0.78) 63%,
+    rgba(20, 42, 32, 0.86) 74%,
+    rgba(20, 42, 32, 0.92) 100%
+  );
+  pointer-events: none;
 }
 
 .photo-card h3,
-.photo-card p {
+.photo-card p,
+.photo-card-cta {
   color: var(--white);
   position: relative;
 }
 
+.photo-card h3,
+.photo-card p {
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+
 .photo-card p {
   font-size: 0.9rem;
-  opacity: 0.9;
+  opacity: 0.95;
+  margin: 0;
+}
+
+.photo-card--face-high img {
+  object-position: center 18%;
+}
+
+.photo-card--face-mid img {
+  object-position: center 32%;
+}
+
+.photo-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+.photo-card-cta span[aria-hidden="true"] {
+  display: inline-block;
+  transition: transform 300ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(31, 58, 46, 0.16);
+  }
+
+  .photo-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .photo-card:hover .photo-card-cta span[aria-hidden="true"] {
+    transform: translateX(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-card,
+  .photo-card img,
+  .photo-card-cta span[aria-hidden="true"] {
+    transition: none;
+  }
 }
 
 /* About */
@@ -1880,8 +1965,8 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .ba-shot img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .ba-arrow {
@@ -1931,6 +2016,13 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   font-weight: 650;
   letter-spacing: 0.05em;
   color: var(--green);
+}
+
+.transform-disclaimer {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
 }
 
 /* Origin story */

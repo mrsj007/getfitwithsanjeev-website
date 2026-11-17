@@ -14,7 +14,13 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 const { marked } = require("marked");
-const { renderPicture, preloadTag, BLOG_CARD_SIZES, BLOG_HERO_SIZES } = require("./picture");
+const {
+  renderPicture,
+  preloadTag,
+  BLOG_CARD_SIZES,
+  BLOG_FEATURE_SIZES,
+  BLOG_HERO_SIZES,
+} = require("./picture");
 
 const ROOT = path.join(__dirname, "..");
 const CONTENT_DIR = path.join(ROOT, "content", "blog");
@@ -744,6 +750,7 @@ function cardOptions(post, where, level, featured) {
     level,
     featured: !!featured,
     eager: !!featured,
+    sizes: featured ? BLOG_FEATURE_SIZES : BLOG_CARD_SIZES,
     idSuffix: where === "home" ? "-home" : where === "related" ? "-related" : "",
   };
 }
@@ -1297,7 +1304,7 @@ ${headHtml({
   type: "website",
   robots: publishedCount === 0 ? "noindex" : "",
   preload: ordered[0] && ordered[0].image && !ordered[0].imageMissing ? "../" + ordered[0].image.replace(/^\//, "") : "",
-  preloadSizes: BLOG_CARD_SIZES,
+  preloadSizes: BLOG_FEATURE_SIZES,
   json: [collectionJson(ordered)],
 })}
   </head>

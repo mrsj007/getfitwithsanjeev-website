@@ -1,14 +1,11 @@
 .DS_Store
-Thumbs.db
 node_modules/
+.vercel/
 .env
 .env.*
 !.env.example
 *.log
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.cursor/
 .wt-main-baseline/
+
+# Client source composites and unblurred originals (never commit)
+private-client-photos/

@@ -10,12 +10,14 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const MANIFEST_PATH = path.join(ROOT, "images", "manifest.json");
 
-const HERO_SIZES = "82rem";
+// Full-bleed hero: match layout width so mobile picks 480/768, not always 1024.
+const HERO_SIZES = "(min-width: 1024px) 82rem, 100vw";
 const PORTRAIT_SIZES = "(min-width: 768px) 34rem, calc(100vw - 2rem)";
 const GUIDANCE_SIZES = "(min-width: 1024px) 24rem, (min-width: 768px) 31vw, (min-width: 480px) 46vw, calc(100vw - 2rem)";
 const TRANSFORM_SIZES = "(min-width: 1024px) 14rem, (min-width: 768px) 20vw, 44vw";
 const LOGO_SIZES = "8rem";
-const BLOG_CARD_SIZES = "(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)";
+const BLOG_CARD_SIZES = "(min-width: 1024px) 22rem, (min-width: 768px) 46vw, calc(100vw - 2rem)";
+const BLOG_FEATURE_SIZES = "(min-width: 1024px) 40rem, (min-width: 768px) 46vw, calc(100vw - 2rem)";
 const BLOG_HERO_SIZES = "min(44rem, calc(100vw - 2rem))";
 const CONTACT_SIZES = "100vw";
 
@@ -165,6 +167,7 @@ module.exports = {
   TRANSFORM_SIZES,
   LOGO_SIZES,
   BLOG_CARD_SIZES,
+  BLOG_FEATURE_SIZES,
   BLOG_HERO_SIZES,
   CONTACT_SIZES,
   absKey,

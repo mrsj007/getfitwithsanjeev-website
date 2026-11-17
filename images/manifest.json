@@ -1,4 +1,294 @@
 {
+  "/images/blog/beyond-the-scale-body-composition.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/beyond-the-scale-body-composition-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/beyond-the-scale-body-composition-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/beyond-the-scale-body-composition-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/beyond-the-scale-body-composition-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/beyond-the-scale-body-composition-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/beyond-the-scale-body-composition-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/beyond-the-scale-body-composition-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/beyond-the-scale-body-composition-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/beyond-the-scale-body-composition-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/beyond-the-scale-body-composition-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/beyond-the-scale-body-composition-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/beyond-the-scale-body-composition.jpg"
+      }
+    ]
+  },
+  "/images/blog/creatine-basics-for-beginners.jpg": {
+    "width": 1600,
+    "height": 1063,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/creatine-basics-for-beginners-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/creatine-basics-for-beginners-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/creatine-basics-for-beginners-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/creatine-basics-for-beginners-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/creatine-basics-for-beginners-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/creatine-basics-for-beginners-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/creatine-basics-for-beginners-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/creatine-basics-for-beginners-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/creatine-basics-for-beginners-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/creatine-basics-for-beginners-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/creatine-basics-for-beginners-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/creatine-basics-for-beginners.jpg"
+      }
+    ]
+  },
+  "/images/blog/eating-for-performance-before-during-after-training.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/eating-for-performance-before-during-after-training-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/eating-for-performance-before-during-after-training.jpg"
+      }
+    ]
+  },
+  "/images/blog/everyday-vitamins-and-supplements-do-you-need-them.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/everyday-vitamins-and-supplements-do-you-need-them.jpg"
+      }
+    ]
+  },
+  "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/exercise-with-arthritis-osteoporosis-sarcopenia.jpg"
+      }
+    ]
+  },
   "/images/blog/fat-loss-without-the-crash.jpg": {
     "width": 1600,
     "height": 1067,
@@ -57,6 +347,64 @@
       }
     ]
   },
+  "/images/blog/gluten-free-lactose-free-eating-for-active-people.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/gluten-free-lactose-free-eating-for-active-people.jpg"
+      }
+    ]
+  },
   "/images/blog/mobility-for-desk-workers.jpg": {
     "width": 1600,
     "height": 1067,
@@ -112,6 +460,122 @@
       {
         "w": 1600,
         "src": "/images/blog/mobility-for-desk-workers.jpg"
+      }
+    ]
+  },
+  "/images/blog/ozempic-and-strength-training.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/ozempic-and-strength-training-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/ozempic-and-strength-training-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/ozempic-and-strength-training-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/ozempic-and-strength-training-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/ozempic-and-strength-training-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/ozempic-and-strength-training-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/ozempic-and-strength-training-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/ozempic-and-strength-training-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/ozempic-and-strength-training-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/ozempic-and-strength-training-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/ozempic-and-strength-training-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/ozempic-and-strength-training.jpg"
+      }
+    ]
+  },
+  "/images/blog/recovery-supplements-what-helps-what-is-hype.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/recovery-supplements-what-helps-what-is-hype.jpg"
       }
     ]
   },
@@ -258,6 +722,122 @@
       {
         "w": 1600,
         "src": "/images/blog/strength-training-after-50.jpg"
+      }
+    ]
+  },
+  "/images/blog/training-alongside-testosterone-therapy.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/training-alongside-testosterone-therapy-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/training-alongside-testosterone-therapy-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/training-alongside-testosterone-therapy-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/training-alongside-testosterone-therapy-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/training-alongside-testosterone-therapy-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/training-alongside-testosterone-therapy-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/training-alongside-testosterone-therapy-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/training-alongside-testosterone-therapy-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/training-alongside-testosterone-therapy-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/training-alongside-testosterone-therapy-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/training-alongside-testosterone-therapy-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/training-alongside-testosterone-therapy.jpg"
+      }
+    ]
+  },
+  "/images/blog/vegan-diet-protein-and-nutrients.jpg": {
+    "width": 1600,
+    "height": 1067,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-1200.webp"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-1600.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-1200.avif"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-1600.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients-1200.jpg"
+      },
+      {
+        "w": 1600,
+        "src": "/images/blog/vegan-diet-protein-and-nutrients.jpg"
       }
     ]
   },
@@ -447,233 +1027,351 @@
       }
     ]
   },
-  "/images/guidance/adults-50.jpg": {
-    "width": 1200,
-    "height": 800,
+  "/images/guidance/adults-50-v2.jpg": {
+    "width": 1400,
+    "height": 1167,
     "webp": [
       {
         "w": 480,
-        "src": "/images/guidance/adults-50-480.webp"
+        "src": "/images/guidance/adults-50-v2-480.webp"
       },
       {
         "w": 768,
-        "src": "/images/guidance/adults-50-768.webp"
+        "src": "/images/guidance/adults-50-v2-768.webp"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/adults-50-1200.webp"
+        "src": "/images/guidance/adults-50-v2-1200.webp"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/adults-50-v2-1400.webp"
       }
     ],
     "avif": [
       {
         "w": 480,
-        "src": "/images/guidance/adults-50-480.avif"
+        "src": "/images/guidance/adults-50-v2-480.avif"
       },
       {
         "w": 768,
-        "src": "/images/guidance/adults-50-768.avif"
+        "src": "/images/guidance/adults-50-v2-768.avif"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/adults-50-1200.avif"
+        "src": "/images/guidance/adults-50-v2-1200.avif"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/adults-50-v2-1400.avif"
       }
     ],
     "fallback": [
       {
         "w": 480,
-        "src": "/images/guidance/adults-50-480.jpg"
+        "src": "/images/guidance/adults-50-v2-480.jpg"
       },
       {
         "w": 768,
-        "src": "/images/guidance/adults-50-768.jpg"
+        "src": "/images/guidance/adults-50-v2-768.jpg"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/adults-50.jpg"
+        "src": "/images/guidance/adults-50-v2-1200.jpg"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/adults-50-v2.jpg"
       }
     ]
   },
-  "/images/guidance/beginners.jpg": {
-    "width": 1200,
-    "height": 800,
+  "/images/guidance/beginners-v3.jpg": {
+    "width": 1400,
+    "height": 1167,
     "webp": [
       {
         "w": 480,
-        "src": "/images/guidance/beginners-480.webp"
+        "src": "/images/guidance/beginners-v3-480.webp"
       },
       {
         "w": 768,
-        "src": "/images/guidance/beginners-768.webp"
+        "src": "/images/guidance/beginners-v3-768.webp"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/beginners-1200.webp"
+        "src": "/images/guidance/beginners-v3-1200.webp"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/beginners-v3-1400.webp"
       }
     ],
     "avif": [
       {
         "w": 480,
-        "src": "/images/guidance/beginners-480.avif"
+        "src": "/images/guidance/beginners-v3-480.avif"
       },
       {
         "w": 768,
-        "src": "/images/guidance/beginners-768.avif"
+        "src": "/images/guidance/beginners-v3-768.avif"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/beginners-1200.avif"
+        "src": "/images/guidance/beginners-v3-1200.avif"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/beginners-v3-1400.avif"
       }
     ],
     "fallback": [
       {
         "w": 480,
-        "src": "/images/guidance/beginners-480.jpg"
+        "src": "/images/guidance/beginners-v3-480.jpg"
       },
       {
         "w": 768,
-        "src": "/images/guidance/beginners-768.jpg"
+        "src": "/images/guidance/beginners-v3-768.jpg"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/beginners.jpg"
+        "src": "/images/guidance/beginners-v3-1200.jpg"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/beginners-v3.jpg"
       }
     ]
   },
-  "/images/guidance/mobility.jpg": {
-    "width": 1200,
-    "height": 800,
+  "/images/guidance/joint-mobility-v2.jpg": {
+    "width": 1400,
+    "height": 1167,
     "webp": [
       {
         "w": 480,
-        "src": "/images/guidance/mobility-480.webp"
+        "src": "/images/guidance/joint-mobility-v2-480.webp"
       },
       {
         "w": 768,
-        "src": "/images/guidance/mobility-768.webp"
+        "src": "/images/guidance/joint-mobility-v2-768.webp"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/mobility-1200.webp"
+        "src": "/images/guidance/joint-mobility-v2-1200.webp"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/joint-mobility-v2-1400.webp"
       }
     ],
     "avif": [
       {
         "w": 480,
-        "src": "/images/guidance/mobility-480.avif"
+        "src": "/images/guidance/joint-mobility-v2-480.avif"
       },
       {
         "w": 768,
-        "src": "/images/guidance/mobility-768.avif"
+        "src": "/images/guidance/joint-mobility-v2-768.avif"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/mobility-1200.avif"
+        "src": "/images/guidance/joint-mobility-v2-1200.avif"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/joint-mobility-v2-1400.avif"
       }
     ],
     "fallback": [
       {
         "w": 480,
-        "src": "/images/guidance/mobility-480.jpg"
+        "src": "/images/guidance/joint-mobility-v2-480.jpg"
       },
       {
         "w": 768,
-        "src": "/images/guidance/mobility-768.jpg"
+        "src": "/images/guidance/joint-mobility-v2-768.jpg"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/mobility.jpg"
+        "src": "/images/guidance/joint-mobility-v2-1200.jpg"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/joint-mobility-v2.jpg"
       }
     ]
   },
-  "/images/guidance/strength.jpg": {
-    "width": 1200,
-    "height": 800,
+  "/images/guidance/strength-functional-v3.jpg": {
+    "width": 1400,
+    "height": 1167,
     "webp": [
       {
         "w": 480,
-        "src": "/images/guidance/strength-480.webp"
+        "src": "/images/guidance/strength-functional-v3-480.webp"
       },
       {
         "w": 768,
-        "src": "/images/guidance/strength-768.webp"
+        "src": "/images/guidance/strength-functional-v3-768.webp"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/strength-1200.webp"
+        "src": "/images/guidance/strength-functional-v3-1200.webp"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/strength-functional-v3-1400.webp"
       }
     ],
     "avif": [
       {
         "w": 480,
-        "src": "/images/guidance/strength-480.avif"
+        "src": "/images/guidance/strength-functional-v3-480.avif"
       },
       {
         "w": 768,
-        "src": "/images/guidance/strength-768.avif"
+        "src": "/images/guidance/strength-functional-v3-768.avif"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/strength-1200.avif"
+        "src": "/images/guidance/strength-functional-v3-1200.avif"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/strength-functional-v3-1400.avif"
       }
     ],
     "fallback": [
       {
         "w": 480,
-        "src": "/images/guidance/strength-480.jpg"
+        "src": "/images/guidance/strength-functional-v3-480.jpg"
       },
       {
         "w": 768,
-        "src": "/images/guidance/strength-768.jpg"
+        "src": "/images/guidance/strength-functional-v3-768.jpg"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/strength.jpg"
+        "src": "/images/guidance/strength-functional-v3-1200.jpg"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/strength-functional-v3.jpg"
       }
     ]
   },
-  "/images/guidance/stress.jpg": {
-    "width": 1200,
-    "height": 800,
+  "/images/guidance/stress-lifestyle-v2.jpg": {
+    "width": 1400,
+    "height": 1167,
     "webp": [
       {
         "w": 480,
-        "src": "/images/guidance/stress-480.webp"
+        "src": "/images/guidance/stress-lifestyle-v2-480.webp"
       },
       {
         "w": 768,
-        "src": "/images/guidance/stress-768.webp"
+        "src": "/images/guidance/stress-lifestyle-v2-768.webp"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/stress-1200.webp"
+        "src": "/images/guidance/stress-lifestyle-v2-1200.webp"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/stress-lifestyle-v2-1400.webp"
       }
     ],
     "avif": [
       {
         "w": 480,
-        "src": "/images/guidance/stress-480.avif"
+        "src": "/images/guidance/stress-lifestyle-v2-480.avif"
       },
       {
         "w": 768,
-        "src": "/images/guidance/stress-768.avif"
+        "src": "/images/guidance/stress-lifestyle-v2-768.avif"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/stress-1200.avif"
+        "src": "/images/guidance/stress-lifestyle-v2-1200.avif"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/stress-lifestyle-v2-1400.avif"
       }
     ],
     "fallback": [
       {
         "w": 480,
-        "src": "/images/guidance/stress-480.jpg"
+        "src": "/images/guidance/stress-lifestyle-v2-480.jpg"
       },
       {
         "w": 768,
-        "src": "/images/guidance/stress-768.jpg"
+        "src": "/images/guidance/stress-lifestyle-v2-768.jpg"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/stress.jpg"
+        "src": "/images/guidance/stress-lifestyle-v2-1200.jpg"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/stress-lifestyle-v2.jpg"
+      }
+    ]
+  },
+  "/images/guidance/womens-fitness-v3.jpg": {
+    "width": 1400,
+    "height": 1167,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/guidance/womens-fitness-v3-480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/womens-fitness-v3-768.webp"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/womens-fitness-v3-1200.webp"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/womens-fitness-v3-1400.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/guidance/womens-fitness-v3-480.avif"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/womens-fitness-v3-768.avif"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/womens-fitness-v3-1200.avif"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/womens-fitness-v3-1400.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/guidance/womens-fitness-v3-480.jpg"
+      },
+      {
+        "w": 768,
+        "src": "/images/guidance/womens-fitness-v3-768.jpg"
+      },
+      {
+        "w": 1200,
+        "src": "/images/guidance/womens-fitness-v3-1200.jpg"
+      },
+      {
+        "w": 1400,
+        "src": "/images/guidance/womens-fitness-v3.jpg"
       }
     ]
   },
@@ -1732,6 +2430,210 @@
       {
         "w": 610,
         "src": "/images/transformations/13-before.jpg"
+      }
+    ]
+  },
+  "/images/transformations/14-after-v2.jpg": {
+    "width": 550,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/14-after-v2-480.webp"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/14-after-v2-550.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/14-after-v2-480.avif"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/14-after-v2-550.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/14-after-v2-480.jpg"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/14-after-v2.jpg"
+      }
+    ]
+  },
+  "/images/transformations/14-before-v2.jpg": {
+    "width": 550,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/14-before-v2-480.webp"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/14-before-v2-550.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/14-before-v2-480.avif"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/14-before-v2-550.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/14-before-v2-480.jpg"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/14-before-v2.jpg"
+      }
+    ]
+  },
+  "/images/transformations/15-after-v2.jpg": {
+    "width": 550,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/15-after-v2-480.webp"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/15-after-v2-550.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/15-after-v2-480.avif"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/15-after-v2-550.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/15-after-v2-480.jpg"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/15-after-v2.jpg"
+      }
+    ]
+  },
+  "/images/transformations/15-before-v2.jpg": {
+    "width": 550,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/15-before-v2-480.webp"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/15-before-v2-550.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/15-before-v2-480.avif"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/15-before-v2-550.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/15-before-v2-480.jpg"
+      },
+      {
+        "w": 550,
+        "src": "/images/transformations/15-before-v2.jpg"
+      }
+    ]
+  },
+  "/images/transformations/16-after.jpg": {
+    "width": 583,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/16-after-480.webp"
+      },
+      {
+        "w": 583,
+        "src": "/images/transformations/16-after-583.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/16-after-480.avif"
+      },
+      {
+        "w": 583,
+        "src": "/images/transformations/16-after-583.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/16-after-480.jpg"
+      },
+      {
+        "w": 583,
+        "src": "/images/transformations/16-after.jpg"
+      }
+    ]
+  },
+  "/images/transformations/16-before.jpg": {
+    "width": 579,
+    "height": 1100,
+    "webp": [
+      {
+        "w": 480,
+        "src": "/images/transformations/16-before-480.webp"
+      },
+      {
+        "w": 579,
+        "src": "/images/transformations/16-before-579.webp"
+      }
+    ],
+    "avif": [
+      {
+        "w": 480,
+        "src": "/images/transformations/16-before-480.avif"
+      },
+      {
+        "w": 579,
+        "src": "/images/transformations/16-before-579.avif"
+      }
+    ],
+    "fallback": [
+      {
+        "w": 480,
+        "src": "/images/transformations/16-before-480.jpg"
+      },
+      {
+        "w": 579,
+        "src": "/images/transformations/16-before.jpg"
       }
     ]
   }
