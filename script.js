@@ -141,6 +141,9 @@
      free-plan allowance (about 50 submissions a month for the project).
      To use a separate form, paste its URL here and in the action on feedback.html. */
   const FEEDBACK_FORM_ENDPOINT = "https://formspree.io/f/maeywvbo";
+  /* BMI calculator lead form (handled in bmi-calculator.js). Keep in sync with that file. */
+  const BMI_FORM_ENDPOINT = "https://formspree.io/f/maeywvbo";
+  void BMI_FORM_ENDPOINT;
   const feedbackForm = document.getElementById("feedback-form");
 
   if (feedbackForm) {

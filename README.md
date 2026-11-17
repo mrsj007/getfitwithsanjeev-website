@@ -9,6 +9,7 @@ Blog articles are written in Markdown and turned into static HTML on your comput
 - `index.html` - home: free guidance, client transformations, training packages, testimonials, FAQ, and the contact form
 - `about.html` - Sanjeev's story, certifications, method, specialized knowledge, FAQ, and the same contact form
 - `book.html` - booking page with a Cal.com calendar embed
+- `bmi-calculator.html` - free adult BMI calculator lead magnet (age-aware chart, optional South Asian cut-offs, guidance, related posts, contact form). Editable copy lives in `content/bmi/guidance.json` and related-article mapping in `content/bmi/related.json`
 - `feedback.html` - private feedback and questions form. Marked `noindex`, and not listed in the sitemap
 - `blog/index.html` - blog index. While nothing is published it shows a short "coming soon" message and is marked `noindex`
 
@@ -112,8 +113,12 @@ Files:
 - `book.html` - booking page
 - `styles.css` - design tokens, layout, responsive rules (edit this)
 - `styles.min.css` - minified CSS the pages load
-- `script.js` - mobile nav, FAQ accordion, Formspree submit for the contact and feedback forms (edit this)
+- `bmi-calculator.css` / `bmi-calculator.min.css` - BMI page styles (built by `npm run build:assets`)
+- `bmi-calculator.js` / `bmi-calculator.min.js` - BMI calculator logic and lead form (built by `npm run build:assets`, bundles `content/bmi/*.json`)
+- `script.js` - mobile nav, FAQ accordion, Formspree submit for the contact and feedback forms (edit this). `BMI_FORM_ENDPOINT` mirrors the BMI page form endpoint
 - `script.min.js` - minified script the pages load
+- `content/bmi/guidance.json` - category guidance Sanjeev can edit
+- `content/bmi/related.json` - related-article mapping for BMI results
 - `fonts/` - self-hosted Playfair Display and Inter
 - `images/sanjeev-kumar.jpg` - portrait used on the about page and in social cards
 - `images/manifest.json` - widths generated for each photo
@@ -132,11 +137,13 @@ The feedback page (`feedback.html`) posts to the same Formspree form. The script
 
 Both forms share Formspree's free-plan allowance, about 50 submissions a month for the project, not 50 each. A second form would split the inbox, but it would not raise that cap. To point feedback at a different form, change `FEEDBACK_FORM_ENDPOINT` in `script.js` and the `action` on `feedback.html` to the new URL.
 
+The BMI calculator page posts to the same Formspree endpoint via `BMI_FORM_ENDPOINT` in `script.js` / `bmi-calculator.js`, with `source=bmi-calculator`. That page will outgrow the free plan once traffic grows. Plan a paid Formspree tier or a dedicated form service (for example Basin, Getform or a small serverless handler) before marketing the calculator widely.
+
 Serve the site over HTTP (for example `npx serve` or `python3 -m http.server`) rather than opening the file directly, so the browser can reach Formspree.
 
 ## SEO files
 
-- `sitemap.xml` - lists `/`, `/about.html`, and `/book.html`. The blog build adds `/blog/` and each published article. `feedback.html` stays out of the sitemap.
+- `sitemap.xml` - lists `/`, `/about.html`, `/book.html`, and `/bmi-calculator.html`. The blog build adds `/blog/` and each published article. `feedback.html` stays out of the sitemap.
 - `robots.txt` - allows crawling and points to the sitemap
 - `llms.txt` - a short plain-text summary for answer engines. Published articles are listed between the `BLOG` markers.
 

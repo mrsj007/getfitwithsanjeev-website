@@ -4743,3 +4743,23 @@ html.blog-motion .blog-card.is-inview {
   }
 }
 
+.post-bmi-link,
+.blog-bmi-promo {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  background: var(--cream);
+  border: 1px solid rgba(31, 58, 46, 0.12);
+  border-radius: 12px;
+}
+
+.blog-bmi-promo {
+  max-width: 40rem;
+}
+
+.post-bmi-link a,
+.blog-bmi-promo a {
+  color: var(--green);
+  font-weight: 700;
+  text-decoration: underline;
+}
+

@@ -1,0 +1,117 @@
+{
+  "seeAllLabel": "See all guidance",
+  "rules": {
+    "underweight": {
+      "topics": ["workout-muscle-gain", "nutrition-athletic-performance"],
+      "seeAllCategory": "workout-muscle-gain"
+    },
+    "healthy": {
+      "topics": ["workout-strength", "workout-stress-management-healthy-lifestyle"],
+      "seeAllCategory": "workout-strength"
+    },
+    "overweight": {
+      "topics": ["workout-fat-loss", "nutrition-fat-weight-loss", "workout-body-composition-changes"],
+      "seeAllCategory": "workout-fat-loss"
+    },
+    "obese": {
+      "topics": ["workout-fat-loss", "nutrition-fat-weight-loss", "workout-body-composition-changes"],
+      "seeAllCategory": "workout-fat-loss"
+    }
+  },
+  "age50PlusExtraTopics": [
+    "workout-arthritis-osteoporosis-and-sarcopenia",
+    "workout-strength"
+  ],
+  "posts": [
+    {
+      "slug": "beyond-the-scale-body-composition",
+      "title": "Beyond the Scale: Understanding Body Composition Changes",
+      "description": "Weight alone does not tell the whole story. Learn what body composition is and simple ways to track real progress.",
+      "image": "images/blog/beyond-the-scale-body-composition.jpg",
+      "topics": ["workout-body-composition-changes", "workout-fat-loss"],
+      "categoryLabel": "Workout - Body Composition Changes",
+      "date": "2026-11-17"
+    },
+    {
+      "slug": "fat-loss-without-the-crash",
+      "title": "Fat Loss Without the Crash: Habits That Last",
+      "description": "Skip the crash diets. Learn the simple habits behind sustainable fat loss: protein, strength training, steps and sleep.",
+      "image": "images/blog/fat-loss-without-the-crash.jpg",
+      "topics": ["workout-fat-loss", "nutrition-fat-weight-loss"],
+      "categoryLabel": "Workout - Fat Loss",
+      "date": "2026-11-10"
+    },
+    {
+      "slug": "strength-training-after-50",
+      "title": "Strength Training After 50: Where to Start",
+      "description": "A plain-language guide to starting strength training after 50: basic movements, a simple weekly plan, and safe progress.",
+      "image": "images/blog/strength-training-after-50.jpg",
+      "topics": ["workout-strength", "workout-beginner-getting-started"],
+      "categoryLabel": "Workout - Strength",
+      "date": "2026-11-03"
+    },
+    {
+      "slug": "exercise-with-arthritis-osteoporosis-sarcopenia",
+      "title": "Exercise With Arthritis, Osteoporosis or Muscle Loss: Where to Start",
+      "description": "Living with arthritis, osteoporosis or age-related muscle loss? Learn why strength and balance work matter.",
+      "image": "images/blog/exercise-with-arthritis-osteoporosis-sarcopenia.jpg",
+      "topics": ["workout-arthritis-osteoporosis-and-sarcopenia", "workout-strength"],
+      "categoryLabel": "Workout - Arthritis, Osteoporosis and Sarcopenia",
+      "date": "2026-11-12"
+    },
+    {
+      "slug": "vegan-diet-protein-and-nutrients",
+      "title": "Eating Vegan and Training Well: Protein and Nutrients",
+      "description": "Training on a vegan diet? See how to get enough protein, iron, calcium and B12 for your workouts.",
+      "image": "images/blog/vegan-diet-protein-and-nutrients.jpg",
+      "topics": ["nutrition-vegan-diet", "workout-muscle-gain"],
+      "categoryLabel": "Nutrition - Vegan Diet",
+      "date": "2026-11-14"
+    },
+    {
+      "slug": "eating-for-performance-before-during-after-training",
+      "title": "Eating for Performance: What to Have Before, During and After Training",
+      "description": "Fuel your training with simple food timing before, during and after a workout.",
+      "image": "images/blog/eating-for-performance-before-during-after-training.jpg",
+      "topics": ["nutrition-athletic-performance", "workout-strength"],
+      "categoryLabel": "Nutrition - Athletic Performance",
+      "date": "2026-11-15"
+    },
+    {
+      "slug": "vegetarian-plate-for-strength",
+      "title": "A Vegetarian Plate Built for Strength",
+      "description": "How to get enough protein, iron and other key nutrients on a vegetarian diet while you train.",
+      "image": "images/blog/vegetarian-plate-for-strength.jpg",
+      "topics": ["nutrition-vegetarian-diet", "nutrition-athletic-performance"],
+      "categoryLabel": "Nutrition - Vegetarian Diet",
+      "date": "2026-11-11"
+    },
+    {
+      "slug": "mobility-for-desk-workers",
+      "title": "Mobility for Desk Workers: A 10-Minute Routine",
+      "description": "Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks.",
+      "image": "images/blog/mobility-for-desk-workers.jpg",
+      "topics": ["workout-stress-management-healthy-lifestyle"],
+      "categoryLabel": "Workout - Stress Management / Healthy Lifestyle",
+      "date": "2026-11-08"
+    },
+    {
+      "slug": "your-first-month-of-training",
+      "title": "Starting From Zero: Your First Month of Training",
+      "description": "New to exercise? A calm, week-by-week plan for your first month of training.",
+      "image": "images/blog/your-first-month-of-training.jpg",
+      "topics": ["workout-beginner-getting-started"],
+      "categoryLabel": "Workout - Beginner / Getting Started",
+      "date": "2026-11-09"
+    },
+    {
+      "slug": "creatine-basics-for-beginners",
+      "title": "Creatine Basics: What It Is and Who Might Consider It",
+      "description": "Curious about creatine? Learn what it does, what the research says, and what to check with your doctor first.",
+      "image": "images/blog/creatine-basics-for-beginners.jpg",
+      "topics": ["supplementation-performance-enhancement", "workout-strength"],
+      "categoryLabel": "Supplementation - Performance Enhancement",
+      "date": "2026-11-16"
+    }
+  ]
+}

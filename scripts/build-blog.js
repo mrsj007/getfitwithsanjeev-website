@@ -633,6 +633,22 @@ function feedbackBlock(post) {
   );
 }
 
+const BMI_POST_TOPICS = new Set([
+  "workout-fat-loss",
+  "workout-muscle-gain",
+  "workout-body-composition-changes",
+  "workout-beginner-getting-started",
+  "workout-arthritis-osteoporosis-and-sarcopenia",
+]);
+
+function bmiPostLink(post) {
+  const match = post.categories.some((category) => BMI_POST_TOPICS.has(category.slug));
+  if (!match) return "";
+  return (
+    '<p class="post-bmi-link"><a href="../bmi-calculator.html">Check your BMI</a> with Sanjeev\'s free adult calculator - age-aware chart included.</p>'
+  );
+}
+
 function faqHtml(items) {
   if (!items.length) return "";
   const blocks = items
@@ -933,6 +949,7 @@ function headerHtml() {
           <ul class="nav-list nav-primary">
             <li><a href="../index.html">Home</a></li>
             <li><a href="../about.html">About Us</a></li>
+            <li><a href="../bmi-calculator.html">Free BMI Calculator</a></li>
             <!-- BLOG:NAV:START -->
             <!-- BLOG:NAV:END -->
           </ul>
@@ -956,6 +973,7 @@ function footerHtml() {
           <ul>
             <li><a href="../index.html">Home</a></li>
             <li><a href="../about.html">About Sanjeev Kumar</a></li>
+            <li><a href="../bmi-calculator.html">Free BMI Calculator</a></li>
             <!-- BLOG:FOOTER:START -->
             <!-- BLOG:FOOTER:END -->
             <li><a href="../book.html">Book a Consultation</a></li>
@@ -1090,6 +1108,7 @@ ${headerHtml()}
         ${articleBody}
         ${faqHtml(post.faq)}
         ${feedbackBlock(post)}
+        ${bmiPostLink(post)}
         <aside class="post-cta" aria-labelledby="post-cta-heading">
           <h2 id="post-cta-heading">Want guidance built around you?</h2>
           <p>Tell Sanjeev where you are today and what you want to understand.</p>
@@ -1317,6 +1336,7 @@ ${headerHtml().replace('      <div class="reading-progress" id="reading-progress
             <p class="eyebrow">The Blog</p>
             <h1 id="blog-heading">${INDEX_H1}</h1>
             <p>${INDEX_INTRO}</p>
+            <p class="blog-bmi-promo"><a href="../bmi-calculator.html">Free BMI Calculator</a> - check your adult BMI and age-aware chart, then come back for matching guidance.</p>
           </header>
           ${[filters, filterStatus, filterEmpty, grid, empty].filter(Boolean).join("\n          ")}
         </div>
@@ -1695,6 +1715,7 @@ function assertSourceMarkers() {
     "about.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "book.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "feedback.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
+    "bmi-calculator.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
   };
   Object.keys(required).forEach((file) => {
     const text = fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -1726,6 +1747,7 @@ function updateSitemap(posts) {
     [SITE + "/"]: "2026-11-02",
     [SITE + "/about.html"]: "2026-11-02",
     [SITE + "/book.html"]: "2026-11-03",
+    [SITE + "/bmi-calculator.html"]: "2026-11-17",
   };
   const found = /<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g;
   let match;
@@ -1736,6 +1758,7 @@ function updateSitemap(posts) {
     { loc: SITE + "/", lastmod: dates[SITE + "/"] },
     { loc: SITE + "/about.html", lastmod: dates[SITE + "/about.html"] },
     { loc: SITE + "/book.html", lastmod: dates[SITE + "/book.html"] },
+    { loc: SITE + "/bmi-calculator.html", lastmod: dates[SITE + "/bmi-calculator.html"] },
   ];
   if (posts.length) {
     const latest = posts.map((post) => post.updated).sort().pop();
@@ -1768,6 +1791,7 @@ function writeOutputs(live, published) {
   applyMarkers(path.join(ROOT, "about.html"), "about", live);
   applyMarkers(path.join(ROOT, "book.html"), "book", live);
   applyMarkers(path.join(ROOT, "feedback.html"), "feedback", live);
+  applyMarkers(path.join(ROOT, "bmi-calculator.html"), "bmi", live);
   applyMarkers(path.join(BLOG_DIR, "index.html"), "blog-index", live);
   live.forEach((post) => applyMarkers(path.join(BLOG_DIR, post.slug + ".html"), "blog-post", live));
   updateLlms(published);
