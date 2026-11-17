@@ -1073,61 +1073,49 @@
       }
     ]
   },
-  "/images/guidance/beginners-v3.jpg": {
-    "width": 1400,
-    "height": 1167,
+  "/images/guidance/beginners-v4.jpg": {
+    "width": 1200,
+    "height": 1000,
     "webp": [
       {
         "w": 480,
-        "src": "/images/guidance/beginners-v3-480.webp"
+        "src": "/images/guidance/beginners-v4-480.webp"
       },
       {
         "w": 768,
-        "src": "/images/guidance/beginners-v3-768.webp"
+        "src": "/images/guidance/beginners-v4-768.webp"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/beginners-v3-1200.webp"
-      },
-      {
-        "w": 1400,
-        "src": "/images/guidance/beginners-v3-1400.webp"
+        "src": "/images/guidance/beginners-v4-1200.webp"
       }
     ],
     "avif": [
       {
         "w": 480,
-        "src": "/images/guidance/beginners-v3-480.avif"
+        "src": "/images/guidance/beginners-v4-480.avif"
       },
       {
         "w": 768,
-        "src": "/images/guidance/beginners-v3-768.avif"
+        "src": "/images/guidance/beginners-v4-768.avif"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/beginners-v3-1200.avif"
-      },
-      {
-        "w": 1400,
-        "src": "/images/guidance/beginners-v3-1400.avif"
+        "src": "/images/guidance/beginners-v4-1200.avif"
       }
     ],
     "fallback": [
       {
         "w": 480,
-        "src": "/images/guidance/beginners-v3-480.jpg"
+        "src": "/images/guidance/beginners-v4-480.jpg"
       },
       {
         "w": 768,
-        "src": "/images/guidance/beginners-v3-768.jpg"
+        "src": "/images/guidance/beginners-v4-768.jpg"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/beginners-v3-1200.jpg"
-      },
-      {
-        "w": 1400,
-        "src": "/images/guidance/beginners-v3.jpg"
+        "src": "/images/guidance/beginners-v4.jpg"
       }
     ]
   },
@@ -1269,49 +1257,49 @@
       }
     ]
   },
-  "/images/guidance/womens-fitness-classic.jpg": {
+  "/images/guidance/womens-fitness-v4.jpg": {
     "width": 1200,
     "height": 1000,
     "webp": [
       {
         "w": 480,
-        "src": "/images/guidance/womens-fitness-classic-480.webp"
+        "src": "/images/guidance/womens-fitness-v4-480.webp"
       },
       {
         "w": 768,
-        "src": "/images/guidance/womens-fitness-classic-768.webp"
+        "src": "/images/guidance/womens-fitness-v4-768.webp"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/womens-fitness-classic-1200.webp"
+        "src": "/images/guidance/womens-fitness-v4-1200.webp"
       }
     ],
     "avif": [
       {
         "w": 480,
-        "src": "/images/guidance/womens-fitness-classic-480.avif"
+        "src": "/images/guidance/womens-fitness-v4-480.avif"
       },
       {
         "w": 768,
-        "src": "/images/guidance/womens-fitness-classic-768.avif"
+        "src": "/images/guidance/womens-fitness-v4-768.avif"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/womens-fitness-classic-1200.avif"
+        "src": "/images/guidance/womens-fitness-v4-1200.avif"
       }
     ],
     "fallback": [
       {
         "w": 480,
-        "src": "/images/guidance/womens-fitness-classic-480.jpg"
+        "src": "/images/guidance/womens-fitness-v4-480.jpg"
       },
       {
         "w": 768,
-        "src": "/images/guidance/womens-fitness-classic-768.jpg"
+        "src": "/images/guidance/womens-fitness-v4-768.jpg"
       },
       {
         "w": 1200,
-        "src": "/images/guidance/womens-fitness-classic.jpg"
+        "src": "/images/guidance/womens-fitness-v4.jpg"
       }
     ]
   },

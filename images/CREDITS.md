@@ -22,23 +22,23 @@ Some contact/background photos were previously hotlinked from Unsplash and are n
 - Edits: Recropped for card framing; EXIF stripped. No logo edits needed.
 - Note: Restored classic Joint & Mobility photo (Pexels 4056724).
 
-## womens-fitness-classic.jpg
+## womens-fitness-v4.jpg
 
-- File: `images/guidance/womens-fitness-classic.jpg`
-- Source: Unsplash
-- Page: https://unsplash.com/photos/photo-1594381898411-846e7d193883 (CDN: `images.unsplash.com/photo-1594381898411-846e7d193883`)
-- Photographer: Not confirmed from the live Unsplash page in this pass
-- Licence: Unsplash Licence (https://unsplash.com/license) assumed from the original hotlink; confirm if needed before long-term use
-- Edits: Soft inpainting over the chest Nike wordmark/swoosh; shoes cropped out of the card frame; EXIF stripped; new `-classic` filename for cache busting.
-
-## beginners-v3.jpg
-
-- File: `images/guidance/beginners-v3.jpg`
+- File: `images/guidance/womens-fitness-v4.jpg`
 - Source: Pexels
-- Page: https://www.pexels.com/photo/a-man-assisting-a-young-woman-carrying-a-steel-bar-4853287/
-- Photographer: Ketut Subiyanto
+- Page: https://www.pexels.com/photo/a-mature-woman-in-white-shirt-smiling-6975788/
+- Photographer: Mikhail Nilov
 - Licence: Pexels Licence (https://www.pexels.com/license/)
-- Note: Kept from the logo-free guidance-images set. The classic Beginners original (Pexels 6455824, Julia Larson) could not be cleaned of repeated “Sport Combat” / “Ring to Cage” gym branding without visible artifacts, so it was not restored.
+- Edits: Cropped from 6000 x 4000 to 1200 x 1000 for card framing (left-side storage box with a label cropped out); brightness lowered about 7 percent to match the set; EXIF and all metadata stripped. No logo edits: checked at full size and 200 percent, no logos, brand names or text in the frame.
+
+## beginners-v4.jpg
+
+- File: `images/guidance/beginners-v4.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/man-and-woman-standing-face-to-face-6740295/
+- Photographer: Mikhail Nilov
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+- Edits: Cropped from 6000 x 4000 to 1200 x 1000 for card framing (a large painted number on the right-hand pillar cropped out); slight warm balance and shadow lift to match the set; EXIF and all metadata stripped. No logo edits: checked at full size and 200 percent, suspension straps carry only stitching, clothing is plain.
 
 ## strength-classic.jpg
 

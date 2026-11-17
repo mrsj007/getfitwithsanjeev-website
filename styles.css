@@ -1234,6 +1234,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
     rgba(20, 42, 32, 0.92) 100%
   );
   pointer-events: none;
+  z-index: 1;
 }
 
 .photo-card h3,
@@ -1241,6 +1242,24 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
 .photo-card-cta {
   color: var(--white);
   position: relative;
+}
+
+/* Keep the title on the scrim when longer copy pushes it above the gradient (phones). */
+.photo-card h3::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -1.5rem;
+  bottom: -3rem;
+  left: -1.25rem;
+  right: -1.25rem;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 42, 32, 0) 0,
+    rgba(20, 42, 32, 0.8) 1.5rem,
+    rgba(20, 42, 32, 0.8) calc(100% - 3rem),
+    rgba(20, 42, 32, 0) 100%
+  );
 }
 
 .photo-card h3,
