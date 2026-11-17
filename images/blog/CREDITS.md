@@ -49,3 +49,27 @@ These photos are free to use, including for commercial use. Attribution is not r
 - Page: https://www.pexels.com/photo/professional-trainer-instructing-black-woman-doing-exercises-with-dumbbell-6455906/
 - Photographer: Julia Larson
 - Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## ozempic-and-strength-training.jpg
+
+- File: `images/blog/ozempic-and-strength-training.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/a-fitness-coach-supervising-an-elderly-woman-workout-4587382/
+- Photographer: Anna Shvets
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## vegan-diet-protein-and-nutrients.jpg
+
+- File: `images/blog/vegan-diet-protein-and-nutrients.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/fried-tofu-with-vegetables-12737810/
+- Photographer: dhiraj jain
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## creatine-basics-for-beginners.jpg
+
+- File: `images/blog/creatine-basics-for-beginners.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/woman-working-out-1552249/
+- Photographer: Leon Mart
+- Licence: Pexels Licence (https://www.pexels.com/license/)
