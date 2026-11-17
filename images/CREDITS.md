@@ -44,9 +44,9 @@ Some contact/background photos were previously hotlinked from Unsplash and are n
 
 - File: `images/guidance/strength-classic.jpg`
 - Source: Unsplash
-- Page: CDN `https://images.unsplash.com/photo-1605296867304-46d5465a13f1` (Unsplash HTML page for this ID returned 404 in this pass)
-- Photographer: Not confirmed (page unavailable)
-- Licence: Unsplash Licence (https://unsplash.com/license) assumed from the original download URL; confirm if needed before long-term use
+- Page: https://unsplash.com/photos/shirtless-man-lifting-barbell-in-gym-9dzWZQWZMdE (CDN: `images.unsplash.com/photo-1605296867304-46d5465a13f1`)
+- Photographer: Anastase Maragos (Unsplash account credited on the page; the photo description adds "Captured By @VisualsByRoyalZ")
+- Licence: Unsplash Licence (https://unsplash.com/license), shown on the page as "Free to use under the Unsplash License" (not Unsplash+)
 - Edits: Recropped for card framing; EXIF stripped. No readable logo edits needed (shoe silhouette only; plate sticker illegible).
 
 ## stress-classic.jpg
