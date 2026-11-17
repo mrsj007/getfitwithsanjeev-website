@@ -1222,15 +1222,15 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.25rem;
-  /* Top ~40% stays clear; transparent near 55%, then a dense scrim under the text */
+  /* Top stays clear; dense forest scrim under titles even when copy wraps taller */
   background: linear-gradient(
     180deg,
     transparent 0%,
-    transparent 40%,
-    rgba(20, 42, 32, 0) 54%,
-    rgba(20, 42, 32, 0.55) 58%,
-    rgba(20, 42, 32, 0.78) 63%,
-    rgba(20, 42, 32, 0.86) 74%,
+    transparent 32%,
+    rgba(20, 42, 32, 0) 42%,
+    rgba(20, 42, 32, 0.55) 48%,
+    rgba(20, 42, 32, 0.78) 56%,
+    rgba(20, 42, 32, 0.88) 72%,
     rgba(20, 42, 32, 0.92) 100%
   );
   pointer-events: none;

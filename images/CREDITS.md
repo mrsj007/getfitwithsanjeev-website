@@ -2,29 +2,34 @@ Client transformation photos and other site images. Blog photos are listed in `i
 
 Some contact/background photos were previously hotlinked from Unsplash and are now served locally.
 
-## adults-50-v2.jpg
+## adults-50-classic.jpg
 
-- File: `images/guidance/adults-50-v2.jpg`
+- File: `images/guidance/adults-50-classic.jpg`
 - Source: Pexels
 - Page: https://www.pexels.com/photo/man-and-woman-lifting-dumbbells-6815693/
 - Photographer: Yan Krukau
 - Licence: Pexels Licence (https://www.pexels.com/license/)
+- Edits: Recropped for card framing; EXIF stripped. No logo edits needed.
+- Note: Restored from the pre-guidance-images classic set (`49c4f0a`). `images/CREDITS.md` at that commit did not list guidance sources; page/photographer confirmed from the creation source URL.
 
-## joint-mobility-v2.jpg
+## mobility-classic.jpg
 
-- File: `images/guidance/joint-mobility-v2.jpg`
+- File: `images/guidance/mobility-classic.jpg`
 - Source: Pexels
-- Page: https://www.pexels.com/photo/an-elderly-woman-stretching-on-a-yoga-mat-7500424/
-- Photographer: Mikhail Nilov
+- Page: https://www.pexels.com/photo/photo-of-woman-stretching-4056724/
+- Photographer: Cliff Booth
 - Licence: Pexels Licence (https://www.pexels.com/license/)
+- Edits: Recropped for card framing; EXIF stripped. No logo edits needed.
+- Note: Restored classic Joint & Mobility photo (Pexels 4056724).
 
-## womens-fitness-v3.jpg
+## womens-fitness-classic.jpg
 
-- File: `images/guidance/womens-fitness-v3.jpg`
-- Source: Pexels
-- Page: https://www.pexels.com/photo/pregnant-woman-doing-yoga-7055676/
-- Photographer: Pavel Danilyuk
-- Licence: Pexels Licence (https://www.pexels.com/license/)
+- File: `images/guidance/womens-fitness-classic.jpg`
+- Source: Unsplash
+- Page: https://unsplash.com/photos/photo-1594381898411-846e7d193883 (CDN: `images.unsplash.com/photo-1594381898411-846e7d193883`)
+- Photographer: Not confirmed from the live Unsplash page in this pass
+- Licence: Unsplash Licence (https://unsplash.com/license) assumed from the original hotlink; confirm if needed before long-term use
+- Edits: Soft inpainting over the chest Nike wordmark/swoosh; shoes cropped out of the card frame; EXIF stripped; new `-classic` filename for cache busting.
 
 ## beginners-v3.jpg
 
@@ -33,22 +38,25 @@ Some contact/background photos were previously hotlinked from Unsplash and are n
 - Page: https://www.pexels.com/photo/a-man-assisting-a-young-woman-carrying-a-steel-bar-4853287/
 - Photographer: Ketut Subiyanto
 - Licence: Pexels Licence (https://www.pexels.com/license/)
+- Note: Kept from the logo-free guidance-images set. The classic Beginners original (Pexels 6455824, Julia Larson) could not be cleaned of repeated “Sport Combat” / “Ring to Cage” gym branding without visible artifacts, so it was not restored.
 
-## strength-functional-v3.jpg
+## strength-classic.jpg
 
-- File: `images/guidance/strength-functional-v3.jpg`
+- File: `images/guidance/strength-classic.jpg`
+- Source: Unsplash
+- Page: CDN `https://images.unsplash.com/photo-1605296867304-46d5465a13f1` (Unsplash HTML page for this ID returned 404 in this pass)
+- Photographer: Not confirmed (page unavailable)
+- Licence: Unsplash Licence (https://unsplash.com/license) assumed from the original download URL; confirm if needed before long-term use
+- Edits: Recropped for card framing; EXIF stripped. No readable logo edits needed (shoe silhouette only; plate sticker illegible).
+
+## stress-classic.jpg
+
+- File: `images/guidance/stress-classic.jpg`
 - Source: Pexels
-- Page: https://www.pexels.com/photo/young-woman-in-gym-clothing-holding-a-kettlebell-at-the-gym-20060599/
-- Photographer: Felix Young
+- Page: https://www.pexels.com/photo/silhouette-of-man-at-daytime-1051838/
+- Photographer: Prasanth Inturi
 - Licence: Pexels Licence (https://www.pexels.com/license/)
-
-## stress-lifestyle-v2.jpg
-
-- File: `images/guidance/stress-lifestyle-v2.jpg`
-- Source: Pexels
-- Page: https://www.pexels.com/photo/women-hiking-in-forest-5622137/
-- Photographer: Gustavo Fring
-- Licence: Pexels Licence (https://www.pexels.com/license/)
+- Edits: Recropped for card framing; EXIF stripped. No logo edits needed.
 
 ## 14-before-v2.jpg / 14-after-v2.jpg
 
