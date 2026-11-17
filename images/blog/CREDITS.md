@@ -73,3 +73,59 @@ These photos are free to use, including for commercial use. Attribution is not r
 - Page: https://www.pexels.com/photo/woman-working-out-1552249/
 - Photographer: Leon Mart
 - Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## exercise-with-arthritis-osteoporosis-sarcopenia.jpg
+
+- File: `images/blog/exercise-with-arthritis-osteoporosis-sarcopenia.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/a-woman-holding-a-resistance-band-8417519/
+- Photographer: SHVETS production
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## beyond-the-scale-body-composition.jpg
+
+- File: `images/blog/beyond-the-scale-body-composition.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/woman-in-gray-tank-top-holding-two-black-dumbbells-3757370/
+- Photographer: Andrea Piacquadio
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## training-alongside-testosterone-therapy.jpg
+
+- File: `images/blog/training-alongside-testosterone-therapy.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/photo-of-man-doing-push-ups-using-yellow-kettlebell-4720269/
+- Photographer: Ketut Subiyanto
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## eating-for-performance-before-during-after-training.jpg
+
+- File: `images/blog/eating-for-performance-before-during-after-training.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/a-bowl-with-oats-and-fruits-4736808/
+- Photographer: Kaboompics
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## gluten-free-lactose-free-eating-for-active-people.jpg
+
+- File: `images/blog/gluten-free-lactose-free-eating-for-active-people.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/a-salmon-with-stir-fry-vegetables-and-rice-on-the-side-10156758/
+- Photographer: Alberta Studios
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## recovery-supplements-what-helps-what-is-hype.jpg
+
+- File: `images/blog/recovery-supplements-what-helps-what-is-hype.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/young-woman-sleeping-on-white-bed-7622515/
+- Photographer: Miriam Alonso
+- Licence: Pexels Licence (https://www.pexels.com/license/)
+
+## everyday-vitamins-and-supplements-do-you-need-them.jpg
+
+- File: `images/blog/everyday-vitamins-and-supplements-do-you-need-them.jpg`
+- Source: Pexels
+- Page: https://www.pexels.com/photo/colorful-fresh-market-produce-arrangement-28937147/
+- Photographer: Patricia Barrios Jaime
+- Licence: Pexels Licence (https://www.pexels.com/license/)
