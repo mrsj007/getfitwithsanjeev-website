@@ -1831,6 +1831,13 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   color: var(--green);
 }
 
+.transform-disclaimer {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
 /* Origin story */
 .origin-wrap {
   max-width: 42rem;

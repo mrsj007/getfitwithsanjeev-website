@@ -11,3 +11,6 @@ node_modules/
 *.swo
 *~
 .cursor/
+
+# Client source composites and unblurred originals (never commit)
+private-client-photos/
