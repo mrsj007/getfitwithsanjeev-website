@@ -32,6 +32,8 @@ function walk(dir, found) {
     const abs = path.join(dir, name);
     const stat = fs.statSync(abs);
     if (stat.isDirectory()) {
+      // Social-share OG originals stay as-is; do not emit responsive variants.
+      if (name === "og") continue;
       walk(abs, found);
       continue;
     }
