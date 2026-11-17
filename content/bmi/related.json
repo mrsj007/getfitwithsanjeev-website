@@ -29,7 +29,7 @@
       "description": "Weight alone does not tell the whole story. Learn what body composition is and simple ways to track real progress.",
       "image": "images/blog/beyond-the-scale-body-composition.jpg",
       "topics": ["workout-body-composition-changes", "workout-fat-loss"],
-      "categoryLabel": "Workout - Body Composition Changes",
+      "categoryLabel": "Body composition",
       "date": "2026-11-17"
     },
     {
@@ -38,7 +38,7 @@
       "description": "Skip the crash diets. Learn the simple habits behind sustainable fat loss: protein, strength training, steps and sleep.",
       "image": "images/blog/fat-loss-without-the-crash.jpg",
       "topics": ["workout-fat-loss", "nutrition-fat-weight-loss"],
-      "categoryLabel": "Workout - Fat Loss",
+      "categoryLabel": "Fat loss",
       "date": "2026-11-10"
     },
     {
@@ -47,7 +47,7 @@
       "description": "A plain-language guide to starting strength training after 50: basic movements, a simple weekly plan, and safe progress.",
       "image": "images/blog/strength-training-after-50.jpg",
       "topics": ["workout-strength", "workout-beginner-getting-started"],
-      "categoryLabel": "Workout - Strength",
+      "categoryLabel": "Strength",
       "date": "2026-11-03"
     },
     {
@@ -56,7 +56,7 @@
       "description": "Living with arthritis, osteoporosis or age-related muscle loss? Learn why strength and balance work matter.",
       "image": "images/blog/exercise-with-arthritis-osteoporosis-sarcopenia.jpg",
       "topics": ["workout-arthritis-osteoporosis-and-sarcopenia", "workout-strength"],
-      "categoryLabel": "Workout - Arthritis, Osteoporosis and Sarcopenia",
+      "categoryLabel": "Joints and bone health",
       "date": "2026-11-12"
     },
     {
@@ -65,7 +65,7 @@
       "description": "Training on a vegan diet? See how to get enough protein, iron, calcium and B12 for your workouts.",
       "image": "images/blog/vegan-diet-protein-and-nutrients.jpg",
       "topics": ["nutrition-vegan-diet", "workout-muscle-gain"],
-      "categoryLabel": "Nutrition - Vegan Diet",
+      "categoryLabel": "Vegan nutrition",
       "date": "2026-11-14"
     },
     {
@@ -74,7 +74,7 @@
       "description": "Fuel your training with simple food timing before, during and after a workout.",
       "image": "images/blog/eating-for-performance-before-during-after-training.jpg",
       "topics": ["nutrition-athletic-performance", "workout-strength"],
-      "categoryLabel": "Nutrition - Athletic Performance",
+      "categoryLabel": "Fuel for training",
       "date": "2026-11-15"
     },
     {
@@ -83,7 +83,7 @@
       "description": "How to get enough protein, iron and other key nutrients on a vegetarian diet while you train.",
       "image": "images/blog/vegetarian-plate-for-strength.jpg",
       "topics": ["nutrition-vegetarian-diet", "nutrition-athletic-performance"],
-      "categoryLabel": "Nutrition - Vegetarian Diet",
+      "categoryLabel": "Vegetarian nutrition",
       "date": "2026-11-11"
     },
     {
@@ -92,7 +92,7 @@
       "description": "Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks.",
       "image": "images/blog/mobility-for-desk-workers.jpg",
       "topics": ["workout-stress-management-healthy-lifestyle"],
-      "categoryLabel": "Workout - Stress Management / Healthy Lifestyle",
+      "categoryLabel": "Mobility and lifestyle",
       "date": "2026-11-08"
     },
     {
@@ -101,16 +101,16 @@
       "description": "New to exercise? A calm, week-by-week plan for your first month of training.",
       "image": "images/blog/your-first-month-of-training.jpg",
       "topics": ["workout-beginner-getting-started"],
-      "categoryLabel": "Workout - Beginner / Getting Started",
+      "categoryLabel": "Getting started",
       "date": "2026-11-09"
     },
     {
       "slug": "creatine-basics-for-beginners",
       "title": "Creatine Basics: What It Is and Who Might Consider It",
       "description": "Curious about creatine? Learn what it does, what the research says, and what to check with your doctor first.",
-      "image": "images/blog/creatine-basics-for-beginners.jpg",
+      "image": "images/blog/eating-for-performance-before-during-after-training.jpg",
       "topics": ["supplementation-performance-enhancement", "workout-strength"],
-      "categoryLabel": "Supplementation - Performance Enhancement",
+      "categoryLabel": "Supplements / Performance",
       "date": "2026-11-16"
     }
   ]

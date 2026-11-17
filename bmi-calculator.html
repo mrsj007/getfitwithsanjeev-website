@@ -256,7 +256,7 @@
                     <p class="bmi-field-error" id="bmi-age-error" hidden role="alert"></p>
                   </div>
 
-                  <div id="bmi-metric-fields">
+                  <div id="bmi-metric-fields" class="bmi-fields">
                     <div class="bmi-field">
                       <label for="bmi-height-cm">Height (cm)</label>
                       <input
@@ -289,11 +289,11 @@
                     </div>
                   </div>
 
-                  <div id="bmi-imperial-fields" hidden>
+                  <div id="bmi-imperial-fields" class="bmi-fields" hidden>
                     <div class="bmi-field">
                       <span id="bmi-height-imperial-label">Height</span>
                       <div class="bmi-imperial-row">
-                        <div>
+                        <div class="bmi-field">
                           <label for="bmi-height-ft">Feet</label>
                           <input
                             id="bmi-height-ft"
@@ -307,7 +307,7 @@
                             aria-describedby="bmi-height-imperial-error"
                           />
                         </div>
-                        <div>
+                        <div class="bmi-field">
                           <label for="bmi-height-in">Inches</label>
                           <input
                             id="bmi-height-in"
@@ -341,7 +341,7 @@
                     </div>
                   </div>
 
-                  <div>
+                  <div class="bmi-field bmi-option-field">
                     <label class="bmi-check" for="bmi-south-asian">
                       <input id="bmi-south-asian" name="south_asian" type="checkbox" value="yes" />
                       <span>South Asian background</span>
@@ -350,7 +350,9 @@
                       Optional. Uses WHO expert-consultation cut-offs often cited for Asian populations (healthy under 23, higher risk from 27.5), because health markers can shift at a lower BMI for some people.
                     </p>
                   </div>
+                </div>
 
+                <div class="bmi-actions-row">
                   <button class="btn btn-primary bmi-submit" type="submit">Calculate BMI</button>
                 </div>
               </form>
@@ -381,24 +383,27 @@
                 </div>
 
                 <div class="bmi-gauge" aria-hidden="false">
-                  <div class="bmi-gauge-track" role="img" aria-labelledby="bmi-gauge-label">
-                    <span class="bmi-gauge-seg bmi-gauge-seg-1" data-bmi-seg="0"></span>
-                    <span class="bmi-gauge-seg bmi-gauge-seg-2" data-bmi-seg="1"></span>
-                    <span class="bmi-gauge-seg bmi-gauge-seg-3" data-bmi-seg="2"></span>
-                    <span class="bmi-gauge-seg bmi-gauge-seg-4" data-bmi-seg="3"></span>
+                  <div class="bmi-gauge-plot">
+                    <span id="bmi-gauge-value" class="bmi-gauge-value" style="left: 50%">-</span>
+                    <div class="bmi-gauge-track" role="img" aria-labelledby="bmi-gauge-label">
+                      <span class="bmi-gauge-seg bmi-gauge-seg-1" data-bmi-seg="0"></span>
+                      <span class="bmi-gauge-seg bmi-gauge-seg-2" data-bmi-seg="1"></span>
+                      <span class="bmi-gauge-seg bmi-gauge-seg-3" data-bmi-seg="2"></span>
+                      <span class="bmi-gauge-seg bmi-gauge-seg-4" data-bmi-seg="3"></span>
+                    </div>
+                    <span id="bmi-gauge-marker" class="bmi-gauge-marker" style="left: 50%"></span>
+                    <div id="bmi-gauge-ticks" class="bmi-gauge-ticks" aria-hidden="true"></div>
                   </div>
-                  <span id="bmi-gauge-marker" class="bmi-gauge-marker" style="left: 50%"></span>
                   <p id="bmi-gauge-label" class="visually-hidden">BMI gauge</p>
-                  <ul id="bmi-gauge-legend" class="bmi-gauge-legend">
-                    <li><span class="bmi-gauge-seg-1"></span>Under</li>
-                    <li><span class="bmi-gauge-seg-2"></span>Healthy</li>
-                    <li><span class="bmi-gauge-seg-3"></span>Over</li>
-                    <li><span class="bmi-gauge-seg-4"></span>Obese</li>
-                  </ul>
+                  <ul id="bmi-gauge-legend" class="bmi-gauge-legend"></ul>
                 </div>
 
                 <p id="bmi-healthy-range"></p>
                 <p id="bmi-distance"></p>
+                <p id="bmi-result-age-note" class="bmi-age-note" hidden></p>
+                <div class="bmi-actions-row">
+                  <a class="btn btn-primary" id="bmi-result-cta" href="#bmi-lead">Talk to Sanjeev</a>
+                </div>
                 <button type="button" class="btn btn-outline bmi-clear" id="bmi-clear" hidden>Clear my results</button>
               </div>
             </div>
@@ -466,7 +471,7 @@
 
           <div id="bmi-guidance" class="bmi-section" hidden></div>
 
-          <section id="bmi-related" class="bmi-section" hidden aria-labelledby="bmi-related-heading">
+          <section id="bmi-related" class="bmi-section bmi-related" hidden aria-labelledby="bmi-related-heading">
             <h2 id="bmi-related-heading">Related guidance</h2>
             <div id="bmi-related-grid" class="blog-card-grid"></div>
             <div class="bmi-related-actions">
@@ -546,7 +551,9 @@
                   <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a> directly.
                 </p>
 
-                <button class="btn btn-primary" type="submit">Send message</button>
+                <div class="bmi-actions-row">
+                  <button class="btn btn-primary" type="submit">Send message</button>
+                </div>
               </form>
 
               <noscript>

@@ -66,15 +66,38 @@ html.page-bmi {
   color: var(--green);
 }
 
+.bmi-form,
+.bmi-contact-form,
+.bmi-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bmi-space-4);
+}
+
+.bmi-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bmi-space-1);
+  margin: 0;
+}
+
 .bmi-field-row {
   display: grid;
-  gap: var(--bmi-space-3);
+  gap: var(--bmi-space-4);
 }
 
 @media (min-width: 768px) {
   .bmi-field-row {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+.bmi-actions-row {
+  margin-top: var(--bmi-space-5);
+}
+
+.bmi-actions-row .btn {
+  min-height: 44px;
 }
 
 .bmi-hero .breadcrumb {
@@ -124,16 +147,24 @@ html.page-bmi {
 }
 
 .bmi-result-card {
-  min-height: 22rem;
+  min-height: 0;
+}
+
+.bmi-results {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--bmi-space-3);
 }
 
 .bmi-units {
   display: inline-flex;
   gap: 0.35rem;
-  margin: 0 0 var(--bmi-space-3);
+  margin: 0;
   padding: 0.25rem;
   background: var(--cream);
   border-radius: 999px;
+  align-self: flex-start;
 }
 
 .bmi-units button {
@@ -155,16 +186,11 @@ html.page-bmi {
   color: var(--cream);
 }
 
-.bmi-fields {
-  display: grid;
-  gap: var(--bmi-space-3);
-}
-
 .bmi-field label {
   display: block;
   font-weight: 600;
   color: var(--green-deep);
-  margin: 0 0 var(--bmi-space-1);
+  margin: 0;
 }
 
 .bmi-field .bmi-hint {
@@ -172,7 +198,7 @@ html.page-bmi {
   font-weight: 400;
   font-size: 0.9rem;
   color: var(--muted);
-  margin: 0 0 var(--bmi-space-1);
+  margin: 0;
 }
 
 .bmi-field input[type="number"],
@@ -201,7 +227,7 @@ html.page-bmi {
 }
 
 .bmi-field-error {
-  margin: 0.35rem 0 0;
+  margin: 0;
   color: #7a2e2e;
   font-size: 0.9rem;
 }
@@ -235,14 +261,18 @@ html.page-bmi {
 }
 
 .bmi-south-asian-note {
-  margin: 0.25rem 0 0;
+  margin: 0;
   padding-left: calc(24px + 0.75rem);
   font-size: 0.92rem;
   color: var(--muted);
 }
 
+.bmi-option-field {
+  gap: var(--bmi-space-1);
+}
+
 .bmi-submit {
-  margin-top: var(--bmi-space-1);
+  margin: 0;
   min-height: 44px;
 }
 
@@ -288,7 +318,7 @@ html.page-bmi {
   flex-wrap: nowrap;
   align-items: baseline;
   gap: 1rem 1.25rem;
-  margin: 0 0 var(--bmi-space-3);
+  margin: 0;
   padding: 1rem 1.1rem;
   background: var(--tan);
   border-radius: 12px;
@@ -319,14 +349,18 @@ html.page-bmi {
 }
 
 .bmi-gauge {
+  margin: 0;
+}
+
+.bmi-gauge-plot {
   position: relative;
-  margin: 0.5rem 0 var(--bmi-space-3);
+  padding: 1.55rem 0 1.35rem;
 }
 
 .bmi-gauge-track {
   display: flex;
   width: 100%;
-  height: 0.85rem;
+  height: 0.95rem;
   border-radius: 999px;
   overflow: hidden;
   gap: 0;
@@ -355,11 +389,27 @@ html.page-bmi {
   background: #a56b4a;
 }
 
+.bmi-gauge-value {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  background: var(--cream);
+  border: 1px solid rgba(31, 58, 46, 0.15);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+}
+
 .bmi-gauge-marker {
   position: absolute;
-  top: -0.2rem;
+  top: 1.35rem;
   width: 0.7rem;
-  height: 1.25rem;
+  height: 1.45rem;
   margin-left: -0.35rem;
   background: var(--green-deep);
   border: 2px solid var(--cream);
@@ -370,48 +420,87 @@ html.page-bmi {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bmi-gauge-marker {
+  .bmi-gauge-marker,
+  .bmi-gauge-value {
     transition: none;
   }
 }
 
+.bmi-gauge-ticks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.15rem;
+  pointer-events: none;
+}
+
+.bmi-gauge-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.bmi-gauge-tick::before {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 0.35rem;
+  margin: 0 auto 0.2rem;
+  background: rgba(31, 58, 46, 0.45);
+}
+
 .bmi-gauge-legend {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.25rem;
-  margin: 0.55rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.55rem 1rem;
+  margin: 0.35rem 0 0;
   padding: 0;
   list-style: none;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--muted);
-  text-align: center;
+  text-align: left;
 }
 
 .bmi-gauge-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   min-width: 0;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .bmi-gauge-legend span {
   display: inline-block;
-  width: 0.55rem;
-  height: 0.55rem;
+  width: 0.65rem;
+  height: 0.65rem;
   border-radius: 2px;
-  margin-right: 0.25rem;
-  vertical-align: middle;
+  flex: none;
 }
 
 .bmi-healthy-range,
 .bmi-distance {
-  margin: 0 0 0.55rem;
+  margin: 0;
   color: var(--text);
+}
+
+.bmi-results > .bmi-age-note {
+  margin: 0;
+}
+
+.bmi-results > .bmi-actions-row {
+  margin-top: var(--bmi-space-2);
 }
 
 .bmi-clear {
   align-self: flex-start;
-  margin-top: var(--bmi-space-3);
+  margin-top: var(--bmi-space-5);
   min-height: 44px;
 }
 
@@ -445,7 +534,7 @@ html.page-bmi {
 
 .bmi-age-table-wrap {
   overflow-x: auto;
-  margin-top: 0.75rem;
+  margin-top: var(--bmi-space-5);
 }
 
 .bmi-age-table {
@@ -570,7 +659,7 @@ html.page-bmi {
 }
 
 .bmi-actions {
-  margin: 0.75rem 0 var(--bmi-space-4);
+  margin: 0.75rem 0 0;
   padding-left: 1.25rem;
   list-style: disc;
 }
@@ -584,10 +673,6 @@ html.page-bmi {
   color: var(--green);
 }
 
-.bmi-guidance .btn {
-  margin-top: var(--bmi-space-2);
-}
-
 .bmi-age-note {
   font-weight: 600;
   color: var(--green-deep);
@@ -597,19 +682,36 @@ html.page-bmi {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
-  margin: var(--bmi-space-3) 0 var(--bmi-space-5);
+  margin: var(--bmi-space-3) 0 0;
   align-items: stretch;
 }
 
-.bmi-related .bmi-related-actions {
-  margin-top: 0;
+.bmi-related-actions {
+  /* padding avoids margin-collapse with the card grid above */
+  margin: 0;
+  padding-top: var(--bmi-space-5);
+  text-align: center;
+}
+
+.bmi-related {
   margin-bottom: 0;
+  padding-bottom: var(--bmi-space-7);
 }
 
 .bmi-related + .bmi-section,
 .bmi-related + #bmi-lead,
 #bmi-lead.bmi-section {
-  margin-top: var(--bmi-space-7);
+  margin-top: 0;
+}
+
+.bmi-related .blog-card-category {
+  min-height: 2.6em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  margin: 0 0 0.45rem;
 }
 
 @media (min-width: 768px) {
@@ -626,11 +728,6 @@ html.page-bmi {
 
 .bmi-related .blog-card {
   height: 100%;
-}
-
-.bmi-related-actions {
-  text-align: center;
-  margin: 0 0 0;
 }
 
 .bmi-lead {
@@ -660,14 +757,12 @@ html.page-bmi {
 }
 
 .bmi-contact-form {
-  display: grid;
-  gap: var(--bmi-space-3);
-  margin-top: 0.75rem;
+  margin-top: var(--bmi-space-2);
 }
 
 .bmi-form-row {
   display: grid;
-  gap: var(--bmi-space-3);
+  gap: var(--bmi-space-4);
 }
 
 @media (min-width: 768px) {
@@ -681,8 +776,8 @@ html.page-bmi {
   resize: vertical;
 }
 
-.bmi-contact-form .bmi-field label {
-  margin-bottom: var(--bmi-space-1);
+.bmi-contact-form .bmi-actions-row {
+  margin-top: var(--bmi-space-5);
 }
 
 .bmi-hp {

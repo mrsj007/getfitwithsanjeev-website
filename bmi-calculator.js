@@ -43,6 +43,8 @@ import relatedData from "./content/bmi/related.json";
   const rangeEl = document.getElementById("bmi-healthy-range");
   const distanceEl = document.getElementById("bmi-distance");
   const gaugeMarker = document.getElementById("bmi-gauge-marker");
+  const gaugeValue = document.getElementById("bmi-gauge-value");
+  const gaugeTicks = document.getElementById("bmi-gauge-ticks");
   const gaugeLabel = document.getElementById("bmi-gauge-label");
   const gaugeLegend = document.getElementById("bmi-gauge-legend");
   const ageChart = document.getElementById("bmi-age-chart");
@@ -57,6 +59,8 @@ import relatedData from "./content/bmi/related.json";
   const summaryField = document.getElementById("bmi-summary");
   const contactForm = document.getElementById("bmi-contact-form");
   const clearBtn = document.getElementById("bmi-clear");
+  const resultAgeNote = document.getElementById("bmi-result-age-note");
+  const resultCta = document.getElementById("bmi-result-cta");
   const SESSION_KEY = "bmiSession";
   const GAUGE_FLOOR = 12.5;
   const GAUGE_CEILING = 40;
@@ -300,6 +304,10 @@ import relatedData from "./content/bmi/related.json";
     return ((clamped - GAUGE_FLOOR) / span) * 100;
   }
 
+  function clampMarkerPct(pct) {
+    return Math.min(96, Math.max(4, pct));
+  }
+
   function updateGauge(bmi, label, south) {
     const widths = gaugeSegmentWidths(south);
     const total = widths.reduce(function (sum, w) {
@@ -311,9 +319,49 @@ import relatedData from "./content/bmi/related.json";
       el.style.flex = flex + " 0 0%";
       el.style.width = flex * 100 + "%";
     });
-    const pct = Math.min(100, Math.max(0, gaugePercent(bmi, south)));
+    const rawPct = Math.min(100, Math.max(0, gaugePercent(bmi, south)));
+    const pct = clampMarkerPct(rawPct);
     if (gaugeMarker) {
       gaugeMarker.style.left = pct + "%";
+    }
+    if (gaugeValue) {
+      gaugeValue.textContent = String(round1(bmi));
+      gaugeValue.style.left = pct + "%";
+    }
+    if (gaugeTicks) {
+      const cuts = south ? [18.5, 23, 27.5] : [18.5, 25, 30];
+      gaugeTicks.innerHTML = cuts
+        .map(function (cut) {
+          const left = clampMarkerPct(gaugePercent(cut, south));
+          return (
+            '<span class="bmi-gauge-tick" data-cut="' +
+            cut +
+            '" style="left:' +
+            left +
+            '%">' +
+            cut +
+            "</span>"
+          );
+        })
+        .join("");
+      window.requestAnimationFrame(function () {
+        const ticks = Array.prototype.slice.call(gaugeTicks.querySelectorAll(".bmi-gauge-tick"));
+        ticks.forEach(function (tick) {
+          tick.hidden = false;
+        });
+        for (let i = 1; i < ticks.length; i += 1) {
+          const prev = ticks[i - 1];
+          const curr = ticks[i];
+          if (prev.hidden) continue;
+          const a = prev.getBoundingClientRect();
+          const b = curr.getBoundingClientRect();
+          if (a.right + 4 > b.left) {
+            /* Prefer keeping the outer cut-offs; hide the middle if needed. */
+            if (i === 1 && ticks[2]) ticks[1].hidden = true;
+            else curr.hidden = true;
+          }
+        }
+      });
     }
     if (gaugeLabel) {
       gaugeLabel.textContent = "BMI " + round1(bmi) + " - " + label;
@@ -321,15 +369,15 @@ import relatedData from "./content/bmi/related.json";
     if (gaugeLegend) {
       if (south) {
         gaugeLegend.innerHTML =
-          '<li><span class="bmi-gauge-seg-1"></span>Under</li>' +
-          '<li><span class="bmi-gauge-seg-2"></span>Healthy</li>' +
+          '<li><span class="bmi-gauge-seg-1"></span>Underweight</li>' +
+          '<li><span class="bmi-gauge-seg-2"></span>Healthy weight</li>' +
           '<li><span class="bmi-gauge-seg-3"></span>Increased</li>' +
           '<li><span class="bmi-gauge-seg-4"></span>High risk</li>';
       } else {
         gaugeLegend.innerHTML =
-          '<li><span class="bmi-gauge-seg-1"></span>Under</li>' +
-          '<li><span class="bmi-gauge-seg-2"></span>Healthy</li>' +
-          '<li><span class="bmi-gauge-seg-3"></span>Over</li>' +
+          '<li><span class="bmi-gauge-seg-1"></span>Underweight</li>' +
+          '<li><span class="bmi-gauge-seg-2"></span>Healthy weight</li>' +
+          '<li><span class="bmi-gauge-seg-3"></span>Overweight</li>' +
           '<li><span class="bmi-gauge-seg-4"></span>Obese</li>';
       }
     }
@@ -426,14 +474,22 @@ import relatedData from "./content/bmi/related.json";
       "<p>" +
       escapeHtml(cat.body) +
       "</p>" +
-      (ageNote ? '<p class="bmi-age-note">' + escapeHtml(ageNote) + "</p>" : "") +
       '<ul class="bmi-actions">' +
       actions +
-      "</ul>" +
-      '<p><a class="btn btn-primary" href="#bmi-lead">' +
-      escapeHtml(cat.cta) +
-      "</a></p>";
+      "</ul>";
     guidanceBlock.hidden = false;
+    if (resultAgeNote) {
+      if (ageNote) {
+        resultAgeNote.textContent = ageNote;
+        resultAgeNote.hidden = false;
+      } else {
+        resultAgeNote.textContent = "";
+        resultAgeNote.hidden = true;
+      }
+    }
+    if (resultCta) {
+      resultCta.textContent = cat.cta || "Talk to Sanjeev";
+    }
   }
 
   function pictureHtml(src) {
@@ -568,6 +624,10 @@ import relatedData from "./content/bmi/related.json";
     lastResult = null;
     if (summaryField) summaryField.value = "";
     if (clearBtn) clearBtn.hidden = true;
+    if (resultAgeNote) {
+      resultAgeNote.hidden = true;
+      resultAgeNote.textContent = "";
+    }
   }
 
   function showEmptyResultCard() {
