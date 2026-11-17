@@ -26,17 +26,17 @@ Client transformation photos and other site images. Blog photos are listed in `i
 - Photographer: Pavel Danilyuk
 - Licence: Pexels Licence (https://www.pexels.com/license/)
 
-## beginners-v2.jpg
+## beginners-v3.jpg
 
-- File: `images/guidance/beginners-v2.jpg`
+- File: `images/guidance/beginners-v3.jpg`
 - Source: Pexels
 - Page: https://www.pexels.com/photo/a-man-assisting-a-young-woman-carrying-a-steel-bar-4853287/
 - Photographer: Ketut Subiyanto
 - Licence: Pexels Licence (https://www.pexels.com/license/)
 
-## strength-functional-v2.jpg
+## strength-functional-v3.jpg
 
-- File: `images/guidance/strength-functional-v2.jpg`
+- File: `images/guidance/strength-functional-v3.jpg`
 - Source: Pexels
 - Page: https://www.pexels.com/photo/young-woman-in-gym-clothing-holding-a-kettlebell-at-the-gym-20060599/
 - Photographer: Felix Young

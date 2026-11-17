@@ -1105,6 +1105,7 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 28%;
   position: absolute;
   inset: 0;
   transform: scale(1);
@@ -1118,12 +1119,16 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.25rem;
+  /* Top ~40% stays clear; transparent near 55%, then a dense scrim under the text */
   background: linear-gradient(
     180deg,
     transparent 0%,
-    transparent 58%,
-    rgba(18, 32, 26, 0.42) 78%,
-    rgba(18, 32, 26, 0.88) 100%
+    transparent 40%,
+    rgba(20, 42, 32, 0) 54%,
+    rgba(20, 42, 32, 0.55) 58%,
+    rgba(20, 42, 32, 0.78) 63%,
+    rgba(20, 42, 32, 0.86) 74%,
+    rgba(20, 42, 32, 0.92) 100%
   );
   pointer-events: none;
 }
@@ -1135,10 +1140,23 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   position: relative;
 }
 
+.photo-card h3,
+.photo-card p {
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+
 .photo-card p {
   font-size: 0.9rem;
   opacity: 0.95;
   margin: 0;
+}
+
+.photo-card--face-high img {
+  object-position: center 18%;
+}
+
+.photo-card--face-mid img {
+  object-position: center 32%;
 }
 
 .photo-card-cta {
