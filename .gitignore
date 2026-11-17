@@ -9,3 +9,6 @@ node_modules/
 
 # Client source composites and unblurred originals (never commit)
 private-client-photos/
+
+.tmp-qa/
+.tmp-shots/
