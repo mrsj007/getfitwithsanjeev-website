@@ -1,15 +1,28 @@
 {
   "reviewedPlaceholder": "Reviewed by Sanjeev",
-  "reviewNote": "PLACEHOLDER - Sanjeev must review and approve all guidance copy before this page goes live.",
+  "reviewNote": "Set reviewed to true on a block after Sanjeev approves that copy. The badge only shows when reviewed is true.",
   "ageBandNotes": {
-    "18-29": "In your twenties, habits you build now tend to stick. Strength and daily walking set you up well.",
-    "30-49": "In your thirties and forties, muscle and stress management matter most for how you feel day to day.",
-    "50-64": "From fifty onward, protecting muscle, joints and balance matters as much as the number on the scale.",
-    "65+": "After sixty-five, strength and balance often matter more than chasing a single BMI number - talk with your doctor about what fits you."
+    "18-29": {
+      "text": "In your twenties, habits you build now tend to stick. Strength and daily walking set you up well.",
+      "reviewed": false
+    },
+    "30-49": {
+      "text": "In your thirties and forties, muscle and stress management matter most for how you feel day to day.",
+      "reviewed": false
+    },
+    "50-64": {
+      "text": "From fifty onward, protecting muscle, joints and balance matters as much as the number on the scale.",
+      "reviewed": false
+    },
+    "65+": {
+      "text": "After sixty-five, strength and balance often matter more than chasing a single BMI number - talk with your doctor about what fits you.",
+      "reviewed": false
+    }
   },
   "categories": {
     "underweight": {
       "label": "Underweight",
+      "reviewed": false,
       "headline": "Your BMI sits below the usual adult range",
       "body": "A lower BMI is only a screening number. It does not explain muscle, appetite, stress or how you feel. Many people in this range feel better when they add gentle strength work, eat enough protein across the day, and protect sleep. If weight has dropped without trying, or meals feel hard to manage, check in with your doctor first. When you are ready, we can look at a calm plan that builds strength without rushing.",
       "actions": [
@@ -21,6 +34,7 @@
     },
     "healthy": {
       "label": "Healthy weight",
+      "reviewed": false,
       "headline": "Your BMI sits in the usual healthy range",
       "body": "Landing in this range is useful feedback, not a finish line. How you move, recover and manage stress still shapes energy and long-term health. Keep a couple of strength sessions in the week, walk daily, and keep protein and sleep steady. If you want to feel stronger, more mobile or more consistent, we can shape a plan around your schedule and joints - without chasing extremes.",
       "actions": [
@@ -32,6 +46,7 @@
     },
     "overweight": {
       "label": "Overweight",
+      "reviewed": false,
       "headline": "Your BMI sits above the usual healthy range",
       "body": "This range is a screening signal, not a label for who you are. Sustainable change usually comes from strength training, more daily walking, and food patterns you can keep - not crash plans. Sleep and stress matter more than people expect. If you have joint pain, a medical condition, or questions about where to start, speak with your doctor, then we can build a realistic training plan that respects your body.",
       "actions": [
@@ -43,6 +58,7 @@
     },
     "obese": {
       "label": "Obese",
+      "reviewed": false,
       "headline": "Your BMI sits in a higher adult range",
       "body": "A higher BMI is one screening number among many. It does not capture fitness, muscle or how carefully you already look after yourself. The most useful next steps are often small and repeatable: strength work two or three times a week, daily walking, and food and sleep habits that feel doable. Please check in with your doctor before a new training plan, especially if you have pain, breathlessness or other health concerns. I am here to help with practical coaching once medical clearance is clear.",
       "actions": [

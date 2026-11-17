@@ -173,7 +173,7 @@
       <div class="header-inner">
         <a class="brand" href="index.html">
           <span class="brand-name">SANJEEV KUMAR</span>
-          <span class="brand-tag">Personal Trainer • Vancouver and South Surrey</span>
+          <span class="brand-tag">Personal Trainer - Vancouver and South Surrey</span>
         </a>
 
         <button
@@ -192,7 +192,7 @@
           <ul class="nav-list nav-primary">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="bmi-calculator.html" aria-current="page">Free BMI Calculator</a></li>
+            <li><a href="bmi-calculator.html" aria-current="page">BMI Calculator</a></li>
             <!-- BLOG:NAV:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:NAV:END -->
@@ -203,25 +203,34 @@
     </header>
 
     <main id="main">
-      <section class="section section-cream bmi-hero" aria-labelledby="bmi-heading">
-        <div class="container">
+
+      <!-- ───── Hero ───── -->
+      <section class="bmi-hero" aria-labelledby="bmi-heading">
+        <div class="container bmi-container">
           <nav class="breadcrumb" aria-label="Breadcrumb">
             <ol>
               <li><a href="index.html">Home</a></li>
               <li aria-current="page">Free BMI Calculator</li>
             </ol>
           </nav>
-          <header class="section-intro">
+          <header class="section-intro section-intro-centre">
             <p class="eyebrow">Free tool</p>
-            <h1 id="bmi-heading">BMI Calculator for Adults</h1>
+            <h1 id="bmi-heading" class="bmi-heading-sm">BMI Calculator for Adults</h1>
             <p>
               Check your body mass index in metric or imperial units, see where you sit on an age-aware chart, and get practical next steps from Sanjeev Kumar, a personal trainer in South Surrey. This is a screening number, not a medical assessment.
             </p>
           </header>
+        </div>
+      </section>
 
+      <!-- ───── Calculator ───── -->
+      <section class="bmi-calculator" aria-labelledby="bmi-calc-heading">
+        <div class="container bmi-container">
           <div class="bmi-layout">
+
+            <!-- Left: form card -->
             <div class="bmi-panel">
-              <h2>Calculate your BMI</h2>
+              <h2 id="bmi-calc-heading">Calculate your BMI</h2>
               <form id="bmi-form" class="bmi-form" novalidate>
                 <div class="bmi-units" role="group" aria-label="Measurement units">
                   <button type="button" class="is-active" data-bmi-units="metric" aria-pressed="true">Metric</button>
@@ -348,8 +357,14 @@
               <p id="bmi-live" class="visually-hidden" aria-live="polite"></p>
             </div>
 
-            <div class="bmi-panel" id="bmi-output-panel">
+            <!-- Right: result card -->
+            <div class="bmi-result-card">
               <h2>Your result</h2>
+
+              <div id="bmi-empty-state" class="bmi-empty-state">
+                <p>Enter your details to see your result.</p>
+              </div>
+
               <div id="bmi-under18" class="bmi-under18" hidden tabindex="-1">
                 <p>
                   BMI for young people is read against growth charts. Please talk to your family doctor or pharmacist.
@@ -366,7 +381,6 @@
                 </div>
 
                 <div class="bmi-gauge" aria-hidden="false">
-                  <svg class="visually-hidden" width="0" height="0" aria-hidden="true" focusable="false"></svg>
                   <div class="bmi-gauge-track" role="img" aria-labelledby="bmi-gauge-label">
                     <span class="bmi-gauge-seg bmi-gauge-seg-1"></span>
                     <span class="bmi-gauge-seg bmi-gauge-seg-2"></span>
@@ -375,7 +389,7 @@
                   </div>
                   <span id="bmi-gauge-marker" class="bmi-gauge-marker" style="left: 50%"></span>
                   <p id="bmi-gauge-label" class="visually-hidden">BMI gauge</p>
-                  <ul class="bmi-gauge-legend">
+                  <ul id="bmi-gauge-legend" class="bmi-gauge-legend">
                     <li><span class="bmi-gauge-seg-1"></span>Underweight</li>
                     <li><span class="bmi-gauge-seg-2"></span>Healthy</li>
                     <li><span class="bmi-gauge-seg-3"></span>Overweight</li>
@@ -385,305 +399,360 @@
 
                 <p id="bmi-healthy-range"></p>
                 <p id="bmi-distance"></p>
-
-                <div class="bmi-limits">
-                  <h3>What BMI does not tell you</h3>
-                  <p>
-                    BMI does not measure muscle, bone, fat distribution, pregnancy or ethnicity differences. Muscular people and some older adults can be misclassified. It is one number among many. Check with a doctor for health decisions.
-                  </p>
-                  <p>If you are pregnant, speak with your healthcare provider about weight and activity rather than relying on BMI alone.</p>
-                </div>
-
-                <div id="bmi-age-chart" class="bmi-age-chart">
-                  <h3>BMI by age band</h3>
-                  <p>
-                    For adults, the official healthy BMI range is the same at every age (18.5 to 24.9). The notes below are about habits, not different cut-offs.
-                  </p>
-                  <div class="bmi-age-table-wrap">
-                    <table class="bmi-age-table">
-                      <thead>
-                        <tr>
-                          <th scope="col">Age band</th>
-                          <th scope="col">Healthy BMI</th>
-                          <th scope="col">Note</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr data-age-band="18-29">
-                          <th scope="row">18-29</th>
-                          <td>18.5-24.9<span class="bmi-age-bar" aria-hidden="true"></span></td>
-                          <td>Build habits now</td>
-                        </tr>
-                        <tr data-age-band="30-49">
-                          <th scope="row">30-49</th>
-                          <td>18.5-24.9<span class="bmi-age-bar" aria-hidden="true"></span></td>
-                          <td>Muscle and stress management matter most</td>
-                        </tr>
-                        <tr data-age-band="50-64">
-                          <th scope="row">50-64</th>
-                          <td>18.5-24.9<span class="bmi-age-bar" aria-hidden="true"></span></td>
-                          <td>Protect muscle and bone as you age</td>
-                        </tr>
-                        <tr data-age-band="65+">
-                          <th scope="row">65+</th>
-                          <td>18.5-24.9<span class="bmi-age-bar" aria-hidden="true"></span></td>
-                          <td>Some research suggests a slightly higher BMI can be fine, and strength and balance matter more than the number - talk to your doctor</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="bmi-source">
-                    Sources:
-                    <a href="https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index" rel="noopener noreferrer" target="_blank">WHO body mass index</a>,
-                    <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/healthy-weights/canadian-guidelines-body-weight-classification-adults/questions-answers-public.html" rel="noopener noreferrer" target="_blank">Health Canada adult weight classification</a>.
-                  </p>
-                </div>
-
-                <div id="bmi-guidance" class="bmi-guidance" hidden></div>
               </div>
-
-              <p class="bmi-placeholder-note" id="bmi-empty-hint">
-                Enter your age, height and weight, then calculate. Results stay in your browser unless you choose to contact Sanjeev.
-              </p>
             </div>
-          </div>
 
-          <section id="bmi-related" class="bmi-related" hidden aria-labelledby="bmi-related-heading">
+          </div>
+        </div>
+      </section>
+
+      <!-- ───── Follow-up (shown by JS after calculation) ───── -->
+      <div id="bmi-follow-up" hidden>
+        <div class="container bmi-container">
+
+          <section id="bmi-limits" class="bmi-section bmi-limits" hidden>
+            <h2>What BMI does not tell you</h2>
+            <p>
+              BMI does not measure muscle, bone, fat distribution, pregnancy or ethnicity differences. Muscular people and some older adults can be misclassified. It is one number among many. Check with a doctor for health decisions.
+            </p>
+            <p>If you are pregnant, speak with your healthcare provider about weight and activity rather than relying on BMI alone.</p>
+          </section>
+
+          <section id="bmi-age-chart" class="bmi-section">
+            <h2>BMI by age band</h2>
+            <p>
+              For adults, the official healthy BMI range is the same at every age (18.5 to 24.9). The notes below are about habits, not different cut-offs.
+            </p>
+            <div class="bmi-age-table-wrap">
+              <table class="bmi-age-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Age band</th>
+                    <th scope="col">Healthy BMI</th>
+                    <th scope="col">Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-age-band="18-29">
+                    <th scope="row" class="bmi-age-band">18-29 <span class="bmi-you-tag">You</span></th>
+                    <td data-label="Healthy BMI" class="bmi-age-range">18.5-24.9</td>
+                    <td data-label="Note">Build habits now</td>
+                  </tr>
+                  <tr data-age-band="30-49">
+                    <th scope="row" class="bmi-age-band">30-49 <span class="bmi-you-tag">You</span></th>
+                    <td data-label="Healthy BMI" class="bmi-age-range">18.5-24.9</td>
+                    <td data-label="Note">Muscle and stress management matter most</td>
+                  </tr>
+                  <tr data-age-band="50-64">
+                    <th scope="row" class="bmi-age-band">50-64 <span class="bmi-you-tag">You</span></th>
+                    <td data-label="Healthy BMI" class="bmi-age-range">18.5-24.9</td>
+                    <td data-label="Note">Protect muscle and bone as you age</td>
+                  </tr>
+                  <tr data-age-band="65+">
+                    <th scope="row" class="bmi-age-band">65+ <span class="bmi-you-tag">You</span></th>
+                    <td data-label="Healthy BMI" class="bmi-age-range">18.5-24.9</td>
+                    <td data-label="Note">Some research suggests a slightly higher BMI can be fine, and strength and balance matter more than the number - talk to your doctor</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="bmi-source">
+              Sources:
+              <a href="https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index" rel="noopener noreferrer" target="_blank">WHO body mass index</a>,
+              <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/healthy-weights/canadian-guidelines-body-weight-classification-adults/questions-answers-public.html" rel="noopener noreferrer" target="_blank">Health Canada adult weight classification</a>.
+            </p>
+          </section>
+
+          <div id="bmi-guidance" class="bmi-section" hidden></div>
+
+          <section id="bmi-related" class="bmi-section" hidden aria-labelledby="bmi-related-heading">
             <h2 id="bmi-related-heading">Related guidance</h2>
             <div id="bmi-related-grid" class="blog-card-grid"></div>
-            <p><a id="bmi-related-see-all" class="btn btn-outline" href="blog/index.html">See all guidance</a></p>
+            <div class="bmi-related-actions">
+              <a id="bmi-related-see-all" class="btn btn-outline" href="blog/index.html">See all guidance</a>
+            </div>
           </section>
 
-          <section id="bmi-lead" class="bmi-lead bmi-panel" hidden aria-labelledby="bmi-lead-heading">
+          <section id="bmi-lead" class="bmi-section bmi-lead" hidden aria-labelledby="bmi-lead-heading">
             <h2 id="bmi-lead-heading">Want a plan for your numbers? Talk to Sanjeev.</h2>
             <p>Share a short message and Sanjeev will follow up about training. Your calculator numbers stay private unless you opt in below.</p>
-            <form
-              id="bmi-contact-form"
-              class="bmi-contact-form"
-              action="https://formspree.io/f/maeywvbo"
-              method="POST"
-            >
-              <div class="bmi-field">
-                <label for="bmi-contact-name">Name <span class="req" aria-hidden="true">*</span></label>
-                <input id="bmi-contact-name" name="name" type="text" autocomplete="name" required aria-describedby="bmi-contact-name-error" />
-                <p class="bmi-field-error" id="bmi-contact-name-error" hidden role="alert"></p>
+
+            <div id="bmi-form-shell">
+              <form
+                id="bmi-contact-form"
+                class="bmi-contact-form"
+                action="https://formspree.io/f/maeywvbo"
+                method="POST"
+                novalidate
+              >
+                <div class="bmi-field-row">
+                  <div class="bmi-field">
+                    <label for="bmi-contact-name">Name <span class="req" aria-hidden="true">*</span></label>
+                    <input id="bmi-contact-name" name="name" type="text" autocomplete="name" required aria-describedby="bmi-contact-name-error" />
+                    <p class="bmi-field-error" id="bmi-contact-name-error" hidden role="alert"></p>
+                  </div>
+                  <div class="bmi-field">
+                    <label for="bmi-contact-email">Email <span class="req" aria-hidden="true">*</span></label>
+                    <input id="bmi-contact-email" name="email" type="email" autocomplete="email" required aria-describedby="bmi-contact-email-error" />
+                    <p class="bmi-field-error" id="bmi-contact-email-error" hidden role="alert"></p>
+                  </div>
+                </div>
+
+                <div class="bmi-field">
+                  <label for="bmi-contact-phone">Phone <span class="bmi-hint">Optional</span></label>
+                  <input id="bmi-contact-phone" name="phone" type="tel" autocomplete="tel" />
+                </div>
+
+                <div class="bmi-field">
+                  <label for="bmi-contact-message">Message <span class="bmi-hint">Optional</span></label>
+                  <textarea id="bmi-contact-message" name="message" rows="4" maxlength="2000"></textarea>
+                </div>
+
+                <label class="bmi-check-row" for="bmi-age-confirm">
+                  <input id="bmi-age-confirm" name="age_confirm" type="checkbox" value="yes" required aria-describedby="bmi-age-confirm-error" />
+                  <span>I confirm I am 18 or older.</span>
+                </label>
+                <p class="bmi-field-error" id="bmi-age-confirm-error" hidden role="alert"></p>
+
+                <label class="bmi-check-row" for="bmi-share-results">
+                  <input id="bmi-share-results" name="share_results" type="checkbox" value="yes" />
+                  <span>Share my results with Sanjeev (age band, BMI, category and units only)</span>
+                </label>
+
+                <label class="bmi-check-row" for="bmi-consent">
+                  <input id="bmi-consent" name="consent" type="checkbox" value="yes" required aria-describedby="bmi-consent-error" />
+                  <span>
+                    I agree to be contacted by Sanjeev about training. My details will be used only for that purpose. See the
+                    <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms and Disclaimer</a>.
+                  </span>
+                </label>
+                <p class="bmi-field-error" id="bmi-consent-error" hidden role="alert"></p>
+
+                <p class="bmi-casl">You can reply STOP or unsubscribe any time. This follows Canada's anti-spam law (CASL).</p>
+
+                <p class="bmi-hp">
+                  <label for="bmi-company">Company</label>
+                  <input id="bmi-company" type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+                </p>
+
+                <input type="hidden" name="bmi_summary" id="bmi-summary" value="" />
+                <input type="hidden" name="source" id="bmi-source" value="bmi-calculator" />
+                <input type="hidden" name="_subject" value="BMI calculator enquiry" />
+
+                <p class="form-error" id="bmi-form-alert" hidden role="alert" tabindex="-1"></p>
+                <p class="form-error" id="bmi-form-error" hidden role="alert" tabindex="-1">
+                  Something went wrong, and your message was not sent. Please email
+                  <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a> directly.
+                </p>
+
+                <button class="btn btn-primary" type="submit">Send message</button>
+              </form>
+
+              <noscript>
+                <p>
+                  JavaScript is off, so the calculator and form helper are unavailable. Email
+                  <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a>
+                  or <a href="book.html">book a free consultation</a>.
+                </p>
+              </noscript>
+
+              <div class="bmi-form-success" id="bmi-form-success" hidden role="status" aria-live="polite" tabindex="-1">
+                <p>Thanks. Sanjeev has your message.</p>
+                <p><a class="btn btn-primary" href="book.html">Book a free consultation</a></p>
               </div>
-              <div class="bmi-field">
-                <label for="bmi-contact-email">Email <span class="req" aria-hidden="true">*</span></label>
-                <input id="bmi-contact-email" name="email" type="email" autocomplete="email" required aria-describedby="bmi-contact-email-error" />
-                <p class="bmi-field-error" id="bmi-contact-email-error" hidden role="alert"></p>
-              </div>
-              <div class="bmi-field">
-                <label for="bmi-contact-phone">Phone <span class="bmi-hint">Optional</span></label>
-                <input id="bmi-contact-phone" name="phone" type="tel" autocomplete="tel" />
-              </div>
-              <div class="bmi-field">
-                <label for="bmi-contact-message">Message <span class="bmi-hint">Optional</span></label>
-                <textarea id="bmi-contact-message" name="message" rows="4" maxlength="2000"></textarea>
-              </div>
-              <label class="bmi-check" for="bmi-share-results">
-                <input id="bmi-share-results" name="share_results" type="checkbox" value="yes" />
-                <span>Share my results with Sanjeev (age band, BMI, category and units only)</span>
-              </label>
-              <input type="hidden" name="bmi_summary" id="bmi-summary" value="" />
-              <input type="hidden" name="source" id="bmi-source" value="bmi-calculator" />
-              <input type="hidden" name="_subject" value="BMI calculator enquiry" />
-              <label class="bmi-check" for="bmi-consent">
-                <input id="bmi-consent" name="consent" type="checkbox" value="yes" required aria-describedby="bmi-consent-error" />
-                <span>
-                  I agree to be contacted by Sanjeev about training. My details will be used only for that purpose. See the
-                  <a href="privacy.html">Privacy Policy</a>.
-                </span>
-              </label>
-              <p class="bmi-field-error" id="bmi-consent-error" hidden role="alert"></p>
-              <p class="bmi-casl">You can reply STOP or unsubscribe any time. This follows Canada's anti-spam law (CASL).</p>
-              <p class="bmi-hp">
-                <label for="bmi-company">Company</label>
-                <input id="bmi-company" type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
-              </p>
-              <p class="form-error" id="bmi-form-alert" hidden role="alert" tabindex="-1"></p>
-              <p class="form-error" id="bmi-form-error" hidden role="alert" tabindex="-1">
-                Something went wrong, and your message was not sent. Please email
-                <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a> directly.
-              </p>
-              <button class="btn btn-primary" type="submit">Send message</button>
-            </form>
-            <noscript>
-              <p>
-                JavaScript is off, so the calculator and form helper are unavailable. Email
-                <a href="mailto:getfitwithsk007@gmail.com">getfitwithsk007@gmail.com</a>
-                or <a href="book.html">book a free consultation</a>.
-              </p>
-            </noscript>
-            <div class="bmi-form-success" id="bmi-form-success" hidden role="status" aria-live="polite" tabindex="-1">
-              <p>Thanks. Sanjeev has your message.</p>
-              <p><a class="btn btn-primary" href="book.html">Book a free consultation</a></p>
             </div>
           </section>
+
         </div>
-      </section>
+      </div>
 
-      <section class="section section-cream bmi-guide" aria-labelledby="bmi-guide-heading">
+      <!-- ───── Educational guide ───── -->
+      <section class="bmi-guide" aria-labelledby="bmi-guide-heading">
         <div class="container">
-          <h2 id="bmi-guide-heading">Understanding BMI</h2>
-          <p>
-            Body mass index (BMI) is a quick screening number made from your height and weight. Clinics and public-health bodies use it to place adults into broad groups. It is not a diagnosis, and it cannot see muscle, bone density, waist shape or pregnancy. Think of it as one clue beside how you feel, how you move, and what your doctor sees in a fuller check.
-          </p>
+          <div class="bmi-guide-layout">
 
-          <h2>How to calculate BMI by hand</h2>
-          <p>
-            The adult formula is weight in kilograms divided by height in metres squared: BMI = kg / m&sup2;. Example: someone who is 170 cm tall weighs 70 kg. Height in metres is 1.70. Square that to get 2.89. Divide 70 by 2.89 and you get about 24.2, which sits in the healthy range. Prefer imperial? Convert pounds to kilograms and feet-and-inches to metres first, or use the toggle above. On this page the maths stays in your browser.
-          </p>
+            <nav class="bmi-guide-toc is-collapsed" aria-label="Guide contents">
+              <button class="bmi-guide-toc-toggle" type="button" aria-expanded="false">Contents</button>
+              <ol>
+                <li><a href="#bmi-guide-heading">Understanding BMI</a></li>
+                <li><a href="#bmi-guide-formula">How to calculate BMI by hand</a></li>
+                <li><a href="#bmi-guide-categories">Adult BMI categories</a></li>
+                <li><a href="#bmi-guide-age">BMI by age</a></li>
+                <li><a href="#bmi-guide-older">BMI for older adults</a></li>
+                <li><a href="#bmi-guide-muscle">BMI and muscle</a></li>
+                <li><a href="#bmi-guide-south-asian">South Asian cut-offs</a></li>
+                <li><a href="#bmi-guide-action">What to do with your result</a></li>
+                <li><a href="#bmi-guide-waist">BMI versus waist and other checks</a></li>
+                <li><a href="#bmi-guide-training">Training in South Surrey and Vancouver</a></li>
+                <li><a href="#bmi-faq-heading">FAQ</a></li>
+              </ol>
+            </nav>
 
-          <h2>Adult BMI categories</h2>
-          <p>
-            Health Canada follows WHO adult groups. Under 18.5 is underweight, 18.5 to 24.9 is healthy weight, 25 to 29.9 is overweight, and 30 or higher is obese, with Class I (30-34.9), Class II (35-39.9) and Class III (40+). These bands describe population risk patterns. They do not name your worth or predict any single outcome.
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">BMI</th>
-                <th scope="col">Category</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Under 18.5</td><td>Underweight</td></tr>
-              <tr><td>18.5-24.9</td><td>Healthy weight</td></tr>
-              <tr><td>25-29.9</td><td>Overweight</td></tr>
-              <tr><td>30-34.9</td><td>Obese - Class I</td></tr>
-              <tr><td>35-39.9</td><td>Obese - Class II</td></tr>
-              <tr><td>40+</td><td>Obese - Class III</td></tr>
-            </tbody>
-          </table>
+            <div class="bmi-guide-prose">
 
-          <h2>BMI by age</h2>
-          <p>
-            For adults, the official healthy range stays 18.5 to 24.9 whether you are 25 or 75. What changes with age is how you use the number. In your late teens and twenties, building strength and walking habits pays off for decades. Through the thirties and forties, muscle and stress management often decide how steady energy feels. From fifty to sixty-four, protecting muscle and bone becomes a clear priority. After sixty-five, some research suggests a slightly higher BMI can be fine for some people, and strength plus balance usually matter more than chasing a single reading - talk with your doctor.
-          </p>
+              <h2 id="bmi-guide-heading">Understanding BMI</h2>
+              <p>
+                Body mass index (BMI) is a quick screening number made from your height and weight. Clinics and public-health bodies use it to place adults into broad groups. It is a screening number, not a medical assessment, and it cannot see muscle, bone density, waist shape or pregnancy. Think of it as one clue beside how you feel, how you move, and what your doctor sees in a fuller check.
+              </p>
 
-          <h2>BMI for older adults</h2>
-          <p>
-            Later life brings shifts in muscle, appetite and medication. A lower BMI can flag unintended weight loss that needs medical attention. A higher BMI can coexist with strong legs and a healthy waist, or with little muscle and a larger waist. That is why older adults benefit from looking at strength tests, walking speed and medical history alongside BMI. If you are 50 or older and want a training plan that respects joints and balance, <a href="blog/index.html?category=workout-arthritis-osteoporosis-and-sarcopenia">read Sanjeev's guidance on arthritis, osteoporosis and sarcopenia</a> or <a href="book.html">book a consultation</a>.
-          </p>
+              <h2 id="bmi-guide-formula">How to calculate BMI by hand</h2>
+              <p>
+                The adult formula is weight in kilograms divided by height in metres squared: BMI = kg / m&sup2;. Example: someone who is 170 cm tall weighs 70 kg. Height in metres is 1.70. Square that to get 2.89. Divide 70 by 2.89 and you get about 24.2, which sits in the healthy range. Prefer imperial? Convert pounds to kilograms and feet-and-inches to metres first, or use the toggle above. On this page the maths stays in your browser.
+              </p>
 
-          <h2>BMI and muscle</h2>
-          <p>
-            Athletes and people who lift often weigh more because muscle is dense. BMI can place them in overweight or obese categories even when body fat is modest. The reverse can also happen: someone with little muscle and more fat can look "fine" on BMI while still needing strength work. Waist measurement, progress photos, how clothes fit and performance in the gym fill in the picture. Sanjeev's article on <a href="blog/beyond-the-scale-body-composition.html">body composition changes</a> explains why the scale alone misleads.
-          </p>
+              <h2 id="bmi-guide-categories">Adult BMI categories</h2>
+              <p>
+                Health Canada follows WHO adult groups. Under 18.5 is underweight, 18.5 to 24.9 is healthy weight, 25 to 29.9 is overweight, and 30 or higher is obese, with Class I (30-34.9), Class II (35-39.9) and Class III (40+). These bands describe population risk patterns. They do not name your worth or predict any single outcome.
+              </p>
+              <table class="bmi-category-table">
+                <thead>
+                  <tr>
+                    <th scope="col">BMI</th>
+                    <th scope="col">Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Under 18.5</td><td>Underweight</td></tr>
+                  <tr><td>18.5-24.9</td><td>Healthy weight</td></tr>
+                  <tr><td>25-29.9</td><td>Overweight</td></tr>
+                  <tr><td>30-34.9</td><td>Obese - Class I</td></tr>
+                  <tr><td>35-39.9</td><td>Obese - Class II</td></tr>
+                  <tr><td>40+</td><td>Obese - Class III</td></tr>
+                </tbody>
+              </table>
 
-          <h2>South Asian cut-offs</h2>
-          <p>
-            A WHO expert consultation noted that many Asian populations can show higher metabolic risk at lower BMI values than the standard European-derived cut-offs. Action points near 23 and 27.5 are widely discussed for South Asian adults. This calculator can switch to those reference lines when you tick South Asian background. The switch does not replace blood work, family history or a clinician's judgement. It simply shows a more cautious reading of the same height and weight.
-          </p>
+              <h2 id="bmi-guide-age">BMI by age</h2>
+              <p>
+                For adults, the official healthy range stays 18.5 to 24.9 whether you are 25 or 75. What changes with age is how you use the number. In your late teens and twenties, building strength and walking habits pays off for decades. Through the thirties and forties, muscle and stress management often decide how steady energy feels. From fifty to sixty-four, protecting muscle and bone becomes a clear priority. After sixty-five, some research suggests a slightly higher BMI can be fine for some people, and strength plus balance usually matter more than chasing a single reading - talk with your doctor.
+              </p>
 
-          <h2>What to do with your result</h2>
-          <p>
-            Start with honesty and a small next step. If your BMI is underweight, focus on regular meals, protein and supervised strength work, and ask a doctor about unexplained loss. If you are in the healthy range, keep training and sleep consistent. If you are overweight or in an obese class, pair daily walking with two or three strength sessions and food patterns you can keep - then check medical advice before big changes. Browse <a href="blog/index.html?category=workout-fat-loss">fat-loss training notes</a>, <a href="blog/index.html?category=workout-strength">strength guidance</a>, or <a href="book.html">book time with Sanjeev</a> when you want a plan built around your schedule.
-          </p>
+              <h2 id="bmi-guide-older">BMI for older adults</h2>
+              <p>
+                Later life brings shifts in muscle, appetite and medication. A lower BMI can flag unintended weight loss that needs medical attention. A higher BMI can coexist with strong legs and a healthy waist, or with little muscle and a larger waist. That is why older adults benefit from looking at strength tests, walking speed and medical history alongside BMI. If you are 50 or older and want a training plan that respects joints and balance, <a href="blog/index.html?category=workout-arthritis-osteoporosis-and-sarcopenia">read Sanjeev's guidance on arthritis, osteoporosis and sarcopenia</a> or <a href="book.html">book a consultation</a>.
+              </p>
 
-          <h2>BMI versus waist and other checks</h2>
-          <p>
-            Waist circumference tracks abdominal fat in a way BMI cannot. Blood pressure, blood sugar, cholesterol, sleep quality and mood all matter too. Use BMI to open a conversation, not to close one. If numbers worry you, bring them to your family doctor or pharmacist and ask what else to measure. Personal training can support movement and habits once medical questions are clear.
-          </p>
+              <h2 id="bmi-guide-muscle">BMI and muscle</h2>
+              <p>
+                Athletes and people who lift often weigh more because muscle is dense. BMI can place them in overweight or obese categories even when body fat is modest. The reverse can also happen: someone with little muscle and more fat can look "fine" on BMI while still needing strength work. Waist measurement, progress photos, how clothes fit and performance in the gym fill in the picture. Sanjeev's article on <a href="blog/beyond-the-scale-body-composition.html">body composition changes</a> explains why the scale alone misleads.
+              </p>
 
-          <h2>Training in South Surrey and Vancouver</h2>
-          <p>
-            Sanjeev Kumar coaches adults who want practical strength, mobility and endurance guidance. He works from 1715 152 St #120, Surrey, BC V4A 4N3, in South Surrey, and supports people across Surrey, White Rock, Langley and Vancouver through in-person packages and online consultations. If this calculator raised useful questions about muscle, habits or where to start, <a href="book.html">book a free consultation</a> and talk through a plan that fits your body and week.
-          </p>
+              <h2 id="bmi-guide-south-asian">South Asian cut-offs</h2>
+              <p>
+                A WHO expert consultation noted that many Asian populations can show higher metabolic risk at lower BMI values than the standard European-derived cut-offs. Action points near 23 and 27.5 are widely discussed for South Asian adults. This calculator can switch to those reference lines when you tick South Asian background. The switch does not replace blood work, family history or a clinician's judgement. It simply shows a more cautious reading of the same height and weight.
+              </p>
 
-          <h2 id="bmi-faq-heading">BMI calculator FAQ</h2>
-          <div class="accordion" aria-labelledby="bmi-faq-heading">
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-1" id="bmi-faq-btn-1">
-                  What is a healthy BMI for my age?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-1" role="region" aria-labelledby="bmi-faq-btn-1" hidden>
-                <p>For adults, Health Canada and the WHO use the same healthy BMI range at every age: 18.5 to 24.9. Age still matters for how you train. From about 50 onward, muscle, joints and balance deserve extra attention, and some research suggests a slightly higher BMI can be fine for some older adults. Talk with your doctor about what fits you.</p>
+              <h2 id="bmi-guide-action">What to do with your result</h2>
+              <p>
+                Start with honesty and a small next step. If your BMI is underweight, focus on regular meals, protein and supervised strength work, and ask a doctor about unexplained loss. If you are in the healthy range, keep training and sleep consistent. If you are overweight or in an obese class, pair daily walking with two or three strength sessions and food patterns you can keep - then check medical advice before big changes. Browse <a href="blog/index.html?category=workout-fat-loss">fat-loss training notes</a>, <a href="blog/index.html?category=workout-strength">strength guidance</a>, or <a href="book.html">book time with Sanjeev</a> when you want a plan built around your schedule.
+              </p>
+
+              <h2 id="bmi-guide-waist">BMI versus waist and other checks</h2>
+              <p>
+                Waist circumference tracks abdominal fat in a way BMI cannot. Blood pressure, blood sugar, cholesterol, sleep quality and mood all matter too. Use BMI to open a conversation, not to close one. If numbers worry you, bring them to your family doctor or pharmacist and ask what else to measure. Personal training can support movement and habits once medical questions are clear.
+              </p>
+
+              <h2 id="bmi-guide-training">Training in South Surrey and Vancouver</h2>
+              <p>
+                Sanjeev Kumar coaches adults who want practical strength, mobility and endurance guidance. He works from 1715 152 St #120, Surrey, BC V4A 4N3, in South Surrey, and supports people across Surrey, White Rock, Langley and Vancouver through in-person packages and online consultations. If this calculator raised useful questions about muscle, habits or where to start, <a href="book.html">book a free consultation</a> and talk through a plan that fits your body and week.
+              </p>
+
+              <h2 id="bmi-faq-heading">BMI calculator FAQ</h2>
+              <div class="accordion" aria-labelledby="bmi-faq-heading">
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-1" id="bmi-faq-btn-1">
+                      What is a healthy BMI for my age?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-1" role="region" aria-labelledby="bmi-faq-btn-1" hidden>
+                    <p>For adults, Health Canada and the WHO use the same healthy BMI range at every age: 18.5 to 24.9. Age still matters for how you train. From about 50 onward, muscle, joints and balance deserve extra attention, and some research suggests a slightly higher BMI can be fine for some older adults. Talk with your doctor about what fits you.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-2" id="bmi-faq-btn-2">
+                      Is BMI accurate for muscular people?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-2" role="region" aria-labelledby="bmi-faq-btn-2" hidden>
+                    <p>BMI uses height and weight only. It does not measure muscle, bone or fat. People with more muscle can land in overweight or obese categories while carrying relatively little body fat. Use BMI as a screening number alongside waist size, strength, energy and advice from your doctor.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-3" id="bmi-faq-btn-3">
+                      What is a good BMI for a woman or man over 50?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-3" role="region" aria-labelledby="bmi-faq-btn-3" hidden>
+                    <p>Official adult categories stay the same for women and men after 50: 18.5 to 24.9 is the usual healthy range. Sex is not required for the calculation. After 50, protecting muscle and bone, and checking balance, often matters more than chasing a single number. Ask your doctor before major changes.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-4" id="bmi-faq-btn-4">
+                      Is BMI different for South Asians?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-4" role="region" aria-labelledby="bmi-faq-btn-4" hidden>
+                    <p>A WHO expert consultation suggested lower BMI action points for many Asian populations, often cited as 23 and 27.5, because health risk can rise at a lower BMI. This calculator can switch to those reference lines when you tick South Asian background. It is still a screening tool, not a personal medical assessment.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-5" id="bmi-faq-btn-5">
+                      How do I calculate BMI in pounds and inches?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-5" role="region" aria-labelledby="bmi-faq-btn-5" hidden>
+                    <p>Convert to metric, then use kilograms divided by metres squared. Multiply weight in pounds by 0.45359237 to get kilograms. Convert height to inches, multiply by 2.54 for centimetres, then divide by 100 for metres. Or use the imperial toggle on this page, which does the conversion for you.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-6" id="bmi-faq-btn-6">
+                      Can I lose weight with strength training?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-6" role="region" aria-labelledby="bmi-faq-btn-6" hidden>
+                    <p>Strength training helps you keep or build muscle while you change food habits and daily walking. Muscle supports metabolism and how clothes fit, even when the scale moves slowly. Pair training with realistic meals, sleep and steps. For personal medical questions, speak with your doctor.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-7" id="bmi-faq-btn-7">
+                      Does this calculator work for people under 18?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-7" role="region" aria-labelledby="bmi-faq-btn-7" hidden>
+                    <p>No. BMI for young people is read against age- and sex-specific growth charts and needs a clinician's input. If you enter an age under 18, this page shows a short message and does not calculate an adult result.</p>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3>
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-8" id="bmi-faq-btn-8">
+                      Is my information stored when I use the calculator?
+                      <span class="accordion-icon" aria-hidden="true">+</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-panel" id="bmi-faq-8" role="region" aria-labelledby="bmi-faq-btn-8" hidden>
+                    <p>Calculation stays in your browser. Age, height and weight are not written to cookies, local storage or the page address. Nothing is sent unless you choose to submit the contact form, and BMI numbers are included only if you tick Share my results with Sanjeev.</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-2" id="bmi-faq-btn-2">
-                  Is BMI accurate for muscular people?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-2" role="region" aria-labelledby="bmi-faq-btn-2" hidden>
-                <p>BMI uses height and weight only. It does not measure muscle, bone or fat. People with more muscle can land in overweight or obese categories while carrying relatively little body fat. Use BMI as a screening number alongside waist size, strength, energy and advice from your doctor.</p>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-3" id="bmi-faq-btn-3">
-                  What is a good BMI for a woman or man over 50?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-3" role="region" aria-labelledby="bmi-faq-btn-3" hidden>
-                <p>Official adult categories stay the same for women and men after 50: 18.5 to 24.9 is the usual healthy range. Sex is not required for the calculation. After 50, protecting muscle and bone, and checking balance, often matters more than chasing a single number. Ask your doctor before major changes.</p>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-4" id="bmi-faq-btn-4">
-                  Is BMI different for South Asians?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-4" role="region" aria-labelledby="bmi-faq-btn-4" hidden>
-                <p>A WHO expert consultation suggested lower BMI action points for many Asian populations, often cited as 23 and 27.5, because health risk can rise at a lower BMI. This calculator can switch to those reference lines when you tick South Asian background. It is still a screening tool, not a personal medical assessment.</p>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-5" id="bmi-faq-btn-5">
-                  How do I calculate BMI in pounds and inches?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-5" role="region" aria-labelledby="bmi-faq-btn-5" hidden>
-                <p>Convert to metric, then use kilograms divided by metres squared. Multiply weight in pounds by 0.45359237 to get kilograms. Convert height to inches, multiply by 2.54 for centimetres, then divide by 100 for metres. Or use the imperial toggle on this page, which does the conversion for you.</p>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-6" id="bmi-faq-btn-6">
-                  Can I lose weight with strength training?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-6" role="region" aria-labelledby="bmi-faq-btn-6" hidden>
-                <p>Strength training helps you keep or build muscle while you change food habits and daily walking. Muscle supports metabolism and how clothes fit, even when the scale moves slowly. Pair training with realistic meals, sleep and steps. For personal medical questions, speak with your doctor.</p>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-7" id="bmi-faq-btn-7">
-                  Does this calculator work for people under 18?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-7" role="region" aria-labelledby="bmi-faq-btn-7" hidden>
-                <p>No. BMI for young people is read against age- and sex-specific growth charts and needs a clinician's input. If you enter an age under 18, this page shows a short message and does not calculate an adult result.</p>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h3>
-                <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="bmi-faq-8" id="bmi-faq-btn-8">
-                  Is my information stored when I use the calculator?
-                  <span class="accordion-icon" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <div class="accordion-panel" id="bmi-faq-8" role="region" aria-labelledby="bmi-faq-btn-8" hidden>
-                <p>Calculation stays in your browser. Age, height and weight are not written to cookies, local storage or the page address. Nothing is sent unless you choose to submit the contact form, and BMI numbers are included only if you tick Share my results with Sanjeev.</p>
-              </div>
+
             </div>
           </div>
         </div>
       </section>
+
     </main>
 
     <footer class="site-footer">
@@ -742,13 +811,20 @@
           </ul>
         </div>
       </div>
+      <div class="footer-legal">
+        <div class="container">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms and Disclaimer</a>
+        </div>
+      </div>
       <div class="footer-bottom">
         <div class="container">
           <p>Fitness and nutrition information provided on this website is for educational purposes only and does not constitute medical advice. Individual results vary.</p>
-          <p>© 2026 GetFitWithSanjeev. All rights reserved.</p>
+          <p>&copy; 2026 GetFitWithSanjeev. All rights reserved.</p>
         </div>
       </div>
     </footer>
+
     <script src="script.min.js" defer></script>
     <script src="bmi-calculator.min.js" defer></script>
   </body>

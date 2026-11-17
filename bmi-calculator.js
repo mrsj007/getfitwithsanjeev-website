@@ -13,22 +13,6 @@ import relatedData from "./content/bmi/related.json";
   const CM_PER_IN = 2.54;
   const KG_PER_LB = 0.45359237;
 
-  const WHO = {
-    underweightMax: 18.5,
-    healthyMax: 25,
-    overweightMax: 30,
-    class1Max: 35,
-    class2Max: 40,
-  };
-
-  const SOUTH_ASIAN = {
-    underweightMax: 18.5,
-    healthyMax: 23,
-    overweightMax: 27.5,
-    class1Max: 32.5,
-    class2Max: 37.5,
-  };
-
   /** Unit preference lives in memory only for this page visit. */
   let units = "metric";
   let lastResult = null;
@@ -49,6 +33,7 @@ import relatedData from "./content/bmi/related.json";
   const unitButtons = form.querySelectorAll("[data-bmi-units]");
 
   const under18Box = document.getElementById("bmi-under18");
+  const emptyState = document.getElementById("bmi-empty-state");
   const results = document.getElementById("bmi-results");
   const resultFocus = document.getElementById("bmi-result-focus");
   const liveRegion = document.getElementById("bmi-live");
@@ -59,13 +44,15 @@ import relatedData from "./content/bmi/related.json";
   const distanceEl = document.getElementById("bmi-distance");
   const gaugeMarker = document.getElementById("bmi-gauge-marker");
   const gaugeLabel = document.getElementById("bmi-gauge-label");
+  const gaugeLegend = document.getElementById("bmi-gauge-legend");
   const ageChart = document.getElementById("bmi-age-chart");
   const guidanceBlock = document.getElementById("bmi-guidance");
   const relatedBlock = document.getElementById("bmi-related");
   const relatedGrid = document.getElementById("bmi-related-grid");
   const relatedSeeAll = document.getElementById("bmi-related-see-all");
   const leadSection = document.getElementById("bmi-lead");
-  const emptyHint = document.getElementById("bmi-empty-hint");
+  const limitsSection = document.getElementById("bmi-limits");
+  const followUp = document.getElementById("bmi-follow-up");
   const shareResults = document.getElementById("bmi-share-results");
   const summaryField = document.getElementById("bmi-summary");
   const contactForm = document.getElementById("bmi-contact-form");
@@ -109,8 +96,8 @@ import relatedData from "./content/bmi/related.json";
 
   function showError(input, errorId, message) {
     const err = document.getElementById(errorId);
-    if (!input || !err) return true;
-    err.textContent = message;
+    if (!input || !err) return !!message;
+    err.textContent = message || "";
     err.hidden = !message;
     if (message) input.setAttribute("aria-invalid", "true");
     else input.removeAttribute("aria-invalid");
@@ -141,31 +128,114 @@ import relatedData from "./content/bmi/related.json";
   });
   setUnits("metric");
 
-  function categoryFor(bmi, cuts) {
-    if (bmi < cuts.underweightMax) {
-      return { key: "underweight", label: "Underweight", detail: "Below 18.5" };
+  function isSouthAsianMode() {
+    return !!(southAsian && southAsian.checked);
+  }
+
+  /**
+   * Standard WHO labels, or South Asian action-point labels (no "obese" wording).
+   * guidanceKey maps to content/bmi/guidance.json categories.
+   */
+  function categoryFor(bmi, south) {
+    if (south) {
+      if (bmi < 18.5) {
+        return {
+          key: "underweight",
+          guidanceKey: "underweight",
+          label: "Underweight",
+          detail: "Below 18.5",
+          healthyLow: 18.5,
+          healthyHigh: 22.9,
+        };
+      }
+      if (bmi < 23) {
+        return {
+          key: "healthy",
+          guidanceKey: "healthy",
+          label: "Healthy range",
+          detail: "18.5 to 22.9 (South Asian reference)",
+          healthyLow: 18.5,
+          healthyHigh: 22.9,
+        };
+      }
+      if (bmi < 27.5) {
+        return {
+          key: "increased",
+          guidanceKey: "overweight",
+          label: "Increased risk",
+          detail: "23 to 27.4 (South Asian reference)",
+          healthyLow: 18.5,
+          healthyHigh: 22.9,
+        };
+      }
+      return {
+        key: "high",
+        guidanceKey: "obese",
+        label: "High risk",
+        detail: "27.5 or more (South Asian reference)",
+        healthyLow: 18.5,
+        healthyHigh: 22.9,
+      };
     }
-    if (bmi < cuts.healthyMax) {
+
+    if (bmi < 18.5) {
+      return {
+        key: "underweight",
+        guidanceKey: "underweight",
+        label: "Underweight",
+        detail: "Below 18.5",
+        healthyLow: 18.5,
+        healthyHigh: 24.9,
+      };
+    }
+    if (bmi < 25) {
       return {
         key: "healthy",
+        guidanceKey: "healthy",
         label: "Healthy weight",
-        detail: cuts === SOUTH_ASIAN ? "18.5 to 22.9 (South Asian reference)" : "18.5 to 24.9",
+        detail: "18.5 to 24.9",
+        healthyLow: 18.5,
+        healthyHigh: 24.9,
       };
     }
-    if (bmi < cuts.overweightMax) {
+    if (bmi < 30) {
       return {
         key: "overweight",
+        guidanceKey: "overweight",
         label: "Overweight",
-        detail: cuts === SOUTH_ASIAN ? "23 to 27.4 (South Asian reference)" : "25 to 29.9",
+        detail: "25 to 29.9",
+        healthyLow: 18.5,
+        healthyHigh: 24.9,
       };
     }
-    if (bmi < cuts.class1Max) {
-      return { key: "obese", label: "Obese - Class I", detail: cuts === SOUTH_ASIAN ? "27.5 to 32.4" : "30 to 34.9" };
+    if (bmi < 35) {
+      return {
+        key: "obese",
+        guidanceKey: "obese",
+        label: "Obese - Class I",
+        detail: "30 to 34.9",
+        healthyLow: 18.5,
+        healthyHigh: 24.9,
+      };
     }
-    if (bmi < cuts.class2Max) {
-      return { key: "obese", label: "Obese - Class II", detail: cuts === SOUTH_ASIAN ? "32.5 to 37.4" : "35 to 39.9" };
+    if (bmi < 40) {
+      return {
+        key: "obese",
+        guidanceKey: "obese",
+        label: "Obese - Class II",
+        detail: "35 to 39.9",
+        healthyLow: 18.5,
+        healthyHigh: 24.9,
+      };
     }
-    return { key: "obese", label: "Obese - Class III", detail: cuts === SOUTH_ASIAN ? "37.5+" : "40+" };
+    return {
+      key: "obese",
+      guidanceKey: "obese",
+      label: "Obese - Class III",
+      detail: "40+",
+      healthyLow: 18.5,
+      healthyHigh: 24.9,
+    };
   }
 
   function ageBand(age) {
@@ -182,30 +252,35 @@ import relatedData from "./content/bmi/related.json";
     return round1(kg) + " kg";
   }
 
-  function healthyRangeText(cm) {
+  function healthyRangeText(cm, low, high) {
     const m = cm / 100;
-    const low = 18.5 * m * m;
-    const high = 24.9 * m * m;
-    return formatWeight(low) + " to " + formatWeight(high);
+    const lowKg = low * m * m;
+    const highKg = high * m * m;
+    return formatWeight(lowKg) + " to " + formatWeight(highKg);
   }
 
-  function distanceText(bmi, cm) {
+  /** Distance from actual kg to the healthy band that is displayed (not from rounded BMI). */
+  function distanceText(kg, cm, low, high) {
     const m = cm / 100;
-    if (bmi >= 18.5 && bmi <= 24.9) {
-      return "You are inside the usual healthy BMI range for adults (18.5 to 24.9).";
+    const lowKg = low * m * m;
+    const highKg = high * m * m;
+    if (kg >= lowKg && kg <= highKg) {
+      return "You are inside the healthy BMI range shown for your height (" + low + " to " + high + ").";
     }
-    if (bmi < 18.5) {
-      const need = 18.5 * m * m;
-      const cur = bmi * m * m;
-      return "About " + formatWeight(need - cur) + " below the lower end of the usual healthy range for your height.";
+    if (kg < lowKg) {
+      return "About " + formatWeight(lowKg - kg) + " below the lower end of the healthy range shown for your height.";
     }
-    const max = 24.9 * m * m;
-    const cur = bmi * m * m;
-    return "About " + formatWeight(cur - max) + " above the upper end of the usual healthy range for your height.";
+    return "About " + formatWeight(kg - highKg) + " above the upper end of the healthy range shown for your height.";
   }
 
-  /** Map BMI onto the four WHO colour bands on the gauge (0-100). */
-  function gaugePercent(bmi) {
+  function gaugePercent(bmi, south) {
+    if (south) {
+      if (bmi <= 18.5) return ((Math.max(12, bmi) - 12) / (18.5 - 12)) * 25;
+      if (bmi <= 23) return 25 + ((bmi - 18.5) / (23 - 18.5)) * 25;
+      if (bmi <= 27.5) return 50 + ((bmi - 23) / (27.5 - 23)) * 25;
+      if (bmi <= 40) return 75 + ((bmi - 27.5) / (40 - 27.5)) * 25;
+      return 98;
+    }
     if (bmi <= 18.5) return ((Math.max(12, bmi) - 12) / (18.5 - 12)) * 25;
     if (bmi <= 25) return 25 + ((bmi - 18.5) / (25 - 18.5)) * 25;
     if (bmi <= 30) return 50 + ((bmi - 25) / (30 - 25)) * 25;
@@ -213,14 +288,28 @@ import relatedData from "./content/bmi/related.json";
     return 98;
   }
 
-  function updateGauge(bmi, label) {
-    const pct = Math.min(98, Math.max(2, gaugePercent(bmi)));
+  function updateGauge(bmi, label, south) {
+    const pct = Math.min(98, Math.max(2, gaugePercent(bmi, south)));
     if (gaugeMarker) {
       gaugeMarker.style.left = pct + "%";
-      gaugeMarker.setAttribute("aria-hidden", "true");
     }
     if (gaugeLabel) {
       gaugeLabel.textContent = "BMI " + round1(bmi) + " - " + label;
+    }
+    if (gaugeLegend) {
+      if (south) {
+        gaugeLegend.innerHTML =
+          '<li><span class="bmi-gauge-seg-1"></span>Under</li>' +
+          '<li><span class="bmi-gauge-seg-2"></span>Healthy</li>' +
+          '<li><span class="bmi-gauge-seg-3"></span>Increased</li>' +
+          '<li><span class="bmi-gauge-seg-4"></span>High risk</li>';
+      } else {
+        gaugeLegend.innerHTML =
+          '<li><span class="bmi-gauge-seg-1"></span>Under</li>' +
+          '<li><span class="bmi-gauge-seg-2"></span>Healthy</li>' +
+          '<li><span class="bmi-gauge-seg-3"></span>Over</li>' +
+          '<li><span class="bmi-gauge-seg-4"></span>Obese</li>';
+      }
     }
   }
 
@@ -234,30 +323,40 @@ import relatedData from "./content/bmi/related.json";
     });
   }
 
-  function renderGuidance(catKey, band) {
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function renderGuidance(guidanceKey, band) {
     if (!guidanceBlock) return;
-    const cat = guidanceData.categories[catKey];
+    const cat = guidanceData.categories[guidanceKey];
     if (!cat) {
       guidanceBlock.hidden = true;
       return;
     }
-    const ageNote = guidanceData.ageBandNotes[band] || "";
+    const ageEntry = guidanceData.ageBandNotes[band];
+    const ageNote = ageEntry && ageEntry.text ? ageEntry.text : "";
+    const showReviewed = !!(cat.reviewed || (ageEntry && ageEntry.reviewed));
     const actions = cat.actions
       .map(function (item) {
         return "<li>" + escapeHtml(item) + "</li>";
       })
       .join("");
     guidanceBlock.innerHTML =
-      '<p class="bmi-reviewed">' +
-      escapeHtml(guidanceData.reviewedPlaceholder) +
-      "</p>" +
+      (showReviewed
+        ? '<p class="bmi-reviewed">' + escapeHtml(guidanceData.reviewedPlaceholder) + "</p>"
+        : "") +
       "<h3>" +
       escapeHtml(cat.headline) +
       "</h3>" +
       "<p>" +
       escapeHtml(cat.body) +
       "</p>" +
-      (ageNote ? "<p class=\"bmi-age-note\">" + escapeHtml(ageNote) + "</p>" : "") +
+      (ageNote ? '<p class="bmi-age-note">' + escapeHtml(ageNote) + "</p>" : "") +
       '<ul class="bmi-actions">' +
       actions +
       "</ul>" +
@@ -267,19 +366,11 @@ import relatedData from "./content/bmi/related.json";
     guidanceBlock.hidden = false;
   }
 
-  function escapeHtml(value) {
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
   function pictureHtml(src) {
     const base = src.replace(/\.jpg$/i, "");
     const sizes = "(min-width: 1024px) 22rem, (min-width: 768px) 46vw, calc(100vw - 2rem)";
     return (
-      '<picture>' +
+      "<picture>" +
       '<source type="image/avif" srcset="' +
       base +
       "-480.avif 480w, " +
@@ -313,8 +404,15 @@ import relatedData from "./content/bmi/related.json";
     );
   }
 
-  function pickRelated(catKey, band) {
-    const rule = relatedData.rules[catKey];
+  function relatedRuleKey(guidanceKey) {
+    if (guidanceKey === "obese") return "obese";
+    if (guidanceKey === "overweight") return "overweight";
+    if (guidanceKey === "underweight") return "underweight";
+    return "healthy";
+  }
+
+  function pickRelated(guidanceKey, band) {
+    const rule = relatedData.rules[relatedRuleKey(guidanceKey)];
     if (!rule) return { posts: [], seeAll: "workout" };
     let topics = rule.topics.slice();
     if (band === "50-64" || band === "65+") {
@@ -331,26 +429,32 @@ import relatedData from "./content/bmi/related.json";
         });
         return { post: post, score: score };
       })
-      .filter(function (row) {
-        return row.score > 0;
-      })
       .sort(function (a, b) {
         return b.score - a.score || b.post.date.localeCompare(a.post.date);
       });
+
     const posts = [];
     const seen = {};
+    scored.forEach(function (row) {
+      if (posts.length >= 3) return;
+      if (row.score <= 0) return;
+      if (seen[row.post.slug]) return;
+      seen[row.post.slug] = true;
+      posts.push(row.post);
+    });
+    /* Fill to 3 with next best published posts from the mapping. */
     scored.forEach(function (row) {
       if (posts.length >= 3) return;
       if (seen[row.post.slug]) return;
       seen[row.post.slug] = true;
       posts.push(row.post);
     });
-    return { posts: posts, seeAll: rule.seeAllCategory };
+    return { posts: posts.slice(0, 3), seeAll: rule.seeAllCategory };
   }
 
-  function renderRelated(catKey, band) {
+  function renderRelated(guidanceKey, band) {
     if (!relatedBlock || !relatedGrid) return;
-    const picked = pickRelated(catKey, band);
+    const picked = pickRelated(guidanceKey, band);
     if (!picked.posts.length) {
       relatedBlock.hidden = true;
       return;
@@ -369,7 +473,7 @@ import relatedData from "./content/bmi/related.json";
           '<p class="blog-card-category">' +
           escapeHtml(post.categoryLabel) +
           "</p>" +
-          "<h3 class=\"blog-card-title\">" +
+          '<h3 class="blog-card-title">' +
           escapeHtml(post.title) +
           "</h3>" +
           '<p class="blog-card-excerpt">' +
@@ -385,14 +489,21 @@ import relatedData from "./content/bmi/related.json";
     relatedBlock.hidden = false;
   }
 
-  function hideAdultResults() {
-    if (results) results.hidden = true;
+  function hideFollowUp() {
+    if (followUp) followUp.hidden = true;
+    if (limitsSection) limitsSection.hidden = true;
     if (guidanceBlock) guidanceBlock.hidden = true;
     if (relatedBlock) relatedBlock.hidden = true;
     if (leadSection) leadSection.hidden = true;
-    if (emptyHint) emptyHint.hidden = false;
     lastResult = null;
     if (summaryField) summaryField.value = "";
+  }
+
+  function showEmptyResultCard() {
+    if (under18Box) under18Box.hidden = true;
+    if (results) results.hidden = true;
+    if (emptyState) emptyState.hidden = false;
+    hideFollowUp();
   }
 
   function validate() {
@@ -435,8 +546,9 @@ import relatedData from "./content/bmi/related.json";
   }
 
   function showUnder18() {
-    hideAdultResults();
-    if (emptyHint) emptyHint.hidden = true;
+    if (emptyState) emptyState.hidden = true;
+    if (results) results.hidden = true;
+    hideFollowUp();
     if (under18Box) {
       under18Box.hidden = false;
       under18Box.focus();
@@ -449,26 +561,36 @@ import relatedData from "./content/bmi/related.json";
 
   function showResult(payload) {
     if (under18Box) under18Box.hidden = true;
-    if (emptyHint) emptyHint.hidden = true;
+    if (emptyState) emptyState.hidden = true;
     lastResult = payload;
 
     if (valueEl) valueEl.textContent = String(payload.bmi);
     if (categoryEl) categoryEl.textContent = payload.category.label;
     if (detailEl) detailEl.textContent = payload.category.detail;
-    if (rangeEl) rangeEl.textContent = "Healthy weight range for your height: " + payload.healthyRange;
+    if (rangeEl) {
+      rangeEl.textContent =
+        "Healthy weight range for your height: " +
+        payload.healthyRange +
+        " (BMI " +
+        payload.category.healthyLow +
+        " to " +
+        payload.category.healthyHigh +
+        ").";
+    }
     if (distanceEl) distanceEl.textContent = payload.distance;
-    updateGauge(payload.bmi, payload.category.label);
+    updateGauge(payload.bmi, payload.category.label, payload.southAsian);
     highlightAgeBand(payload.band);
-    renderGuidance(payload.category.key, payload.band);
-    renderRelated(payload.category.key, payload.band);
+    renderGuidance(payload.category.guidanceKey, payload.band);
+    renderRelated(payload.category.guidanceKey, payload.band);
 
     if (results) results.hidden = false;
+    if (followUp) followUp.hidden = false;
+    if (limitsSection) limitsSection.hidden = false;
     if (leadSection) leadSection.hidden = false;
     updateSummaryField();
 
     if (liveRegion) {
-      liveRegion.textContent =
-        "Your BMI is " + payload.bmi + ", category " + payload.category.label + ".";
+      liveRegion.textContent = "Your BMI is " + payload.bmi + ", category " + payload.category.label + ".";
     }
     if (resultFocus && typeof resultFocus.focus === "function") {
       resultFocus.focus();
@@ -508,32 +630,35 @@ import relatedData from "./content/bmi/related.json";
     }
 
     const metric = toMetric();
+    const south = isSouthAsianMode();
     const bmi = round1(calcBmi(metric.kg, metric.cm));
-    const cuts = southAsian && southAsian.checked ? SOUTH_ASIAN : WHO;
-    const category = categoryFor(bmi, cuts);
+    const category = categoryFor(bmi, south);
     showResult({
       age: age,
       band: ageBand(age),
       bmi: bmi,
+      kg: metric.kg,
+      cm: metric.cm,
       category: category,
-      healthyRange: healthyRangeText(metric.cm),
-      distance: distanceText(bmi, metric.cm),
+      healthyRange: healthyRangeText(metric.cm, category.healthyLow, category.healthyHigh),
+      distance: distanceText(metric.kg, metric.cm, category.healthyLow, category.healthyHigh),
       units: units,
-      southAsian: !!(southAsian && southAsian.checked),
+      southAsian: south,
     });
   });
 
-  /* Contact form - same Formspree pattern as feedback; no health data unless opted in. */
   if (contactForm) {
     const honeypot = contactForm.querySelector('[name="_gotcha"]');
     const success = document.getElementById("bmi-form-success");
     const errorBox = document.getElementById("bmi-form-error");
     const alertBox = document.getElementById("bmi-form-alert");
     const consent = document.getElementById("bmi-consent");
+    const ageConfirm = document.getElementById("bmi-age-confirm");
     const nameInput = document.getElementById("bmi-contact-name");
     const emailInput = document.getElementById("bmi-contact-email");
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const sourceField = document.getElementById("bmi-source");
+    const formShell = document.getElementById("bmi-form-shell");
 
     contactForm.noValidate = true;
     contactForm.action = BMI_FORM_ENDPOINT;
@@ -564,6 +689,7 @@ import relatedData from "./content/bmi/related.json";
       const emailVal = emailInput ? emailInput.value.trim() : "";
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
       mark(emailInput, "bmi-contact-email-error", emailOk ? "" : "Enter an email address like name@example.com.");
+      mark(ageConfirm, "bmi-age-confirm-error", ageConfirm && ageConfirm.checked ? "" : "Confirm you are 18 or older.");
       mark(consent, "bmi-consent-error", consent && consent.checked ? "" : "Tick the box to agree to be contacted.");
 
       if (first && typeof first.focus === "function") {
@@ -600,6 +726,7 @@ import relatedData from "./content/bmi/related.json";
         .then(function (response) {
           if (!response.ok) throw new Error("Formspree request failed");
           contactForm.hidden = true;
+          if (formShell) formShell.classList.add("is-sent");
           if (success) {
             success.hidden = false;
             success.focus();
@@ -614,12 +741,25 @@ import relatedData from "./content/bmi/related.json";
     });
   }
 
-  /* Expose pure helpers for manual checks in the console during QA. */
+  /* Guide TOC: mirror blog post behaviour on small screens. */
+  const tocToggle = document.querySelector(".bmi-guide-toc-toggle");
+  const tocNav = document.querySelector(".bmi-guide-toc");
+  if (tocToggle && tocNav) {
+    tocToggle.addEventListener("click", function () {
+      const open = tocToggle.getAttribute("aria-expanded") === "true";
+      tocToggle.setAttribute("aria-expanded", open ? "false" : "true");
+      tocNav.classList.toggle("is-collapsed", open);
+    });
+  }
+
+  showEmptyResultCard();
+
   window.__bmiTest = {
     calcBmi: calcBmi,
     round1: round1,
     categoryFor: categoryFor,
-    WHO: WHO,
+    distanceText: distanceText,
+    healthyRangeText: healthyRangeText,
     toImperialBmi: function (ft, inches, lb) {
       const cm = (ft * 12 + inches) * CM_PER_IN;
       const kg = lb * KG_PER_LB;

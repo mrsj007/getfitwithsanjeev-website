@@ -10,6 +10,8 @@ Blog articles are written in Markdown and turned into static HTML on your comput
 - `about.html` - Sanjeev's story, certifications, method, specialized knowledge, FAQ, and the same contact form
 - `book.html` - booking page with a Cal.com calendar embed
 - `bmi-calculator.html` - free adult BMI calculator lead magnet (age-aware chart, optional South Asian cut-offs, guidance, related posts, contact form). Editable copy lives in `content/bmi/guidance.json` and related-article mapping in `content/bmi/related.json`
+- `privacy.html` - Privacy Policy (adults 18+)
+- `terms.html` - Terms and Disclaimer (adults 18+)
 - `feedback.html` - private feedback and questions form. Marked `noindex`, and not listed in the sitemap
 - `blog/index.html` - blog index. While nothing is published it shows a short "coming soon" message and is marked `noindex`
 
@@ -117,8 +119,20 @@ Files:
 - `bmi-calculator.js` / `bmi-calculator.min.js` - BMI calculator logic and lead form (built by `npm run build:assets`, bundles `content/bmi/*.json`)
 - `script.js` - mobile nav, FAQ accordion, Formspree submit for the contact and feedback forms (edit this). `BMI_FORM_ENDPOINT` mirrors the BMI page form endpoint
 - `script.min.js` - minified script the pages load
-- `content/bmi/guidance.json` - category guidance Sanjeev can edit
+- `content/bmi/guidance.json` - category guidance Sanjeev can edit. Each block has `"reviewed": false` until Sanjeev (or the site owner) flips it to `true`; the "Reviewed by Sanjeev" badge only shows when `reviewed` is true
 - `content/bmi/related.json` - related-article mapping for BMI results
+
+### Legal page decision values
+
+Update these together if they change:
+
+- BUSINESS_NAME = Sanjeev Kumar
+- PRIVACY_EMAIL = getfitwithsk007@gmail.com
+- RETENTION = 24 months
+- CANCELLATION_TEXT = Cancellation and rescheduling terms will be confirmed with you when you book.
+- Last updated = November 17, 2026
+- Address = 1715 152 St #120, Surrey, BC V4A 4N3, Canada
+- Audience = adults aged 18 or older
 - `fonts/` - self-hosted Playfair Display and Inter
 - `images/sanjeev-kumar.jpg` - portrait used on the about page and in social cards
 - `images/manifest.json` - widths generated for each photo
@@ -143,7 +157,7 @@ Serve the site over HTTP (for example `npx serve` or `python3 -m http.server`) r
 
 ## SEO files
 
-- `sitemap.xml` - lists `/`, `/about.html`, `/book.html`, and `/bmi-calculator.html`. The blog build adds `/blog/` and each published article. `feedback.html` stays out of the sitemap.
+- `sitemap.xml` - lists `/`, `/about.html`, `/book.html`, `/bmi-calculator.html`, `/privacy.html`, and `/terms.html`. The blog build adds `/blog/` and each published article. `feedback.html` stays out of the sitemap.
 - `robots.txt` - allows crawling and points to the sitemap
 - `llms.txt` - a short plain-text summary for answer engines. Published articles are listed between the `BLOG` markers.
 

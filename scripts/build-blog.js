@@ -949,7 +949,7 @@ function headerHtml() {
           <ul class="nav-list nav-primary">
             <li><a href="../index.html">Home</a></li>
             <li><a href="../about.html">About Us</a></li>
-            <li><a href="../bmi-calculator.html">Free BMI Calculator</a></li>
+            <li><a href="../bmi-calculator.html">BMI Calculator</a></li>
             <!-- BLOG:NAV:START -->
             <!-- BLOG:NAV:END -->
           </ul>
@@ -1019,6 +1019,10 @@ function footerHtml() {
         <div class="container">
           <p>Fitness and nutrition information provided on this website is for educational purposes only and does not constitute medical advice. Individual results vary.</p>
           <p>© 2026 GetFitWithSanjeev. All rights reserved.</p>
+          <p class="footer-legal">
+            <a href="../privacy.html">Privacy Policy</a>
+            <a href="../terms.html">Terms and Disclaimer</a>
+          </p>
         </div>
       </div>
     </footer>
@@ -1716,6 +1720,8 @@ function assertSourceMarkers() {
     "book.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "feedback.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "bmi-calculator.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
+    "privacy.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
+    "terms.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
   };
   Object.keys(required).forEach((file) => {
     const text = fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -1748,6 +1754,8 @@ function updateSitemap(posts) {
     [SITE + "/about.html"]: "2026-11-02",
     [SITE + "/book.html"]: "2026-11-03",
     [SITE + "/bmi-calculator.html"]: "2026-11-17",
+    [SITE + "/privacy.html"]: "2026-11-17",
+    [SITE + "/terms.html"]: "2026-11-17",
   };
   const found = /<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g;
   let match;
@@ -1759,6 +1767,8 @@ function updateSitemap(posts) {
     { loc: SITE + "/about.html", lastmod: dates[SITE + "/about.html"] },
     { loc: SITE + "/book.html", lastmod: dates[SITE + "/book.html"] },
     { loc: SITE + "/bmi-calculator.html", lastmod: dates[SITE + "/bmi-calculator.html"] },
+    { loc: SITE + "/privacy.html", lastmod: dates[SITE + "/privacy.html"] },
+    { loc: SITE + "/terms.html", lastmod: dates[SITE + "/terms.html"] },
   ];
   if (posts.length) {
     const latest = posts.map((post) => post.updated).sort().pop();
@@ -1792,6 +1802,8 @@ function writeOutputs(live, published) {
   applyMarkers(path.join(ROOT, "book.html"), "book", live);
   applyMarkers(path.join(ROOT, "feedback.html"), "feedback", live);
   applyMarkers(path.join(ROOT, "bmi-calculator.html"), "bmi", live);
+  applyMarkers(path.join(ROOT, "privacy.html"), "privacy", live);
+  applyMarkers(path.join(ROOT, "terms.html"), "terms", live);
   applyMarkers(path.join(BLOG_DIR, "index.html"), "blog-index", live);
   live.forEach((post) => applyMarkers(path.join(BLOG_DIR, post.slug + ".html"), "blog-post", live));
   updateLlms(published);

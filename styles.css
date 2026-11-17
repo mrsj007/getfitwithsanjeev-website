@@ -4763,3 +4763,93 @@ html.blog-motion .blog-card.is-inview {
   text-decoration: underline;
 }
 
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  justify-content: center;
+  margin: 0.65rem 0 0;
+}
+
+.footer-legal a {
+  color: #f4efe6;
+  text-decoration: underline;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.form-legal-note {
+  margin: 0.65rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.form-legal-note a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+.booking-legal-note {
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  max-width: 40rem;
+}
+
+.booking-legal-note a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+html.page-legal .legal-page {
+  padding: 2rem 0 4rem;
+}
+
+html.page-legal .legal-page > .container {
+  max-width: 720px;
+}
+
+html.page-legal .legal-updated {
+  color: var(--text);
+  margin: 0 0 1.25rem;
+}
+
+html.page-legal .legal-toc {
+  margin: 0 0 2rem;
+  padding: 0.85rem 1rem;
+  background: var(--cream);
+  border-radius: 12px;
+}
+
+html.page-legal .legal-toc ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
+html.page-legal .legal-toc a {
+  color: var(--green);
+  text-decoration: underline;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+html.page-legal h1 {
+  font-size: clamp(1.85rem, 4vw, 2.85rem);
+  color: var(--green);
+}
+
+html.page-legal h2 {
+  font-size: clamp(1.45rem, 3vw, 1.9rem);
+  font-weight: 500;
+  color: var(--green);
+  margin: 2rem 0 0.65rem;
+}
+
+html.page-legal .legal-page p,
+html.page-legal .legal-page li {
+  color: var(--text);
+}
+
