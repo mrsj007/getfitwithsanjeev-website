@@ -12,3 +12,6 @@ private-client-photos/
 
 .tmp-qa/
 .tmp-shots/
+*.tmp-qa*
+screenshots/
+.tmp-screenshots/

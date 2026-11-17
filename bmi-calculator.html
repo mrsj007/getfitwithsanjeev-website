@@ -150,7 +150,7 @@
               "name": "Is my information stored when I use the calculator?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Calculation stays in your browser. Age, height and weight are not written to cookies, local storage or the page address. Nothing is sent unless you choose to submit the contact form, and BMI numbers are included only if you tick Share my results with Sanjeev."
+                "text": "The age, height and weight you enter are used only in your browser. To keep your result visible while you move around the site, the page keeps them in your browser's temporary session storage on your device. They are deleted when you close the tab or press 'Clear my results', and they are never sent to me unless you choose to share them through the contact form."
               }
             }
           ]
@@ -173,7 +173,7 @@
       <div class="header-inner">
         <a class="brand" href="index.html">
           <span class="brand-name">SANJEEV KUMAR</span>
-          <span class="brand-tag">Personal Trainer - Vancouver and South Surrey</span>
+          <span class="brand-tag">Personal Trainer • Vancouver and South Surrey</span>
         </a>
 
         <button
@@ -374,7 +374,7 @@
               <div id="bmi-results" class="bmi-results" hidden>
                 <div id="bmi-result-focus" class="bmi-result-head" tabindex="-1">
                   <p class="bmi-value"><span id="bmi-value">-</span></p>
-                  <div>
+                  <div class="bmi-result-meta">
                     <p class="bmi-category" id="bmi-category-label">Category</p>
                     <p class="bmi-category-detail" id="bmi-detail"></p>
                   </div>
@@ -382,23 +382,24 @@
 
                 <div class="bmi-gauge" aria-hidden="false">
                   <div class="bmi-gauge-track" role="img" aria-labelledby="bmi-gauge-label">
-                    <span class="bmi-gauge-seg bmi-gauge-seg-1"></span>
-                    <span class="bmi-gauge-seg bmi-gauge-seg-2"></span>
-                    <span class="bmi-gauge-seg bmi-gauge-seg-3"></span>
-                    <span class="bmi-gauge-seg bmi-gauge-seg-4"></span>
+                    <span class="bmi-gauge-seg bmi-gauge-seg-1" data-bmi-seg="0"></span>
+                    <span class="bmi-gauge-seg bmi-gauge-seg-2" data-bmi-seg="1"></span>
+                    <span class="bmi-gauge-seg bmi-gauge-seg-3" data-bmi-seg="2"></span>
+                    <span class="bmi-gauge-seg bmi-gauge-seg-4" data-bmi-seg="3"></span>
                   </div>
                   <span id="bmi-gauge-marker" class="bmi-gauge-marker" style="left: 50%"></span>
                   <p id="bmi-gauge-label" class="visually-hidden">BMI gauge</p>
                   <ul id="bmi-gauge-legend" class="bmi-gauge-legend">
-                    <li><span class="bmi-gauge-seg-1"></span>Underweight</li>
+                    <li><span class="bmi-gauge-seg-1"></span>Under</li>
                     <li><span class="bmi-gauge-seg-2"></span>Healthy</li>
-                    <li><span class="bmi-gauge-seg-3"></span>Overweight</li>
+                    <li><span class="bmi-gauge-seg-3"></span>Over</li>
                     <li><span class="bmi-gauge-seg-4"></span>Obese</li>
                   </ul>
                 </div>
 
                 <p id="bmi-healthy-range"></p>
                 <p id="bmi-distance"></p>
+                <button type="button" class="btn btn-outline bmi-clear" id="bmi-clear" hidden>Clear my results</button>
               </div>
             </div>
 
@@ -474,10 +475,10 @@
           </section>
 
           <section id="bmi-lead" class="bmi-section bmi-lead" hidden aria-labelledby="bmi-lead-heading">
-            <h2 id="bmi-lead-heading">Want a plan for your numbers? Talk to Sanjeev.</h2>
-            <p>Share a short message and Sanjeev will follow up about training. Your calculator numbers stay private unless you opt in below.</p>
+            <div id="bmi-form-shell" class="bmi-form-shell bmi-panel">
+              <h2 id="bmi-lead-heading">Want a plan for your numbers?</h2>
+              <p>Talk to Sanjeev - share a short message and he will follow up about training. Your calculator numbers stay private unless you opt in below.</p>
 
-            <div id="bmi-form-shell">
               <form
                 id="bmi-contact-form"
                 class="bmi-contact-form"
@@ -597,7 +598,7 @@
 
               <h2 id="bmi-guide-formula">How to calculate BMI by hand</h2>
               <p>
-                The adult formula is weight in kilograms divided by height in metres squared: BMI = kg / m&sup2;. Example: someone who is 170 cm tall weighs 70 kg. Height in metres is 1.70. Square that to get 2.89. Divide 70 by 2.89 and you get about 24.2, which sits in the healthy range. Prefer imperial? Convert pounds to kilograms and feet-and-inches to metres first, or use the toggle above. On this page the maths stays in your browser.
+                The adult formula is weight in kilograms divided by height in metres squared: BMI = kg / m&sup2;. Example: someone who is 170 cm tall weighs 70 kg. Height in metres is 1.70. Square that to get 2.89. Divide 70 by 2.89 and you get about 24.2, which sits in the healthy range. Prefer imperial? Convert pounds to kilograms and feet-and-inches to metres first, or use the toggle above. The age, height and weight you enter are used only in your browser. To keep your result visible while you move around the site, the page keeps them in your browser's temporary session storage on your device. They are deleted when you close the tab or press 'Clear my results', and they are never sent to me unless you choose to share them through the contact form.
               </p>
 
               <h2 id="bmi-guide-categories">Adult BMI categories</h2>
@@ -743,7 +744,7 @@
                     </button>
                   </h3>
                   <div class="accordion-panel" id="bmi-faq-8" role="region" aria-labelledby="bmi-faq-btn-8" hidden>
-                    <p>Calculation stays in your browser. Age, height and weight are not written to cookies, local storage or the page address. Nothing is sent unless you choose to submit the contact form, and BMI numbers are included only if you tick Share my results with Sanjeev.</p>
+                    <p>The age, height and weight you enter are used only in your browser. To keep your result visible while you move around the site, the page keeps them in your browser's temporary session storage on your device. They are deleted when you close the tab or press 'Clear my results', and they are never sent to me unless you choose to share them through the contact form.</p>
                   </div>
                 </div>
               </div>
@@ -811,16 +812,17 @@
           </ul>
         </div>
       </div>
-      <div class="footer-legal">
-        <div class="container">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms and Disclaimer</a>
-        </div>
-      </div>
       <div class="footer-bottom">
         <div class="container">
           <p>Fitness and nutrition information provided on this website is for educational purposes only and does not constitute medical advice. Individual results vary.</p>
-          <p>&copy; 2026 GetFitWithSanjeev. All rights reserved.</p>
+          <p class="footer-meta">
+            <span>&copy; 2026 GetFitWithSanjeev. All rights reserved.</span>
+            <span class="footer-legal">
+              <a href="privacy.html">Privacy Policy</a>
+              <span class="footer-legal-sep" aria-hidden="true">|</span>
+              <a href="terms.html">Terms and Disclaimer</a>
+            </span>
+          </p>
         </div>
       </div>
     </footer>

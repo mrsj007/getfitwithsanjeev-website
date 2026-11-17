@@ -4763,12 +4763,24 @@ html.blog-motion .blog-card.is-inview {
   text-decoration: underline;
 }
 
-.footer-legal {
+.footer-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 1rem;
+  align-items: center;
   justify-content: center;
-  margin: 0.65rem 0 0;
+  gap: 0.35rem 0.55rem;
+  margin: 0;
+}
+
+.footer-legal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
 }
 
 .footer-legal a {
@@ -4777,7 +4789,14 @@ html.blog-motion .blog-card.is-inview {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0;
+  padding: 0.15rem 0.2rem;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.footer-legal-sep {
+  margin: 0 0.35rem;
+  opacity: 0.7;
 }
 
 .form-legal-note {

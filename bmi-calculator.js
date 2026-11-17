@@ -56,6 +56,10 @@ import relatedData from "./content/bmi/related.json";
   const shareResults = document.getElementById("bmi-share-results");
   const summaryField = document.getElementById("bmi-summary");
   const contactForm = document.getElementById("bmi-contact-form");
+  const clearBtn = document.getElementById("bmi-clear");
+  const SESSION_KEY = "bmiSession";
+  const GAUGE_FLOOR = 12.5;
+  const GAUGE_CEILING = 40;
 
   function round1(n) {
     return Math.round(n * 10) / 10;
@@ -273,23 +277,41 @@ import relatedData from "./content/bmi/related.json";
     return "About " + formatWeight(kg - highKg) + " above the upper end of the healthy range shown for your height.";
   }
 
+  /** Cut-offs that end each coloured segment, from GAUGE_FLOOR to GAUGE_CEILING. */
+  function gaugeCuts(south) {
+    return south ? [18.5, 23, 27.5, GAUGE_CEILING] : [18.5, 25, 30, GAUGE_CEILING];
+  }
+
+  function gaugeSegmentWidths(south) {
+    const cuts = gaugeCuts(south);
+    const widths = [];
+    let prev = GAUGE_FLOOR;
+    cuts.forEach(function (cut) {
+      widths.push(cut - prev);
+      prev = cut;
+    });
+    return widths;
+  }
+
+  /** Marker position on the same continuum as the segment widths. */
   function gaugePercent(bmi, south) {
-    if (south) {
-      if (bmi <= 18.5) return ((Math.max(12, bmi) - 12) / (18.5 - 12)) * 25;
-      if (bmi <= 23) return 25 + ((bmi - 18.5) / (23 - 18.5)) * 25;
-      if (bmi <= 27.5) return 50 + ((bmi - 23) / (27.5 - 23)) * 25;
-      if (bmi <= 40) return 75 + ((bmi - 27.5) / (40 - 27.5)) * 25;
-      return 98;
-    }
-    if (bmi <= 18.5) return ((Math.max(12, bmi) - 12) / (18.5 - 12)) * 25;
-    if (bmi <= 25) return 25 + ((bmi - 18.5) / (25 - 18.5)) * 25;
-    if (bmi <= 30) return 50 + ((bmi - 25) / (30 - 25)) * 25;
-    if (bmi <= 40) return 75 + ((bmi - 30) / (40 - 30)) * 25;
-    return 98;
+    const span = GAUGE_CEILING - GAUGE_FLOOR;
+    const clamped = Math.min(GAUGE_CEILING, Math.max(GAUGE_FLOOR, bmi));
+    return ((clamped - GAUGE_FLOOR) / span) * 100;
   }
 
   function updateGauge(bmi, label, south) {
-    const pct = Math.min(98, Math.max(2, gaugePercent(bmi, south)));
+    const widths = gaugeSegmentWidths(south);
+    const total = widths.reduce(function (sum, w) {
+      return sum + w;
+    }, 0);
+    document.querySelectorAll("[data-bmi-seg]").forEach(function (el) {
+      const idx = parseInt(el.getAttribute("data-bmi-seg"), 10);
+      const flex = widths[idx] / total;
+      el.style.flex = flex + " 0 0%";
+      el.style.width = flex * 100 + "%";
+    });
+    const pct = Math.min(100, Math.max(0, gaugePercent(bmi, south)));
     if (gaugeMarker) {
       gaugeMarker.style.left = pct + "%";
     }
@@ -311,6 +333,54 @@ import relatedData from "./content/bmi/related.json";
           '<li><span class="bmi-gauge-seg-4"></span>Obese</li>';
       }
     }
+  }
+
+  function readSession() {
+    try {
+      const raw = sessionStorage.getItem(SESSION_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function writeSession(data) {
+    try {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
+    } catch (err) {
+      /* Private windows or blocked storage: calculator still works. */
+    }
+  }
+
+  function clearSession() {
+    try {
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch (err) {
+      /* ignore */
+    }
+  }
+
+  function saveCurrentInputs() {
+    const age = parseInt(ageInput.value, 10);
+    if (!Number.isFinite(age) || age < 18) {
+      clearSession();
+      return;
+    }
+    const payload = {
+      age: age,
+      units: units,
+      southAsian: isSouthAsianMode(),
+    };
+    if (units === "metric") {
+      payload.heightCm = heightCm.value;
+      payload.weightKg = weightKg.value;
+    } else {
+      payload.heightFt = heightFt.value;
+      payload.heightIn = heightIn.value;
+      payload.weightLb = weightLb.value;
+    }
+    writeSession(payload);
   }
 
   function highlightAgeBand(band) {
@@ -497,6 +567,7 @@ import relatedData from "./content/bmi/related.json";
     if (leadSection) leadSection.hidden = true;
     lastResult = null;
     if (summaryField) summaryField.value = "";
+    if (clearBtn) clearBtn.hidden = true;
   }
 
   function showEmptyResultCard() {
@@ -504,6 +575,64 @@ import relatedData from "./content/bmi/related.json";
     if (results) results.hidden = true;
     if (emptyState) emptyState.hidden = false;
     hideFollowUp();
+  }
+
+  function applyCalculation(options) {
+    const opts = options || {};
+    const moveFocus = opts.moveFocus !== false;
+    const persist = opts.persist !== false;
+    const age = parseInt(ageInput.value, 10);
+
+    if (!Number.isFinite(age)) return false;
+    if (age < 18) {
+      if (persist) clearSession();
+      showUnder18(moveFocus);
+      return true;
+    }
+
+    const metric = toMetric();
+    if (!Number.isFinite(metric.cm) || !Number.isFinite(metric.kg)) return false;
+    const south = isSouthAsianMode();
+    const bmi = round1(calcBmi(metric.kg, metric.cm));
+    const category = categoryFor(bmi, south);
+    showResult(
+      {
+        age: age,
+        band: ageBand(age),
+        bmi: bmi,
+        kg: metric.kg,
+        cm: metric.cm,
+        category: category,
+        healthyRange: healthyRangeText(metric.cm, category.healthyLow, category.healthyHigh),
+        distance: distanceText(metric.kg, metric.cm, category.healthyLow, category.healthyHigh),
+        units: units,
+        southAsian: south,
+      },
+      { moveFocus: moveFocus }
+    );
+    if (persist) saveCurrentInputs();
+    return true;
+  }
+
+  function restoreSession() {
+    const data = readSession();
+    if (!data || !data.age || data.age < 18) {
+      showEmptyResultCard();
+      return;
+    }
+    ageInput.value = String(data.age);
+    setUnits(data.units === "imperial" ? "imperial" : "metric");
+    if (southAsian) southAsian.checked = !!data.southAsian;
+    if (units === "metric") {
+      if (heightCm) heightCm.value = data.heightCm || "";
+      if (weightKg) weightKg.value = data.weightKg || "";
+    } else {
+      if (heightFt) heightFt.value = data.heightFt || "";
+      if (heightIn) heightIn.value = data.heightIn || "";
+      if (weightLb) weightLb.value = data.weightLb || "";
+    }
+    const ok = applyCalculation({ moveFocus: false, persist: false });
+    if (!ok) showEmptyResultCard();
   }
 
   function validate() {
@@ -545,13 +674,13 @@ import relatedData from "./content/bmi/related.json";
     return !first;
   }
 
-  function showUnder18() {
+  function showUnder18(moveFocus) {
     if (emptyState) emptyState.hidden = true;
     if (results) results.hidden = true;
     hideFollowUp();
     if (under18Box) {
       under18Box.hidden = false;
-      under18Box.focus();
+      if (moveFocus !== false && typeof under18Box.focus === "function") under18Box.focus();
     }
     if (liveRegion) {
       liveRegion.textContent =
@@ -559,7 +688,8 @@ import relatedData from "./content/bmi/related.json";
     }
   }
 
-  function showResult(payload) {
+  function showResult(payload, options) {
+    const opts = options || {};
     if (under18Box) under18Box.hidden = true;
     if (emptyState) emptyState.hidden = true;
     lastResult = payload;
@@ -584,6 +714,7 @@ import relatedData from "./content/bmi/related.json";
     renderRelated(payload.category.guidanceKey, payload.band);
 
     if (results) results.hidden = false;
+    if (clearBtn) clearBtn.hidden = false;
     if (followUp) followUp.hidden = false;
     if (limitsSection) limitsSection.hidden = false;
     if (leadSection) leadSection.hidden = false;
@@ -592,8 +723,8 @@ import relatedData from "./content/bmi/related.json";
     if (liveRegion) {
       liveRegion.textContent = "Your BMI is " + payload.bmi + ", category " + payload.category.label + ".";
     }
-    if (resultFocus && typeof resultFocus.focus === "function") {
-      resultFocus.focus();
+    if (opts.moveFocus !== false && resultFocus && typeof resultFocus.focus === "function") {
+      resultFocus.focus({ preventScroll: false });
     }
   }
 
@@ -622,30 +753,20 @@ import relatedData from "./content/bmi/related.json";
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     if (!validate()) return;
-
-    const age = parseInt(ageInput.value, 10);
-    if (age < 18) {
-      showUnder18();
-      return;
-    }
-
-    const metric = toMetric();
-    const south = isSouthAsianMode();
-    const bmi = round1(calcBmi(metric.kg, metric.cm));
-    const category = categoryFor(bmi, south);
-    showResult({
-      age: age,
-      band: ageBand(age),
-      bmi: bmi,
-      kg: metric.kg,
-      cm: metric.cm,
-      category: category,
-      healthyRange: healthyRangeText(metric.cm, category.healthyLow, category.healthyHigh),
-      distance: distanceText(metric.kg, metric.cm, category.healthyLow, category.healthyHigh),
-      units: units,
-      southAsian: south,
-    });
+    applyCalculation({ moveFocus: true, persist: true });
   });
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", function () {
+      clearSession();
+      form.reset();
+      setUnits("metric");
+      if (southAsian) southAsian.checked = false;
+      showEmptyResultCard();
+      if (liveRegion) liveRegion.textContent = "Results cleared.";
+      if (ageInput && typeof ageInput.focus === "function") ageInput.focus();
+    });
+  }
 
   if (contactForm) {
     const honeypot = contactForm.querySelector('[name="_gotcha"]');
@@ -752,7 +873,10 @@ import relatedData from "./content/bmi/related.json";
     });
   }
 
-  showEmptyResultCard();
+  restoreSession();
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) restoreSession();
+  });
 
   window.__bmiTest = {
     calcBmi: calcBmi,
@@ -760,6 +884,8 @@ import relatedData from "./content/bmi/related.json";
     categoryFor: categoryFor,
     distanceText: distanceText,
     healthyRangeText: healthyRangeText,
+    gaugePercent: gaugePercent,
+    gaugeSegmentWidths: gaugeSegmentWidths,
     toImperialBmi: function (ft, inches, lb) {
       const cm = (ft * 12 + inches) * CM_PER_IN;
       const kg = lb * KG_PER_LB;

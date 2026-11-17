@@ -9,7 +9,7 @@ Blog articles are written in Markdown and turned into static HTML on your comput
 - `index.html` - home: free guidance, client transformations, training packages, testimonials, FAQ, and the contact form
 - `about.html` - Sanjeev's story, certifications, method, specialized knowledge, FAQ, and the same contact form
 - `book.html` - booking page with a Cal.com calendar embed
-- `bmi-calculator.html` - free adult BMI calculator lead magnet (age-aware chart, optional South Asian cut-offs, guidance, related posts, contact form). Editable copy lives in `content/bmi/guidance.json` and related-article mapping in `content/bmi/related.json`
+- `bmi-calculator.html` - free adult BMI calculator lead magnet (age-aware chart, optional South Asian cut-offs, guidance, related posts, contact form). Editable copy lives in `content/bmi/guidance.json` and related-article mapping in `content/bmi/related.json`. The age, height and weight you enter are used only in your browser. To keep your result visible while you move around the site, the page keeps them in your browser's temporary session storage on your device. They are deleted when you close the tab or press 'Clear my results', and they are never sent to me unless you choose to share them through the contact form.
 - `privacy.html` - Privacy Policy (adults 18+)
 - `terms.html` - Terms and Disclaimer (adults 18+)
 - `feedback.html` - private feedback and questions form. Marked `noindex`, and not listed in the sitemap
