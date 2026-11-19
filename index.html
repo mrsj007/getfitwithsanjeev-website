@@ -29,6 +29,7 @@
       {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
+        "@id": "https://www.getfitwithsanjeev.com/#business",
         "name": "Sanjeev Kumar - Personal Training",
         "url": "https://www.getfitwithsanjeev.com/",
         "image": "https://www.getfitwithsanjeev.com/images/sanjeev-kumar.jpg",
@@ -48,15 +49,30 @@
         "sameAs": ["https://www.linkedin.com/in/sanjeev-kumar-0387b6207"],
         "founder": {
           "@type": "Person",
+          "@id": "https://www.getfitwithsanjeev.com/#person",
           "name": "Sanjeev Kumar",
           "jobTitle": "Personal Trainer",
           "url": "https://www.getfitwithsanjeev.com/about.html"
         },
         "employee": {
           "@type": "Person",
+          "@id": "https://www.getfitwithsanjeev.com/#person",
           "name": "Sanjeev Kumar",
           "jobTitle": "Personal Trainer",
           "url": "https://www.getfitwithsanjeev.com/about.html"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://www.getfitwithsanjeev.com/#website",
+        "url": "https://www.getfitwithsanjeev.com/",
+        "name": "Sanjeev Kumar - Personal Trainer",
+        "inLanguage": "en-CA",
+        "publisher": {
+          "@id": "https://www.getfitwithsanjeev.com/#business"
         }
       }
     </script>
@@ -176,7 +192,16 @@
         <nav class="primary-nav" id="primary-nav" aria-label="Primary">
           <ul class="nav-list nav-primary">
             <li><a href="about.html">About Us</a></li>
-            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <!-- SITE:TOOLS-NAV:START -->
+            <li class="nav-tools">
+              <button class="nav-tools-btn" type="button" aria-expanded="false" aria-controls="nav-tools-menu">Tools<span class="nav-tools-caret" aria-hidden="true"></span></button>
+              <ul class="nav-tools-menu" id="nav-tools-menu" hidden>
+                <li><a href="tools.html">All tools</a></li>
+                <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+              </ul>
+            </li>
+            <!-- SITE:TOOLS-NAV:END -->
             <!-- BLOG:NAV:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:NAV:END -->
@@ -609,11 +634,15 @@
           <p class="transform-disclaimer">Results vary. These are individual experiences shared with permission.</p>
           <div class="package-grid" style="margin-top: 1.5rem">
             <article class="info-card package-card package-card-secondary">
-              <h3>Free BMI Calculator</h3>
+              <h3>Free tools</h3>
               <p>
-                Check your adult BMI, see an age-aware chart, and get practical next steps before you book.
+                Check your adult BMI, then work out your daily calories, with practical next steps from Sanjeev before you book.
               </p>
-              <a class="btn btn-outline" href="bmi-calculator.html">Open the free BMI calculator</a>
+              <ul>
+                <li><a href="bmi-calculator.html">Free BMI calculator</a> with an age-aware chart</li>
+                <li><a href="bmr-calculator.html">Free BMR and daily calorie calculator</a> with simple graphs</li>
+              </ul>
+              <a class="btn btn-outline" href="tools.html">See all free fitness tools</a>
             </article>
           </div>
         </div>
@@ -1304,7 +1333,11 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Sanjeev Kumar</a></li>
-            <li><a href="bmi-calculator.html">Free BMI Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:START -->
+            <li><a href="tools.html">Free Fitness Tools</a></li>
+            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:END -->
             <!-- BLOG:FOOTER:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:FOOTER:END -->

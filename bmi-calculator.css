@@ -934,3 +934,24 @@ html.page-bmi {
 .bmi-guide .accordion {
   margin-top: 0.75rem;
 }
+
+/* "Next tool" card shown after a result (BMI links to BMR, BMR links to BMI). */
+.tool-next {
+  padding: 1.35rem;
+  background: var(--white);
+  border: 1px solid rgba(31, 58, 46, 0.12);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.page-bmi .tool-next > h2 {
+  margin-bottom: var(--bmi-space-2);
+}
+
+.tool-next > p {
+  margin: 0 0 var(--bmi-space-5);
+}
+
+.tool-next .btn {
+  min-height: 44px;
+}

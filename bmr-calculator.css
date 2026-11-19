@@ -1,0 +1,352 @@
+/* BMR calculator page styles. Loaded after styles.min.css.
+   Reuses every BMI component (cards, result card, guidance, related cards, form, guide, FAQ)
+   by bundling bmi-calculator.css, then adds only what the BMR page needs.
+   The page sets class="page-bmi page-bmr" on <html>, so the BMI spacing tokens apply. */
+
+@import "./bmi-calculator.css";
+
+.bmr-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ───── Form: fieldsets, pills, activity cards, advanced ───── */
+
+.bmr-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.bmr-fieldset legend {
+  padding: 0;
+  margin: 0 0 var(--bmi-space-1);
+  font-weight: 600;
+  color: var(--green-deep);
+}
+
+.bmr-fieldset-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bmi-space-1);
+}
+
+.bmr-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bmi-space-1);
+}
+
+.bmr-pill,
+.bmr-card {
+  position: relative;
+  display: block;
+}
+
+/* The real radio covers the whole pill or card, so it stays clickable and keyboard-focusable. */
+.bmr-pill input,
+.bmr-card input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.bmr-pill span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(31, 58, 46, 0.4);
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--green);
+  font-weight: 600;
+}
+
+.bmr-pill input:checked + span {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--cream);
+}
+
+/* A tick as well as the fill, so the choice never relies on colour alone. */
+.bmr-pill input:checked + span::before {
+  content: "\2713";
+}
+
+.bmr-card span {
+  position: relative;
+  display: block;
+  min-height: 44px;
+  padding: 0.6rem 0.9rem 0.6rem 2.75rem;
+  border: 1px solid rgba(31, 58, 46, 0.3);
+  border-radius: 10px;
+  background: var(--cream);
+  line-height: 1.4;
+}
+
+.bmr-card span::before {
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  top: 0.75rem;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--green);
+  border-radius: 50%;
+  background: var(--white);
+}
+
+.bmr-card strong {
+  display: block;
+  color: var(--green-deep);
+}
+
+.bmr-card input:checked + span {
+  border-color: var(--green);
+  box-shadow: inset 0 0 0 1px var(--green);
+  background: var(--white);
+}
+
+.bmr-card input:checked + span::before {
+  background: radial-gradient(circle, var(--green) 0 4px, var(--white) 5px);
+}
+
+.bmr-pill input:focus-visible + span,
+.bmr-card input:focus-visible + span {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
+}
+
+.bmr-cards {
+  display: grid;
+  gap: var(--bmi-space-1);
+}
+
+.bmr-advanced summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.bmr-advanced summary:focus-visible,
+.bmr-table-toggle summary:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
+}
+
+.bmr-advanced-body {
+  margin-top: var(--bmi-space-1);
+}
+
+.bmr-note {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--green);
+  border-radius: 10px;
+  background: var(--cream);
+  color: var(--green-deep);
+  font-size: 0.95rem;
+}
+
+/* ───── Result card ───── */
+
+.page-bmr .bmi-results p {
+  margin: 0;
+}
+
+.bmr-value-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.bmr-about {
+  font-weight: 600;
+  color: var(--green-deep);
+}
+
+/* The BMR head is longer than the BMI one, so it may wrap on the narrowest phones. */
+.page-bmr .bmi-result-head {
+  flex-wrap: wrap;
+}
+
+.page-bmr .bmi-layout > * {
+  min-width: 0;
+}
+
+/* Muted grey is under 4.5:1 on tan, so text in the tan box uses the deep green. */
+.page-bmr .bmi-result-head .bmi-category-detail {
+  color: var(--green-deep);
+}
+
+.bmr-figures {
+  display: grid;
+  margin: 0;
+}
+
+.bmr-figures div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(31, 58, 46, 0.12);
+}
+
+.bmr-figures dt {
+  font-weight: 600;
+  color: var(--green-deep);
+}
+
+.bmr-figures dd {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.bmr-small {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.bmr-caution {
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(31, 58, 46, 0.15);
+  border-radius: 10px;
+  background: var(--cream);
+  font-size: 0.9rem;
+}
+
+/* ───── Charts ───── */
+
+.bmr-chart {
+  margin: var(--bmi-space-4) 0 0;
+  padding: 1.25rem;
+  background: var(--white);
+  border: 1px solid rgba(31, 58, 46, 0.12);
+  border-radius: var(--radius);
+}
+
+.bmr-chart-svg svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Reserve each chart's height so drawing it never shifts the page. */
+.bmr-chart-svg-bar {
+  min-height: 44px;
+}
+
+.bmr-chart-svg-ladder {
+  min-height: 238px;
+}
+
+.bmr-chart-svg-line {
+  min-height: 250px;
+}
+
+@media (max-width: 599px) {
+  .bmr-chart-svg-ladder {
+    min-height: 286px;
+  }
+}
+
+.bmr-key {
+  display: grid;
+  gap: var(--bmi-space-1);
+  margin: var(--bmi-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bmr-key li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.bmr-swatch {
+  flex: none;
+  margin-top: 0.2rem;
+}
+
+.bmr-chart figcaption,
+.bmr-chart .bmr-small {
+  margin: var(--bmi-space-2) 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.bmr-table-toggle {
+  margin-top: var(--bmi-space-1);
+}
+
+.bmr-table-toggle summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.bmr-chart-table {
+  width: 100%;
+  margin: var(--bmi-space-1) 0 0;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.bmr-chart-table th,
+.bmr-chart-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid rgba(31, 58, 46, 0.12);
+  text-align: left;
+  vertical-align: top;
+}
+
+.bmr-chart-table thead th {
+  color: var(--green);
+}
+
+/* ───── Guidance, sources, noscript ───── */
+
+.bmr-guidance-part + .bmr-guidance-part {
+  margin-top: var(--bmi-space-5);
+  padding-top: var(--bmi-space-5);
+  border-top: 1px solid rgba(31, 58, 46, 0.2);
+}
+
+.bmr-guidance-part > p {
+  margin: 0;
+}
+
+.bmr-sources li {
+  margin-bottom: var(--bmi-space-1);
+}
+
+.bmr-noscript {
+  margin: var(--bmi-space-6) 0 0;
+}
+
+/* Body text on the tan guidance card uses the main text colour (muted grey is 4.19:1 on tan). */
+.page-bmr .bmi-guidance p,
+.page-bmr .bmi-guidance li {
+  color: var(--text);
+}

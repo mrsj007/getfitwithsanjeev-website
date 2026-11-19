@@ -6,13 +6,13 @@
     <title>Privacy Policy | Sanjeev Kumar</title>
     <meta
       name="description"
-      content="How Sanjeev Kumar collects, uses and protects your personal information when you use this website, the BMI calculator, book a consultation or send a message."
+      content="How Sanjeev Kumar collects, uses and protects your personal information when you use this website and its BMI and BMR calculators, book a consultation or send a message."
     />
     <link rel="canonical" href="https://www.getfitwithsanjeev.com/privacy.html" />
     <meta property="og:title" content="Privacy Policy | Sanjeev Kumar" />
     <meta
       property="og:description"
-      content="How Sanjeev Kumar collects, uses and protects your personal information when you use this website, the BMI calculator, book a consultation or send a message."
+      content="How Sanjeev Kumar collects, uses and protects your personal information when you use this website and its BMI and BMR calculators, book a consultation or send a message."
     />
     <meta property="og:url" content="https://www.getfitwithsanjeev.com/privacy.html" />
     <meta property="og:type" content="website" />
@@ -22,7 +22,7 @@
     <meta name="twitter:title" content="Privacy Policy | Sanjeev Kumar" />
     <meta
       name="twitter:description"
-      content="How Sanjeev Kumar collects, uses and protects your personal information when you use this website, the BMI calculator, book a consultation or send a message."
+      content="How Sanjeev Kumar collects, uses and protects your personal information when you use this website and its BMI and BMR calculators, book a consultation or send a message."
     />
     <meta name="twitter:image" content="https://www.getfitwithsanjeev.com/images/sanjeev-kumar.jpg" />
     <script type="application/ld+json">
@@ -31,7 +31,7 @@
         "@type": "WebPage",
         "name": "Privacy Policy",
         "url": "https://www.getfitwithsanjeev.com/privacy.html",
-        "description": "How Sanjeev Kumar collects, uses and protects your personal information when you use this website, the BMI calculator, book a consultation or send a message."
+        "description": "How Sanjeev Kumar collects, uses and protects your personal information when you use this website and its BMI and BMR calculators, book a consultation or send a message."
       }
     </script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -67,7 +67,16 @@
           <ul class="nav-list nav-primary">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <!-- SITE:TOOLS-NAV:START -->
+            <li class="nav-tools">
+              <button class="nav-tools-btn" type="button" aria-expanded="false" aria-controls="nav-tools-menu">Tools<span class="nav-tools-caret" aria-hidden="true"></span></button>
+              <ul class="nav-tools-menu" id="nav-tools-menu" hidden>
+                <li><a href="tools.html">All tools</a></li>
+                <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+              </ul>
+            </li>
+            <!-- SITE:TOOLS-NAV:END -->
             <!-- BLOG:NAV:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:NAV:END -->
@@ -81,7 +90,7 @@
       <div class="legal-page">
         <div class="container">
           <h1>Privacy Policy</h1>
-          <p class="legal-updated">Last updated: November 17, 2026</p>
+          <p class="legal-updated">Last updated: November 19, 2026</p>
 
           <nav class="legal-toc" aria-label="On this page">
             <p><strong>On this page</strong></p>
@@ -89,7 +98,7 @@
               <li><a href="#who-i-am">Who I am</a></li>
               <li><a href="#adults-only">Adults only</a></li>
               <li><a href="#what-i-collect">What I collect</a></li>
-              <li><a href="#bmi-calculator">BMI calculator</a></li>
+              <li><a href="#bmi-calculator">BMI and BMR calculators</a></li>
               <li><a href="#why-i-collect">Why I collect your information</a></li>
               <li><a href="#consent">Consent</a></li>
               <li><a href="#who-else">Who else may access your information</a></li>
@@ -131,6 +140,11 @@
               if you choose to share your results: age group, BMI value, BMI category and unit preference.
             </li>
             <li>
+              <strong>BMR calculator form</strong> - name, email, phone (optional) and message - and only
+              if you choose to share your results: age group, estimated BMR, estimated daily calories (TDEE),
+              goal and unit preference. Sex, height, weight and body fat are never included.
+            </li>
+            <li>
               <strong>Cal.com booking</strong> - name, email, time zone, appointment time and any
               questions you include.
             </li>
@@ -145,16 +159,32 @@
             </li>
           </ul>
 
-          <h2 id="bmi-calculator">4. BMI calculator</h2>
+          <h2 id="bmi-calculator">4. BMI and BMR calculators</h2>
           <p>
-            The age, height and weight you enter are used only in your browser. To keep your result visible
-            while you move around the site, the page keeps them in your browser's temporary session storage
-            on your device. They are deleted when you close the tab or press 'Clear my results', and they
-            are never sent to me unless you choose to share them through the contact form. They are not
-            saved in cookies or included in the URL.
+            The details you enter in the calculators are used only in your browser. The BMI calculator uses
+            your age, height and weight. The BMR calculator also uses your sex, activity level, goal and, if
+            you add it, your body fat percentage.
           </p>
           <p>
-            The calculator is a screening tool and is not medical advice.
+            To keep your result visible while you move around the site, each calculator keeps your entries
+            in your browser's temporary session storage on your device: the BMI calculator under the name
+            <code>bmiSession</code> and the BMR calculator under <code>bmrSession</code>. If you used the BMI
+            calculator first, the BMR calculator reads your age, height and weight from
+            <code>bmiSession</code> in the same tab so you do not have to type them again. Both are deleted
+            when you close the tab, and each is deleted when you press 'Clear my results' on that
+            calculator. Ages under 18 are never saved, and nothing you type in a contact form is kept in
+            session storage. Your entries are not saved in cookies, not included in the URL, and never sent
+            to me unless you choose to share them through a calculator's contact form.
+          </p>
+          <p>
+            Each calculator page has an optional contact form, sent through Formspree. Your calculator
+            numbers are included only if you tick 'Share my results'. The form then adds a short summary:
+            for the BMI calculator, your age group, BMI value, BMI category and units; for the BMR calculator,
+            your age group, estimated BMR, estimated daily calories, goal and units. Sex, height, weight and
+            body fat are never sent.
+          </p>
+          <p>
+            The calculators are screening and education tools. They are not medical or nutrition advice.
           </p>
 
           <h2 id="why-i-collect">5. Why I collect your information</h2>
@@ -173,7 +203,7 @@
 
           <h2 id="consent">6. Consent</h2>
           <p>
-            By sending a message, using the BMI calculator with the share option, or booking a
+            By sending a message, using a calculator with the share option, or booking a
             consultation, you consent to the collection and use of your information as described in this
             policy. You can withdraw your consent at any time - see
             <a href="#your-rights">section 12</a>.
@@ -257,7 +287,11 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Sanjeev Kumar</a></li>
-            <li><a href="bmi-calculator.html">Free BMI Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:START -->
+            <li><a href="tools.html">Free Fitness Tools</a></li>
+            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:END -->
             <!-- BLOG:FOOTER:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:FOOTER:END -->

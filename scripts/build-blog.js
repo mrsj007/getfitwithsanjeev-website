@@ -65,6 +65,10 @@ const PORTRAIT_ALT = "Sanjeev Kumar, personal trainer, photographed in a gym";
 const warnings = [];
 let GROUPS = [];
 
+/* content/tools.json drives the Tools drop-down, footer links, the tools.html cards and the sitemap. */
+const TOOLS = JSON.parse(fs.readFileSync(path.join(ROOT, "content", "tools.json"), "utf8")).tools;
+const TOOL_PAGES = { bmi: "bmi-calculator.html", bmr: "bmr-calculator.html", tools: "tools.html" };
+
 function fail(message) {
   console.error("Error: " + message);
   process.exit(1);
@@ -649,6 +653,21 @@ function bmiPostLink(post) {
   );
 }
 
+const CALORIE_POST_TOPICS = new Set([
+  "workout-fat-loss",
+  "workout-muscle-gain",
+  "nutrition-fat-weight-loss",
+  "nutrition-athletic-performance",
+]);
+
+function caloriePostLink(post) {
+  const match = post.categories.some((category) => CALORIE_POST_TOPICS.has(category.slug));
+  if (!match) return "";
+  return (
+    '<p class="post-bmi-link"><a href="../bmr-calculator.html">Check your daily calories</a> with Sanjeev\'s free BMR calculator - simple graphs included.</p>'
+  );
+}
+
 function faqHtml(items) {
   if (!items.length) return "";
   const blocks = items
@@ -949,7 +968,8 @@ function headerHtml() {
           <ul class="nav-list nav-primary">
             <li><a href="../index.html">Home</a></li>
             <li><a href="../about.html">About Us</a></li>
-            <li><a href="../bmi-calculator.html">BMI Calculator</a></li>
+            <!-- SITE:TOOLS-NAV:START -->
+            <!-- SITE:TOOLS-NAV:END -->
             <!-- BLOG:NAV:START -->
             <!-- BLOG:NAV:END -->
           </ul>
@@ -973,7 +993,8 @@ function footerHtml() {
           <ul>
             <li><a href="../index.html">Home</a></li>
             <li><a href="../about.html">About Sanjeev Kumar</a></li>
-            <li><a href="../bmi-calculator.html">Free BMI Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:START -->
+            <!-- SITE:TOOLS-FOOTER:END -->
             <!-- BLOG:FOOTER:START -->
             <!-- BLOG:FOOTER:END -->
             <li><a href="../book.html">Book a Consultation</a></li>
@@ -1116,6 +1137,7 @@ ${headerHtml()}
         ${faqHtml(post.faq)}
         ${feedbackBlock(post)}
         ${bmiPostLink(post)}
+        ${caloriePostLink(post)}
         <aside class="post-cta" aria-labelledby="post-cta-heading">
           <h2 id="post-cta-heading">Want guidance built around you?</h2>
           <p>Tell Sanjeev where you are today and what you want to understand.</p>
@@ -1685,9 +1707,116 @@ function footerInner(kind, posts) {
   return '<li><a href="blog/index.html">Blog</a></li>';
 }
 
+function linkPrefix(kind) {
+  return kind === "blog-index" || kind === "blog-post" ? "../" : "";
+}
+
+function toolLink(kind, href, label) {
+  const current = TOOL_PAGES[kind] === href ? ' aria-current="page"' : "";
+  return '<li><a href="' + linkPrefix(kind) + href + '"' + current + ">" + escapeHtml(label) + "</a></li>";
+}
+
+/* Tools drop-down: a disclosure button plus a list of links (script.js adds the behaviour). */
+function toolsNavInner(kind) {
+  const onToolPage = Object.prototype.hasOwnProperty.call(TOOL_PAGES, kind);
+  return [
+    '<li class="nav-tools' + (onToolPage ? " is-current" : "") + '">',
+    '  <button class="nav-tools-btn" type="button" aria-expanded="false" aria-controls="nav-tools-menu">Tools<span class="nav-tools-caret" aria-hidden="true"></span></button>',
+    '  <ul class="nav-tools-menu" id="nav-tools-menu" hidden>',
+    "    " + toolLink(kind, "tools.html", "All tools"),
+  ]
+    .concat(TOOLS.map((tool) => "    " + toolLink(kind, tool.href, tool.name)))
+    .concat(["  </ul>", "</li>"])
+    .join("\n");
+}
+
+function toolsFooterInner(kind) {
+  return [toolLink(kind, "tools.html", "Free Fitness Tools")]
+    .concat(TOOLS.map((tool) => toolLink(kind, tool.href, tool.name)))
+    .join("\n");
+}
+
+/* Cards and ItemList on tools.html, from content/tools.json. */
+function toolsCardsInner() {
+  return TOOLS.map((tool) =>
+    [
+      '<article class="info-card package-card tool-card">',
+      "  <h2>" + escapeHtml(tool.name) + "</h2>",
+      "  <p>" + escapeHtml(tool.summary) + "</p>",
+      '  <a class="btn btn-primary" href="' + tool.href + '" aria-label="Open calculator: ' + escapeHtml(tool.name) + '">Open calculator</a>',
+      "</article>",
+    ].join("\n")
+  ).join("\n");
+}
+
+function toolsJsonLdInner() {
+  const page = SITE + "/tools.html";
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": page,
+        url: page,
+        name: "Free Fitness Tools",
+        description:
+          "Free BMI and BMR calculators for adults from Sanjeev Kumar, personal trainer in South Surrey and Vancouver.",
+        isPartOf: { "@id": SITE + "/#website" },
+        about: { "@id": SITE + "/#business" },
+        breadcrumb: { "@id": page + "#breadcrumb" },
+        mainEntity: { "@id": page + "#tools" },
+      },
+      {
+        "@type": "ItemList",
+        "@id": page + "#tools",
+        name: "Free fitness tools",
+        numberOfItems: TOOLS.length,
+        itemListElement: TOOLS.map((tool, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: tool.name,
+          url: SITE + "/" + tool.href,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": page + "#breadcrumb",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
+          { "@type": "ListItem", position: 2, name: "Tools", item: page },
+        ],
+      },
+    ],
+  };
+  return '<script type="application/ld+json">\n' + JSON.stringify(data, null, 2) + "\n</script>";
+}
+
+/* Related-article files must only point at published posts. */
+function assertRelatedSlugs(published) {
+  const live = new Set(published.map((post) => post.slug));
+  ["bmr"].forEach((tool) => {
+    const file = path.join(ROOT, "content", tool, "related.json");
+    if (!fs.existsSync(file)) return;
+    const data = JSON.parse(fs.readFileSync(file, "utf8"));
+    (data.posts || []).forEach((post) => {
+      if (!live.has(post.slug)) fail("content/" + tool + "/related.json lists " + post.slug + ", which is not a published post.");
+    });
+  });
+}
+
 function applyMarkers(filePath, kind, posts) {
   let html = fs.readFileSync(filePath, "utf8");
   const label = path.relative(ROOT, filePath);
+  if (html.includes("<!-- SITE:TOOLS-NAV:START -->")) {
+    html = replaceBlock(html, "<!-- SITE:TOOLS-NAV:START -->", "<!-- SITE:TOOLS-NAV:END -->", toolsNavInner(kind), label);
+  }
+  if (html.includes("<!-- SITE:TOOLS-FOOTER:START -->")) {
+    html = replaceBlock(html, "<!-- SITE:TOOLS-FOOTER:START -->", "<!-- SITE:TOOLS-FOOTER:END -->", toolsFooterInner(kind), label);
+  }
+  if (kind === "tools") {
+    html = replaceBlock(html, "<!-- SITE:TOOLS-CARDS:START -->", "<!-- SITE:TOOLS-CARDS:END -->", toolsCardsInner(), label);
+    html = replaceBlock(html, "<!-- SITE:TOOLS-JSONLD:START -->", "<!-- SITE:TOOLS-JSONLD:END -->", toolsJsonLdInner(), label);
+  }
   if (html.includes("<!-- BLOG:NAV:START -->")) {
     html = replaceBlock(html, "<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", navInner(kind, posts), label);
   }
@@ -1708,6 +1837,12 @@ function applyMarkers(filePath, kind, posts) {
 }
 
 function assertSourceMarkers() {
+  const shared = [
+    "<!-- SITE:TOOLS-NAV:START -->",
+    "<!-- SITE:TOOLS-NAV:END -->",
+    "<!-- SITE:TOOLS-FOOTER:START -->",
+    "<!-- SITE:TOOLS-FOOTER:END -->",
+  ];
   const required = {
     "index.html": [
       "<!-- BLOG:NAV:START -->",
@@ -1725,10 +1860,21 @@ function assertSourceMarkers() {
     "bmi-calculator.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "privacy.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
     "terms.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
+    "bmr-calculator.html": ["<!-- BLOG:NAV:START -->", "<!-- BLOG:NAV:END -->", "<!-- BLOG:FOOTER:START -->", "<!-- BLOG:FOOTER:END -->"],
+    "tools.html": [
+      "<!-- BLOG:NAV:START -->",
+      "<!-- BLOG:NAV:END -->",
+      "<!-- BLOG:FOOTER:START -->",
+      "<!-- BLOG:FOOTER:END -->",
+      "<!-- SITE:TOOLS-CARDS:START -->",
+      "<!-- SITE:TOOLS-CARDS:END -->",
+      "<!-- SITE:TOOLS-JSONLD:START -->",
+      "<!-- SITE:TOOLS-JSONLD:END -->",
+    ],
   };
   Object.keys(required).forEach((file) => {
     const text = fs.readFileSync(path.join(ROOT, file), "utf8");
-    required[file].forEach((marker) => {
+    shared.concat(required[file]).forEach((marker) => {
       if (!text.includes(marker)) fail(file + " is missing " + marker + ".");
     });
   });
@@ -1745,6 +1891,12 @@ function updateLlms(posts) {
     .map((post) => post.title + " - " + SITE + "/blog/" + post.slug + ".html - " + post.description.replace(/\s+/g, " "))
     .join("\n");
   text = replaceBlock(text, "<!-- BLOG:START -->", "<!-- BLOG:END -->", lines, "llms.txt");
+  if (text.includes("<!-- TOOLS:START -->")) {
+    const toolLines = ["- Free fitness tools: " + SITE + "/tools.html - free calculators for adults. Calculations stay in the browser."]
+      .concat(TOOLS.map((tool) => "- " + tool.name + ": " + SITE + "/" + tool.href + " - " + tool.summary))
+      .join("\n");
+    text = replaceBlock(text, "<!-- TOOLS:START -->", "<!-- TOOLS:END -->", toolLines, "llms.txt");
+  }
   if (!text.endsWith("\n")) text += "\n";
   fs.writeFileSync(filePath, text);
 }
@@ -1753,26 +1905,37 @@ function updateSitemap(posts) {
   const filePath = path.join(ROOT, "sitemap.xml");
   const xml = fs.readFileSync(filePath, "utf8");
   const dates = {
-    [SITE + "/"]: "2026-11-02",
-    [SITE + "/about.html"]: "2026-11-02",
+    [SITE + "/"]: "2026-11-19",
+    [SITE + "/about.html"]: "2026-11-19",
     [SITE + "/book.html"]: "2026-11-03",
-    [SITE + "/bmi-calculator.html"]: "2026-11-17",
-    [SITE + "/privacy.html"]: "2026-11-17",
-    [SITE + "/terms.html"]: "2026-11-17",
+    [SITE + "/tools.html"]: "2026-11-19",
+    [SITE + "/bmi-calculator.html"]: "2026-11-19",
+    [SITE + "/privacy.html"]: "2026-11-19",
+    [SITE + "/terms.html"]: "2026-11-19",
   };
+  TOOLS.forEach((tool) => {
+    const loc = SITE + "/" + tool.href;
+    if (!dates[loc] || tool.lastmod > dates[loc]) dates[loc] = tool.lastmod;
+  });
+  /* Keep the newer of the date already in sitemap.xml and the date above. */
   const found = /<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g;
   let match;
   while ((match = found.exec(xml))) {
-    if (Object.prototype.hasOwnProperty.call(dates, match[1])) dates[match[1]] = match[2];
+    if (Object.prototype.hasOwnProperty.call(dates, match[1]) && match[2] > dates[match[1]]) dates[match[1]] = match[2];
   }
   const urls = [
     { loc: SITE + "/", lastmod: dates[SITE + "/"] },
     { loc: SITE + "/about.html", lastmod: dates[SITE + "/about.html"] },
     { loc: SITE + "/book.html", lastmod: dates[SITE + "/book.html"] },
-    { loc: SITE + "/bmi-calculator.html", lastmod: dates[SITE + "/bmi-calculator.html"] },
-    { loc: SITE + "/privacy.html", lastmod: dates[SITE + "/privacy.html"] },
-    { loc: SITE + "/terms.html", lastmod: dates[SITE + "/terms.html"] },
+    { loc: SITE + "/tools.html", lastmod: dates[SITE + "/tools.html"] },
   ];
+  TOOLS.forEach((tool) => {
+    urls.push({ loc: SITE + "/" + tool.href, lastmod: dates[SITE + "/" + tool.href] });
+  });
+  urls.push(
+    { loc: SITE + "/privacy.html", lastmod: dates[SITE + "/privacy.html"] },
+    { loc: SITE + "/terms.html", lastmod: dates[SITE + "/terms.html"] }
+  );
   if (posts.length) {
     const latest = posts.map((post) => post.updated).sort().pop();
     urls.push({ loc: SITE + "/blog/", lastmod: latest });
@@ -1805,6 +1968,8 @@ function writeOutputs(live, published) {
   applyMarkers(path.join(ROOT, "book.html"), "book", live);
   applyMarkers(path.join(ROOT, "feedback.html"), "feedback", live);
   applyMarkers(path.join(ROOT, "bmi-calculator.html"), "bmi", live);
+  applyMarkers(path.join(ROOT, "bmr-calculator.html"), "bmr", live);
+  applyMarkers(path.join(ROOT, "tools.html"), "tools", live);
   applyMarkers(path.join(ROOT, "privacy.html"), "privacy", live);
   applyMarkers(path.join(ROOT, "terms.html"), "terms", live);
   applyMarkers(path.join(BLOG_DIR, "index.html"), "blog-index", live);
@@ -1830,6 +1995,7 @@ function main() {
   const published = posts.filter((post) => post.status === "published");
   const drafts = posts.filter((post) => post.status === "draft");
   const live = INCLUDE_DRAFTS ? posts : published;
+  assertRelatedSlugs(published);
   writeOutputs(live, published);
   summary(published.length, drafts.length);
 }

@@ -225,7 +225,16 @@
         <nav class="primary-nav" id="primary-nav" aria-label="Primary">
           <ul class="nav-list nav-primary">
             <li><a href="index.html">Home</a></li>
-            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <!-- SITE:TOOLS-NAV:START -->
+            <li class="nav-tools">
+              <button class="nav-tools-btn" type="button" aria-expanded="false" aria-controls="nav-tools-menu">Tools<span class="nav-tools-caret" aria-hidden="true"></span></button>
+              <ul class="nav-tools-menu" id="nav-tools-menu" hidden>
+                <li><a href="tools.html">All tools</a></li>
+                <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+              </ul>
+            </li>
+            <!-- SITE:TOOLS-NAV:END -->
             <!-- BLOG:NAV:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:NAV:END -->
@@ -268,7 +277,9 @@
               in the body you live in every day.
               The home page covers <a href="index.html">in-person training, online consultations and free guidance</a>.
               You can also <a href="book.html">book a consultation with Sanjeev</a>,
-              or try the <a href="bmi-calculator.html">free BMI calculator for adults</a>.
+              or try the <a href="bmi-calculator.html">free BMI calculator for adults</a>
+              and the <a href="bmr-calculator.html">free BMR and daily calorie calculator</a>
+              (both are on the <a href="tools.html">free fitness tools page</a>).
             </p>
             <dl class="stat-grid">
               <div>
@@ -1158,7 +1169,11 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Sanjeev Kumar</a></li>
-            <li><a href="bmi-calculator.html">Free BMI Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:START -->
+            <li><a href="tools.html">Free Fitness Tools</a></li>
+            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:END -->
             <!-- BLOG:FOOTER:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:FOOTER:END -->

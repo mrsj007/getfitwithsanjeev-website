@@ -1,0 +1,7 @@
+{
+  "note": "One line per tool. The build (npm run build:blog) uses this list for the Tools drop-down in the header, the footer Explore links, the cards and ItemList on tools.html, and the sitemap. To add a tool: create its page, then add one line here.",
+  "tools": [
+    { "name": "BMI Calculator", "href": "bmi-calculator.html", "summary": "Check your adult body mass index in metric or imperial, with an age-aware chart and South Asian cut-offs.", "lastmod": "2026-11-19" },
+    { "name": "BMR Calculator", "href": "bmr-calculator.html", "summary": "Estimate your basal metabolic rate and daily calories, with three simple graphs and gentle starting ranges.", "lastmod": "2026-11-19" }
+  ]
+}

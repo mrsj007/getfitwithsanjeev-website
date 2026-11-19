@@ -9,6 +9,8 @@ Blog articles are written in Markdown and turned into static HTML on your comput
 - `index.html` - home: free guidance, client transformations, training packages, testimonials, FAQ, and the contact form
 - `about.html` - Sanjeev's story, certifications, method, specialized knowledge, FAQ, and the same contact form
 - `book.html` - booking page with a Cal.com calendar embed
+- `tools.html` - Tools hub. Its cards and ItemList JSON-LD are written by `npm run build:blog` from `content/tools.json`, the one list of tools. The same list drives the Tools drop-down in every header, the footer Explore links, the sitemap and the tools lines in `llms.txt`. To add a tool, build its page, then add one line to `content/tools.json`.
+- `bmr-calculator.html` - free adult BMR and daily calorie calculator lead magnet (Mifflin-St Jeor, or Katch-McArdle with body fat; TDEE from five activity levels; gentle goal ranges; three inline SVG charts with table alternatives; guidance; related posts; contact form). Editable copy lives in `content/bmr/guidance.json` and the related-article mapping in `content/bmr/related.json` (the build fails if it lists a slug that is not published). The details you enter stay in the browser in session storage under `bmrSession` and are deleted when the tab closes or on 'Clear my results'. If `bmiSession` exists, the page prefills age, height, weight and units only. See "BMR calculator decisions" below.
 - `bmi-calculator.html` - free adult BMI calculator lead magnet (age-aware chart, optional South Asian cut-offs, guidance, related posts, contact form). Editable copy lives in `content/bmi/guidance.json` and related-article mapping in `content/bmi/related.json`. The age, height and weight you enter are used only in your browser. To keep your result visible while you move around the site, the page keeps them in your browser's temporary session storage on your device. They are deleted when you close the tab or press 'Clear my results', and they are never sent to me unless you choose to share them through the contact form.
 - `privacy.html` - Privacy Policy (adults 18+)
 - `terms.html` - Terms and Disclaimer (adults 18+)
@@ -121,6 +123,21 @@ Files:
 - `script.min.js` - minified script the pages load
 - `content/bmi/guidance.json` - category guidance Sanjeev can edit. Each block has `"reviewed": false` until Sanjeev (or the site owner) flips it to `true`; the "Reviewed by Sanjeev" badge only shows when `reviewed` is true
 - `content/bmi/related.json` - related-article mapping for BMI results
+- `bmr-calculator.css` / `bmr-calculator.min.css` - BMR page styles. The source imports `bmi-calculator.css`, and `build:assets` bundles both into one minified file, so the two calculators share components
+- `bmr-calculator.js` / `bmr-calculator.min.js` - BMR maths, charts, session handling and lead form (built by `npm run build:assets`, bundles `content/bmr/*.json`)
+- `content/bmr/guidance.json` - BMR guidance in Sanjeev's voice: one block per goal (lose, maintain, build) and per age band (18-29, 30-49, 50-64, 65+), plus the short safety messages. **Sanjeev must approve this copy.** Every block has `"reviewed": false`; the "Reviewed by Sanjeev" badge shows only when it is `true`
+- `content/bmr/related.json` - related-article mapping for BMR results (goal and 50+ age bands to published posts)
+- `content/tools.json` - the list of free tools (see `tools.html` above)
+
+### BMR calculator decisions
+
+- Adults 18 to 100 only. Under 18 shows a short message and nothing is saved.
+- Mifflin-St Jeor by default: 10 x kg + 6.25 x cm - 5 x age, then + 5 (male) or - 161 (female). With body fat (5 to 60 percent) under Advanced, Katch-McArdle: 370 + 21.6 x lean body mass in kg; the Mifflin result is shown too. Values are exact inside the script and shown rounded to the nearest 10 kcal with "about".
+- Sex: Female or Male, with one line explaining that the formula uses sex assigned at birth.
+- TDEE = BMR x 1.2, 1.375, 1.55, 1.725 or 1.9.
+- Goals: lose fat gradually (10 to 20 percent below TDEE), maintain (TDEE), build muscle (5 to 10 percent above TDEE). Safety rules in code: never below BMR; age 65 and over gets maintenance only plus a note to speak with a doctor; an internal BMI under 18.5 never gets a fat-loss range. No macros, meal plans or weekly-loss promises.
+- Charts: inline SVG drawn at the real container width (so text never shrinks), patterns as well as colours, a plain key or row labels instead of labels at bar ends, and a data table under each chart.
+- Focus moves to the result only when the form is sent from the keyboard. Pointer users are scrolled to the result on small screens. Restores (load, back/forward) never move focus or scroll.
 
 ### Legal page decision values
 
@@ -130,7 +147,7 @@ Update these together if they change:
 - PRIVACY_EMAIL = getfitwithsk007@gmail.com
 - RETENTION = 24 months
 - CANCELLATION_TEXT = Cancellation and rescheduling terms will be confirmed with you when you book.
-- Last updated = November 17, 2026
+- Last updated = November 19, 2026
 - Address = 1715 152 St #120, Surrey, BC V4A 4N3, Canada
 - Audience = adults aged 18 or older
 - `fonts/` - self-hosted Playfair Display and Inter
@@ -151,13 +168,13 @@ The feedback page (`feedback.html`) posts to the same Formspree form. The script
 
 Both forms share Formspree's free-plan allowance, about 50 submissions a month for the project, not 50 each. A second form would split the inbox, but it would not raise that cap. To point feedback at a different form, change `FEEDBACK_FORM_ENDPOINT` in `script.js` and the `action` on `feedback.html` to the new URL.
 
-The BMI calculator page posts to the same Formspree endpoint via `BMI_FORM_ENDPOINT` in `bmi-calculator.js`, with `source=bmi-calculator`. That page will outgrow the free plan once traffic grows. Plan a paid Formspree tier or a dedicated form service (for example Basin, Getform or a small serverless handler) before marketing the calculator widely.
+The BMI calculator page posts to the same Formspree endpoint via `BMI_FORM_ENDPOINT` in `bmi-calculator.js`, with `source=bmi-calculator`. The BMR calculator does the same via `BMR_FORM_ENDPOINT` in `bmr-calculator.js`, with `source=bmr-calculator`. Every form shares the one free-plan allowance (about 50 submissions a month), so the calculators will outgrow it once traffic grows. Plan a paid Formspree tier or a dedicated form service (for example Basin, Getform or a small serverless handler) before marketing the calculator widely.
 
 Serve the site over HTTP (for example `npx serve` or `python3 -m http.server`) rather than opening the file directly, so the browser can reach Formspree.
 
 ## SEO files
 
-- `sitemap.xml` - lists `/`, `/about.html`, `/book.html`, `/bmi-calculator.html`, `/privacy.html`, and `/terms.html`. The blog build adds `/blog/` and each published article. `feedback.html` stays out of the sitemap.
+- `sitemap.xml` - lists `/`, `/about.html`, `/book.html`, `/tools.html`, every tool in `content/tools.json` (`/bmi-calculator.html`, `/bmr-calculator.html`), `/privacy.html`, and `/terms.html`. The blog build adds `/blog/` and each published article. `feedback.html` stays out of the sitemap.
 - `robots.txt` - allows crawling and points to the sitemap
 - `llms.txt` - a short plain-text summary for answer engines. Published articles are listed between the `BLOG` markers.
 

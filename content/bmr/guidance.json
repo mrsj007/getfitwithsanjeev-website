@@ -1,0 +1,93 @@
+{
+  "reviewedPlaceholder": "Reviewed by Sanjeev",
+  "reviewNote": "Draft copy in Sanjeev's voice. Set reviewed to true on a block only after Sanjeev approves that exact text. The badge shows only when reviewed is true. Each body is 80 to 120 words.",
+  "goals": {
+    "lose": {
+      "label": "Lose fat gradually",
+      "reviewed": false,
+      "headline": "Losing fat gradually, without the crash",
+      "body": "A slow, steady approach usually lasts longer than a big cut. The range above is only a gentle starting point, and it never goes below your BMR, because eating that little tends to leave people tired, hungry and losing muscle. Start by eating close to the top of the range for two or three weeks and watch your energy, sleep, mood and training. If those feel good, keep going. If they slip, eat a little more. Strength training tells your body to keep its muscle while fat comes off. If you have a health condition or take medication, check with your doctor first.",
+      "actions": [
+        "Strength train 2-3 days a week so you keep muscle while fat comes off",
+        "Walk most days and build protein into each meal",
+        "Protect your sleep, and check in with your doctor before any big change"
+      ],
+      "cta": "Talk to Sanjeev about fat loss"
+    },
+    "maintain": {
+      "label": "Maintain",
+      "reviewed": false,
+      "headline": "Maintenance is a strong place to start",
+      "body": "Eating around your maintenance number means you are fuelling your body for the life you live now. It is a useful base for almost every goal. Many people find that when they train consistently at maintenance, their shape and strength change even if the scale barely moves. Use the number as a rough guide, not a target to hit to the calorie. Your weight naturally moves up and down from day to day, so look at the trend over a few weeks. If energy, sleep and recovery feel steady, you are probably close. If something feels off, talk with your doctor.",
+      "actions": [
+        "Strength train 2-3 days a week to keep muscle and bone strong",
+        "Walk daily, even in short blocks that fit your day",
+        "Keep protein and sleep habits steady, and see your doctor for routine check-ups"
+      ],
+      "cta": "Talk to Sanjeev"
+    },
+    "build": {
+      "label": "Build muscle",
+      "reviewed": false,
+      "headline": "Building muscle steadily",
+      "body": "Muscle grows when training gives it a reason to adapt and food and sleep give it what it needs to recover. A small step above maintenance, like the range above, is usually enough. Eating far more than that mostly adds fat, not muscle. Focus on getting a little stronger on a few basic lifts over the weeks, and spread protein across your meals. Check your progress through strength, how clothes fit and photos, not only the scale. If you have a health condition, or a doctor has asked you to watch your weight, talk with them before you change how you eat.",
+      "actions": [
+        "Strength train 2-3 days a week and add a little weight or a rep over time",
+        "Walk on rest days to help recovery and keep you moving",
+        "Build each meal around protein, sleep 7-9 hours, and check in with your doctor if unsure"
+      ],
+      "cta": "Talk to Sanjeev about building muscle"
+    }
+  },
+  "ageBands": {
+    "18-29": {
+      "reviewed": false,
+      "line": "Age 18-29: the habits you build now tend to stick for decades.",
+      "headline": "In your twenties",
+      "body": "Your twenties are a great time to learn how to train well. The strength and walking habits you build now often stay with you for decades, and the muscle you add supports you for years to come. Life can be busy and irregular at this age, with school, work, shifts and late nights. A simple routine you can repeat beats a perfect plan you drop after three weeks. Learn the basic lifts with good form, eat regular meals with protein, and give sleep the same priority as training. If you are unsure about a health question, your doctor is the right person to ask.",
+      "actions": [
+        "Learn the basic lifts with good form, 2-3 days a week",
+        "Walk or cycle as part of your normal day",
+        "Keep a regular sleep pattern, and see your doctor with any health questions"
+      ]
+    },
+    "30-49": {
+      "reviewed": false,
+      "line": "Age 30-49: muscle, sleep and stress management matter most for how you feel.",
+      "headline": "In your thirties and forties",
+      "body": "Through your thirties and forties, work, family and stress often squeeze out training. This is when keeping your muscle matters most, because adults who stop strength training tend to lose some muscle each decade. Short sessions count. Two or three focused workouts a week, plus daily walking, can keep you strong and steady. Watch sleep and stress closely: when they slip, appetite, energy and recovery often slip too. If your weight has changed and you are not sure why, or you have started a new medication, check in with your doctor before you change how you eat.",
+      "actions": [
+        "Strength train 2-3 days a week, even 30 minutes counts",
+        "Walk daily to manage stress and stay active",
+        "Guard your sleep, and see your doctor about unexplained weight changes"
+      ]
+    },
+    "50-64": {
+      "reviewed": false,
+      "line": "Age 50-64: protecting muscle, bone and balance matters as much as calories.",
+      "headline": "From fifty to sixty-four",
+      "body": "From your fifties, protecting muscle and bone becomes a clear priority. Muscle helps you stay strong, steady and independent, and it is one of the few things that supports your metabolism as you age. Strength training two or three days a week is one of the most useful habits at this stage. Protein matters more than people expect, so spread it across your meals. Joints may need a gentler start, and that is fine. Hormone changes, such as menopause, can affect weight and energy. Talk with your doctor about any health conditions or medication before you change your eating.",
+      "actions": [
+        "Strength train 2-3 days a week, starting light and progressing slowly",
+        "Walk most days and add simple balance practice",
+        "Include protein at each meal, and review medication and health questions with your doctor"
+      ]
+    },
+    "65+": {
+      "reviewed": false,
+      "line": "Age 65 and over: this page shows maintenance only. Speak with your doctor before any weight loss.",
+      "headline": "At sixty-five and over",
+      "body": "After sixty-five, keeping strength, balance and energy usually matters more than chasing a lower number. Losing weight without a clear plan can mean losing muscle, which makes everyday tasks harder. That is why this page shows maintenance only for your age. If you are thinking about losing weight, speak with your doctor first so they can look at your full health picture. Strength and balance training, done gently and regularly, can help you stay independent and confident on your feet. Eating enough protein and staying active through the day support that work.",
+      "actions": [
+        "Strength and balance training 2-3 days a week, with a gentle start",
+        "Walk most days at a pace that feels comfortable",
+        "Eat enough protein, and speak with your doctor before any weight loss"
+      ]
+    }
+  },
+  "messages": {
+    "age65": "At 65 and over, this page shows maintenance only. Speak with your doctor before any weight loss.",
+    "lowBmi": "Based on your height and weight, a fat-loss range is not shown here. Maintenance is shown instead. If you want to change your shape or strength, training at maintenance is a good place to start, and your doctor or a registered dietitian can help with food.",
+    "floor": "The lower end is held at your BMR, because this page never shows a target below it."
+  }
+}

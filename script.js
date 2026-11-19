@@ -46,6 +46,102 @@
     });
   }
 
+  /* Tools drop-down in the header (markup from scripts/build-blog.js).
+     A disclosure button plus links: click, Enter or Space toggles it; hover opens it
+     on large screens with a mouse; Escape, an outside click or focus leaving closes it;
+     arrow keys, Home and End move between the links. In the mobile menu it is an accordion. */
+  const tools = document.querySelector(".nav-tools");
+  const toolsBtn = tools && tools.querySelector(".nav-tools-btn");
+  const toolsMenu = tools && document.getElementById(toolsBtn.getAttribute("aria-controls"));
+
+  if (tools && toolsBtn && toolsMenu) {
+    const hoverMq = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)");
+    let openedByHover = false;
+    let hoverTimer = null;
+
+    function toolLinks() {
+      return Array.prototype.slice.call(toolsMenu.querySelectorAll("a"));
+    }
+
+    function setTools(open) {
+      toolsBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      toolsMenu.hidden = !open;
+      if (!open) openedByHover = false;
+    }
+
+    function isToolsOpen() {
+      return toolsBtn.getAttribute("aria-expanded") === "true";
+    }
+
+    toolsBtn.addEventListener("click", function () {
+      if (isToolsOpen() && openedByHover) {
+        openedByHover = false;
+        return;
+      }
+      setTools(!isToolsOpen());
+    });
+
+    toolsBtn.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        setTools(true);
+        const links = toolLinks();
+        const target = event.key === "ArrowDown" ? links[0] : links[links.length - 1];
+        if (target) target.focus();
+      }
+    });
+
+    toolsMenu.addEventListener("keydown", function (event) {
+      const links = toolLinks();
+      const index = links.indexOf(document.activeElement);
+      let next = null;
+      if (event.key === "ArrowDown") next = links[(index + 1) % links.length];
+      else if (event.key === "ArrowUp") next = links[(index - 1 + links.length) % links.length];
+      else if (event.key === "Home") next = links[0];
+      else if (event.key === "End") next = links[links.length - 1];
+      if (next) {
+        event.preventDefault();
+        next.focus();
+      }
+    });
+
+    tools.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && isToolsOpen()) {
+        event.stopPropagation();
+        setTools(false);
+        toolsBtn.focus();
+      }
+    });
+
+    tools.addEventListener("focusout", function (event) {
+      if (event.relatedTarget && !tools.contains(event.relatedTarget)) setTools(false);
+    });
+
+    document.addEventListener("click", function (event) {
+      if (isToolsOpen() && !tools.contains(event.target)) setTools(false);
+    });
+
+    tools.addEventListener("mouseenter", function () {
+      if (!hoverMq.matches) return;
+      clearTimeout(hoverTimer);
+      if (!isToolsOpen()) {
+        setTools(true);
+        openedByHover = true;
+      }
+    });
+
+    tools.addEventListener("mouseleave", function () {
+      if (!hoverMq.matches || !openedByHover) return;
+      hoverTimer = setTimeout(function () {
+        if (openedByHover) setTools(false);
+      }, 200);
+    });
+
+    mq.addEventListener("change", function () {
+      setTools(false);
+    });
+  }
+
   /* FAQ: one panel open at a time */
   const triggers = Array.from(document.querySelectorAll(".accordion-trigger"));
 

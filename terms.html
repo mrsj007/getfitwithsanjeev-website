@@ -6,13 +6,13 @@
     <title>Terms and Disclaimer | Sanjeev Kumar</title>
     <meta
       name="description"
-      content="Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI calculator and consultations."
+      content="Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI and BMR calculators and consultations."
     />
     <link rel="canonical" href="https://www.getfitwithsanjeev.com/terms.html" />
     <meta property="og:title" content="Terms and Disclaimer | Sanjeev Kumar" />
     <meta
       property="og:description"
-      content="Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI calculator and consultations."
+      content="Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI and BMR calculators and consultations."
     />
     <meta property="og:url" content="https://www.getfitwithsanjeev.com/terms.html" />
     <meta property="og:type" content="website" />
@@ -22,7 +22,7 @@
     <meta name="twitter:title" content="Terms and Disclaimer | Sanjeev Kumar" />
     <meta
       name="twitter:description"
-      content="Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI calculator and consultations."
+      content="Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI and BMR calculators and consultations."
     />
     <meta name="twitter:image" content="https://www.getfitwithsanjeev.com/images/sanjeev-kumar.jpg" />
     <script type="application/ld+json">
@@ -31,7 +31,7 @@
         "@type": "WebPage",
         "name": "Terms and Disclaimer",
         "url": "https://www.getfitwithsanjeev.com/terms.html",
-        "description": "Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI calculator and consultations."
+        "description": "Terms of use, disclaimer and liability information for the GetFitWithSanjeev website, BMI and BMR calculators and consultations."
       }
     </script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -67,7 +67,16 @@
           <ul class="nav-list nav-primary">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <!-- SITE:TOOLS-NAV:START -->
+            <li class="nav-tools">
+              <button class="nav-tools-btn" type="button" aria-expanded="false" aria-controls="nav-tools-menu">Tools<span class="nav-tools-caret" aria-hidden="true"></span></button>
+              <ul class="nav-tools-menu" id="nav-tools-menu" hidden>
+                <li><a href="tools.html">All tools</a></li>
+                <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+              </ul>
+            </li>
+            <!-- SITE:TOOLS-NAV:END -->
             <!-- BLOG:NAV:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:NAV:END -->
@@ -81,14 +90,14 @@
       <div class="legal-page">
         <div class="container">
           <h1>Terms and Disclaimer</h1>
-          <p class="legal-updated">Last updated: November 17, 2026</p>
+          <p class="legal-updated">Last updated: November 19, 2026</p>
 
           <nav class="legal-toc" aria-label="On this page">
             <p><strong>On this page</strong></p>
             <ol>
               <li><a href="#adults-only">Adults only</a></li>
               <li><a href="#general-information">General information only</a></li>
-              <li><a href="#bmi-calculator">About the BMI calculator</a></li>
+              <li><a href="#bmi-calculator">About the BMI and BMR calculators</a></li>
               <li><a href="#results-vary">Results vary</a></li>
               <li><a href="#exercise-risk">Exercise involves risk</a></li>
               <li><a href="#consultations">Consultations</a></li>
@@ -113,11 +122,19 @@
             program.
           </p>
 
-          <h2 id="bmi-calculator">3. About the BMI calculator</h2>
+          <h2 id="bmi-calculator">3. About the BMI and BMR calculators</h2>
           <p>
             The BMI calculator on this website is a simple screening tool. It does not diagnose any
             medical condition. Your results should be discussed with a healthcare professional for
             proper interpretation.
+          </p>
+          <p>
+            The BMR and daily calorie calculator gives estimates from published formulas (Mifflin-St Jeor,
+            or Katch-McArdle if you enter body fat). Real energy needs vary with muscle, age, genetics,
+            medication, illness, hormones, pregnancy and breastfeeding. Its numbers and starting ranges are
+            general education, not medical or nutrition advice, and not a meal plan. Talk to your doctor or
+            a registered dietitian before changing how you eat, especially if you have a health condition
+            or take medication.
           </p>
 
           <h2 id="results-vary">4. Results vary</h2>
@@ -188,7 +205,11 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Sanjeev Kumar</a></li>
-            <li><a href="bmi-calculator.html">Free BMI Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:START -->
+            <li><a href="tools.html">Free Fitness Tools</a></li>
+            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <li><a href="bmr-calculator.html">BMR Calculator</a></li>
+            <!-- SITE:TOOLS-FOOTER:END -->
             <!-- BLOG:FOOTER:START -->
             <li><a href="blog/index.html">Blog</a></li>
             <!-- BLOG:FOOTER:END -->

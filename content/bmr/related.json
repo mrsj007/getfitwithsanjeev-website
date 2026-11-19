@@ -1,0 +1,160 @@
+{
+  "note": "Maps each goal (and the 50+ age bands) to published blog posts. Slugs must match content/blog. The build fails if a slug here is not published. Always 3 cards: best matches first, then the next best posts.",
+  "seeAllLabel": "See all guidance",
+  "rules": {
+    "lose": {
+      "topics": [
+        "nutrition-fat-weight-loss",
+        "workout-fat-loss",
+        "workout-body-composition-changes"
+      ],
+      "seeAllCategory": "workout-fat-loss"
+    },
+    "maintain": {
+      "topics": [
+        "workout-strength",
+        "workout-stress-management-healthy-lifestyle"
+      ],
+      "seeAllCategory": "workout-strength"
+    },
+    "build": {
+      "topics": [
+        "workout-muscle-gain",
+        "nutrition-athletic-performance",
+        "workout-strength"
+      ],
+      "seeAllCategory": "workout-muscle-gain"
+    }
+  },
+  "age50Plus": {
+    "bands": [
+      "50-64",
+      "65+"
+    ],
+    "topics": [
+      "workout-arthritis-osteoporosis-and-sarcopenia",
+      "workout-strength"
+    ],
+    "seeAllCategory": "workout-arthritis-osteoporosis-and-sarcopenia"
+  },
+  "posts": [
+    {
+      "slug": "fat-loss-without-the-crash",
+      "title": "Fat Loss Without the Crash: Habits That Last",
+      "description": "Skip the crash diets. Learn the simple habits behind sustainable fat loss: protein, strength training, steps, sleep and a realistic pace.",
+      "image": "images/blog/fat-loss-without-the-crash.jpg",
+      "topics": [
+        "workout-fat-loss",
+        "nutrition-fat-weight-loss"
+      ],
+      "categoryLabel": "Workout - Fat Loss",
+      "date": "2026-11-09"
+    },
+    {
+      "slug": "beyond-the-scale-body-composition",
+      "title": "Beyond the Scale: Understanding Body Composition Changes",
+      "description": "Weight alone does not tell the whole story. Learn what body composition is, why the scale can stall while you improve, and simple ways to track real progress.",
+      "image": "images/blog/beyond-the-scale-body-composition.jpg",
+      "topics": [
+        "workout-body-composition-changes",
+        "workout-fat-loss"
+      ],
+      "categoryLabel": "Workout - Body Composition Changes",
+      "date": "2026-11-17"
+    },
+    {
+      "slug": "vegan-diet-protein-and-nutrients",
+      "title": "Eating Vegan and Training Well: Protein and Nutrients",
+      "description": "Training on a vegan diet? See how to get enough protein, iron, calcium and B12, and build simple plant-based meals that support your workouts.",
+      "image": "images/blog/vegan-diet-protein-and-nutrients.jpg",
+      "topics": [
+        "nutrition-vegan-diet",
+        "workout-muscle-gain"
+      ],
+      "categoryLabel": "Nutrition - Vegan Diet",
+      "date": "2026-11-17"
+    },
+    {
+      "slug": "eating-for-performance-before-during-after-training",
+      "title": "Eating for Performance: What to Have Before, During and After Training",
+      "description": "Fuel your training with simple food timing. See what to eat before, during and after a workout, how much to drink, and a sample day for active people.",
+      "image": "images/blog/eating-for-performance-before-during-after-training.jpg",
+      "topics": [
+        "nutrition-athletic-performance",
+        "workout-strength"
+      ],
+      "categoryLabel": "Nutrition - Athletic Performance",
+      "date": "2026-11-17"
+    },
+    {
+      "slug": "vegetarian-plate-for-strength",
+      "title": "A Vegetarian Plate Built for Strength",
+      "description": "How to get enough protein, iron and other key nutrients on a vegetarian diet while you train, with simple meal ideas and common pitfalls.",
+      "image": "images/blog/vegetarian-plate-for-strength.jpg",
+      "topics": [
+        "nutrition-vegetarian-diet",
+        "nutrition-athletic-performance"
+      ],
+      "categoryLabel": "Nutrition - Vegetarian Diet",
+      "date": "2026-11-09"
+    },
+    {
+      "slug": "strength-training-after-50",
+      "title": "Strength Training After 50: Where to Start",
+      "description": "A plain-language guide to starting strength training after 50: the basic movements, a simple weekly plan, and how to progress safely.",
+      "image": "images/blog/strength-training-after-50.jpg",
+      "topics": [
+        "workout-strength",
+        "workout-beginner-getting-started"
+      ],
+      "categoryLabel": "Workout - Strength",
+      "date": "2026-11-03"
+    },
+    {
+      "slug": "exercise-with-arthritis-osteoporosis-sarcopenia",
+      "title": "Exercise With Arthritis, Osteoporosis or Muscle Loss: Where to Start",
+      "description": "Living with arthritis, osteoporosis or age-related muscle loss? Learn why strength and balance work matter, how to start gently and when to ask your doctor.",
+      "image": "images/blog/exercise-with-arthritis-osteoporosis-sarcopenia.jpg",
+      "topics": [
+        "workout-arthritis-osteoporosis-and-sarcopenia",
+        "workout-strength"
+      ],
+      "categoryLabel": "Workout - Arthritis, Osteoporosis and Sarcopenia",
+      "date": "2026-11-17"
+    },
+    {
+      "slug": "mobility-for-desk-workers",
+      "title": "Mobility for Desk Workers: A 10-Minute Routine",
+      "description": "Stiff hips, tight shoulders and a sore neck from desk work? Try these simple movement breaks and a 10-minute mobility routine.",
+      "image": "images/blog/mobility-for-desk-workers.jpg",
+      "topics": [
+        "workout-stress-management-healthy-lifestyle"
+      ],
+      "categoryLabel": "Workout - Stress Management / Healthy Lifestyle",
+      "date": "2026-11-03"
+    },
+    {
+      "slug": "your-first-month-of-training",
+      "title": "Starting From Zero: Your First Month of Training",
+      "description": "New to exercise? A calm, week-by-week plan for your first month of training, with tips on soreness, habits and how to know it is working.",
+      "image": "images/blog/your-first-month-of-training.jpg",
+      "topics": [
+        "workout-beginner-getting-started"
+      ],
+      "categoryLabel": "Workout - Beginner / Getting Started",
+      "date": "2026-11-03"
+    },
+    {
+      "slug": "recovery-supplements-what-helps-what-is-hype",
+      "title": "Recovery Supplements: What Helps and What Is Mostly Hype",
+      "description": "Wondering which supplements help recovery? See why sleep, food and rest come first, what the evidence says about common products, and how to choose safely.",
+      "image": "images/blog/recovery-supplements-what-helps-what-is-hype.jpg",
+      "topics": [
+        "supplementation-recovery",
+        "workout-stress-management-healthy-lifestyle"
+      ],
+      "categoryLabel": "Supplementation - Recovery",
+      "date": "2026-11-17"
+    }
+  ]
+}

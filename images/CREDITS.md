@@ -85,3 +85,12 @@ Some contact/background photos were previously hotlinked from Unsplash and are n
 - Crop: 1920 by 1438, quality 80
 - Photographer: Hipcravo (listed for this photo id in a public credit table as "Gym equipment")
 - Licence: Unsplash Licence (https://unsplash.com/license)
+
+## og/bmr-calculator.jpg and og/tools.jpg
+
+- Files: `images/og/bmr-calculator.jpg`, `images/og/tools.jpg` (1200 x 630 social share cards)
+- Source: original graphics made for this site (text and shapes only, no photos, logos or third-party artwork), drawn in the site colours to match `images/og/bmi-calculator.jpg`
+- Page: not applicable (created for this site)
+- Photographer: not applicable
+- Licence: owned by the site
+- Edits: rendered from SVG with sharp; no EXIF or other metadata. No responsive variants (the `og` folder is skipped by `build:images`).
