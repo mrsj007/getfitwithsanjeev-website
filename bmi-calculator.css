@@ -342,9 +342,10 @@ html.page-bmi {
   color: var(--green-deep);
 }
 
+/* Deep green, not muted grey: grey is only 4.19:1 on the tan result box. */
 .bmi-category-detail {
   margin: 0.2rem 0 0;
-  color: var(--muted);
+  color: var(--green-deep);
   font-size: 0.95rem;
 }
 

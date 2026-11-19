@@ -188,11 +188,6 @@
   min-width: 0;
 }
 
-/* Muted grey is under 4.5:1 on tan, so text in the tan box uses the deep green. */
-.page-bmr .bmi-result-head .bmi-category-detail {
-  color: var(--green-deep);
-}
-
 .bmr-figures {
   display: grid;
   margin: 0;
