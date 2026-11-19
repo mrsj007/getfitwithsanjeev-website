@@ -15,3 +15,11 @@ private-client-photos/
 *.tmp-qa*
 screenshots/
 .tmp-screenshots/
+
+# Lighthouse reports (never commit)
+*.report.html
+*.report.json
+lighthouse-report*
+.lighthouseci/
+lh-*.json
+lh-*.html
