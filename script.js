@@ -659,7 +659,8 @@
     };
   }
 
-  /* Tap a certification card to open its short summary. */
+  /* Tap a certification card to open its short summary.
+     Each card is a real <button>, so Enter and Space already fire "click". */
   const certList = document.querySelector(".cert-list");
   if (certList) {
     function closeCertCards() {
@@ -687,15 +688,6 @@
       const card = event.target.closest(".cert-card");
       if (!card || !certList.contains(card)) return;
       toggleCertCard(card);
-    });
-
-    certList.addEventListener("keydown", function (event) {
-      const card = event.target.closest(".cert-card");
-      if (!card || !certList.contains(card)) return;
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        toggleCertCard(card);
-      }
     });
   }
 

@@ -1380,6 +1380,20 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   margin-bottom: 0.5rem;
 }
 
+/* The step numbers 01-04 are decoration: the <ol> already gives the order to
+   screen readers, so the digits come from a CSS counter instead of page text. */
+.method-grid {
+  counter-reset: method-step;
+}
+
+.method-grid > li {
+  counter-increment: method-step;
+}
+
+.method-num::before {
+  content: counter(method-step, decimal-leading-zero);
+}
+
 /* Specialties */
 .specialty-grid {
   display: grid;
@@ -2213,9 +2227,22 @@ html.booking-motion .booking-steps .booking-reveal:nth-child(3) {
   text-wrap: pretty;
 }
 
+/* Each badge is a <button class="cert-card"> inside a plain <li class="cert-item">.
+   The li fills its grid cell and lets the button stretch to the row height. */
+.cert-item {
+  display: flex;
+  min-width: 0;
+}
+
 .cert-card {
   box-sizing: border-box;
   width: 100%;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
   min-height: 0;
   display: flex;
   flex-direction: column;
