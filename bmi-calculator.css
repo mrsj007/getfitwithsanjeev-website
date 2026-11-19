@@ -824,10 +824,6 @@ html.page-bmi {
     top: calc(var(--header-h) + 1rem);
   }
 
-  .bmi-guide-toc-toggle {
-    display: none;
-  }
-
   .bmi-guide-prose {
     max-width: 720px;
     margin: 0 auto 0 0;
@@ -873,9 +869,15 @@ html.page-bmi {
   display: none;
 }
 
+/* Desktop: the list is always open, so the toggle is hidden. This sits after the
+   toggle's base rule so it wins (an earlier copy was overridden by source order). */
 @media (min-width: 1024px) {
   .bmi-guide-toc.is-collapsed .bmi-guide-toc-list {
     display: block;
+  }
+
+  .bmi-guide-toc-toggle {
+    display: none;
   }
 }
 
