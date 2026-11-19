@@ -1,66 +1,69 @@
-CLAUDE.md - getfitwithsanjeev.com
+# CLAUDE.md - getfitwithsanjeev.com
+
 Website for Sanjeev Kumar, personal trainer in South Surrey and Vancouver, BC. Static site (plain HTML, CSS and vanilla JS) deployed by Vercel from GitHub `mrsj007/getfitwithsanjeev-website`, branch `main`. The person you work with does not code: explain results in plain words, show exact command output, and stop and explain any error instead of working around it.
-Git rules
 
-* Never force-push. Never push to `main` without being asked. Merge only with `git merge --ff-only`; if that fails, merge `origin/main` into the branch and try again.
+## Git rules
 
-* Small, low-risk text or link fixes may go straight to `main` once every check passes. Anything visual or bigger goes on a preview branch (for example `name-preview`), pushed alone, approved, then fast-forwarded to `main`.
+- Never force-push. Never push to `main` without being asked. Merge only with `git merge --ff-only`; if that fails, merge `origin/main` into the branch and try again.
 
-* Always `git fetch`, `git pull` and confirm a clean `git status` before starting. Show `git diff --stat` before merging and `git log origin/main -3` after.
+- Small, low-risk text or link fixes may go straight to `main` once every check passes. Anything visual or bigger goes on a preview branch (for example `name-preview`), pushed alone, approved, then fast-forwarded to `main`.
 
-* Never commit QA files (`.tmp-qa/`, screenshots, Lighthouse reports) or anything from `private-client-photos/`. Keep them out of the repo (they are gitignored).
+- Always `git fetch`, `git pull` and confirm a clean `git status` before starting. Show `git diff --stat` before merging and `git log origin/main -3` after.
 
-Build (there is no build step on Vercel; build locally and commit the output)
+- Never commit QA files (`.tmp-qa/`, screenshots, Lighthouse reports) or anything from `private-client-photos/`. Keep them out of the repo (they are gitignored).
 
-* `npm run build:site` = assets, images, then blog. Also `build:assets`, `build:images`, `build:blog`. Run the full build twice before committing: the second run must change nothing.
+## Build (there is no build step on Vercel; build locally and commit the output)
 
-* Never hand-edit generated files (`styles.min.css`, `script.min.js`, `bmi-calculator.min.*`, `blog/*.html`, `sitemap.xml`, `llms.txt`, `blog/rss.xml`, `images/manifest.json`). Edit sources and templates (`styles.css`, `script.js`, `scripts/build-blog.js`, `content/`) and rebuild.
+- `npm run build:site` = assets, images, then blog. Also `build:assets`, `build:images`, `build:blog`. Run the full build twice before committing: the second run must change nothing.
 
-* Some root pages are partly generated. `build:blog` rewrites the marked blog link and section blocks in `index.html`, `about.html`, `book.html`, `feedback.html`, `bmi-calculator.html`, `privacy.html` and `terms.html` (and the shared nav/footer blocks on all pages). `build:images` rewrites every `<picture>` tag in `index.html` and `about.html`. Hand edits inside those parts are overwritten on the next build: change the template or script instead.
+- Never hand-edit generated files (`styles.min.css`, `script.min.js`, `bmi-calculator.min.*`, `blog/*.html`, `sitemap.xml`, `llms.txt`, `blog/rss.xml`, `images/manifest.json`). Edit sources and templates (`styles.css`, `script.js`, `scripts/build-blog.js`, `content/`) and rebuild.
 
-* Lighthouse: use `node scripts/serve-brotli.mjs` (compresses like Vercel). A plain `python3 -m http.server` gives misleadingly low scores. Targets on mobile: 95+ performance, 100 accessibility, best practices and SEO.
+- Some root pages are partly generated. `build:blog` rewrites the marked blog link and section blocks in `index.html`, `about.html`, `book.html`, `feedback.html`, `bmi-calculator.html`, `privacy.html` and `terms.html` (and the shared nav/footer blocks on all pages). `build:images` rewrites every `<picture>` tag in `index.html` and `about.html`. Hand edits inside those parts are overwritten on the next build: change the template or script instead.
 
-Content and style
+- Lighthouse: use `node scripts/serve-brotli.mjs` (compresses like Vercel). A plain `python3 -m http.server` gives misleadingly low scores. Targets on mobile: 95+ performance, 100 accessibility, best practices and SEO.
 
-* Plain hyphen " - " for dashes, never em dashes. Canadian spelling (colour, fibre, labour, but "-ize" spellings are fine; avoid British "-ise"). Search for both before committing.
+## Content and style
 
-* Header tagline is "Personal Trainer • Vancouver and South Surrey" with a bullet. Keep the bullet. Business address: 1715 152 St #120, Surrey, BC V4A 4N3, Canada (use the full text with postal code and "Canada" everywhere). Contact email: [getfitwithsk007@gmail.com](mailto:getfitwithsk007@gmail.com).
+- Plain hyphen " - " for dashes, never em dashes. Canadian spelling (colour, fibre, labour, but "-ize" spellings are fine; avoid British "-ise"). Search for both before committing.
 
-* Health wording: no cure, treat, heal, prescribe, dosage, dose, stop taking, guaranteed, detox or "replace your medication" (the blog build warns on these, see `scripts/build-blog.js`; keep it at 0 warnings). Never diagnose; add "talk to your doctor" where fitting. The BMI calculator is a screening number only.
+- Header tagline is "Personal Trainer • Vancouver and South Surrey" with a bullet. Keep the bullet. Business address: 1715 152 St #120, Surrey, BC V4A 4N3, Canada (use the full text with postal code and "Canada" everywhere). Contact email: getfitwithsk007@gmail.com.
 
-* The site and every form are for adults aged 18 or older.
+- Health wording: no cure, treat, heal, prescribe, dosage, dose, stop taking, guaranteed, detox or "replace your medication" (the blog build warns on these, see `scripts/build-blog.js`; keep it at 0 warnings). Never diagnose; add "talk to your doctor" where fitting. The BMI calculator is a screening number only.
 
-* Blog posts live in `content/blog/*.md` with the front matter described in `scripts/build-blog.js` and categories in `content/blog/categories.json` ("Group > Topic" format). Publish only after Sanjeev has reviewed. Do not change post text unless asked.
+- The site and every form are for adults aged 18 or older.
 
-* BMI copy is in `content/bmi/guidance.json` and `content/bmi/related.json`. Keep `reviewed: false` until Sanjeev approves (this hides the "Reviewed by Sanjeev" badge).
+- Blog posts live in `content/blog/*.md` with the front matter described in `scripts/build-blog.js` and categories in `content/blog/categories.json` ("Group > Topic" format). Publish only after Sanjeev has reviewed. Do not change post text unless asked.
 
-Images and privacy
+- BMI copy is in `content/bmi/guidance.json` and `content/bmi/related.json`. Keep `reviewed: false` until Sanjeev approves (this hides the "Reviewed by Sanjeev" badge).
 
-* Replaced or changed images need NEW file names: `/images` and `/fonts` are cached for a year (`immutable`). Run `npm run build:images` for responsive WebP/AVIF/JPEG variants, and use `<picture>` with width, height, `loading="lazy"` and `decoding="async"` (only the single LCP image gets `fetchpriority="high"`, on its `<img>` and its matching preload link).
+## Images and privacy
 
-* Every image is local (never hotlinked), has EXIF stripped, and an entry in `images/CREDITS.md` with source, page URL, photographer and licence. No visible logos, brand names, signage, watermarks or text in stock photos; crop them out or pick another photo.
+- Replaced or changed images need NEW file names: `/images` and `/fonts` are cached for a year (`immutable`). Run `npm run build:images` for responsive WebP/AVIF/JPEG variants, and use `<picture>` with width, height, `loading="lazy"` and `decoding="async"` (only the single LCP image gets `fetchpriority="high"`, on its `<img>` and its matching preload link).
 
-* Client photos: faces are blurred inside the image file, never with CSS. Unblurred originals stay only in the gitignored `private-client-photos/`. Responsive variants are made only from the committed, already-blurred files. Publish client photos, quotes and stories only with written consent.
+- Every image is local (never hotlinked), has EXIF stripped, and an entry in `images/CREDITS.md` with source, page URL, photographer and licence. No visible logos, brand names, signage, watermarks or text in stock photos; crop them out or pick another photo.
 
-Forms, privacy and third parties
+- Client photos: faces are blurred inside the image file, never with CSS. Unblurred originals stay only in the gitignored `private-client-photos/`. Responsive variants are made only from the committed, already-blurred files. Publish client photos, quotes and stories only with written consent.
 
-* All forms post to the same Formspree address (`https://formspree.io/f/maeywvbo`): the feedback form (`FEEDBACK_FORM_ENDPOINT` in `script.js`), the BMI form (its own constant in `bmi-calculator.js`) and the Home and About contact forms (the URL in the form tag). Every form must have a honeypot and a minimum-time check. The free plan allows about 50 submissions a month for all forms together, so spam wastes real leads. `feedback.html` is `noindex` and stays out of the sitemap.
+## Forms, privacy and third parties
 
-* No analytics, tracking pixels or cookies. (`book.html` has an unused `gtag` hook that does nothing without a Google Analytics script; do not add one without updating `privacy.html`.) If any are ever added, update `privacy.html` first. Fonts are self-hosted (no Google Fonts). Booking uses the Cal.com embed.
+- All forms post to the same Formspree address (`https://formspree.io/f/maeywvbo`): the feedback form (`FEEDBACK_FORM_ENDPOINT` in `script.js`), the BMI form (its own constant in `bmi-calculator.js`) and the Home and About contact forms (the URL in the form tag). Every form must have a honeypot and a minimum-time check. The free plan allows about 50 submissions a month for all forms together, so spam wastes real leads. `feedback.html` is `noindex` and stays out of the sitemap.
 
-* BMI calculator: numbers stay in the browser, kept only in `sessionStorage` (`bmiSession`) for the tab; nothing about age, height or weight goes in cookies, the URL or any request except a deliberate, consented "share my results" form submit. Under-18 entries are never saved.
+- No analytics, tracking pixels or cookies. (`book.html` has an unused `gtag` hook that does nothing without a Google Analytics script; do not add one without updating `privacy.html`.) If any are ever added, update `privacy.html` first. Fonts are self-hosted (no Google Fonts). Booking uses the Cal.com embed.
 
-* `privacy.html` and `terms.html` must match what the site really does. Update both (and the "Last updated" date) whenever data collection, storage or third parties change.
+- BMI calculator: numbers stay in the browser, kept only in `sessionStorage` (`bmiSession`) for the tab; nothing about age, height or weight goes in cookies, the URL or any request except a deliberate, consented "share my results" form submit. Under-18 entries are never saved.
 
-Design and accessibility
+- `privacy.html` and `terms.html` must match what the site really does. Update both (and the "Last updated" date) whenever data collection, storage or third parties change.
 
-* Keep the existing design tokens, fonts and components. Do not redesign unasked.
+## Design and accessibility
 
-* Colour contrast at least 4.5:1 for text (measure it, including text over photos); visible keyboard focus; 44px touch targets; no layout shift; respect `prefers-reduced-motion`.
+- Keep the existing design tokens, fonts and components. Do not redesign unasked.
 
-* Links on dark sections use the reusable `.on-dark` style (cream, underlined).
+- Colour contrast at least 4.5:1 for text (measure it, including text over photos); visible keyboard focus; 44px touch targets; no layout shift; respect `prefers-reduced-motion`.
 
-* After visual changes, check at 375, 768, 1024 and 1440px and report what changed.
+- Links on dark sections use the reusable `.on-dark` style (cream, underlined).
 
-Before saying "done"
+- After visual changes, check at 375, 768, 1024 and 1440px and report what changed.
+
+## Before saying "done"
+
 Show: command output, files changed, the checks you ran, `git log origin/main -3`, and (after a deploy) the live URL status codes. Say plainly what you could not verify.
