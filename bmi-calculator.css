@@ -780,12 +780,9 @@ html.page-bmi {
   margin-top: var(--bmi-space-5);
 }
 
+/* Honeypot: display none keeps it away from people and screen readers (bots still fill it). */
 .bmi-hp {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+  display: none;
 }
 
 .bmi-casl {
