@@ -900,6 +900,27 @@ html.page-bmi {
   color: var(--green);
 }
 
+/* Current section (set by script.js): green text plus a bar on the list's left rule,
+   so colour is not the only signal. Same font and size, so nothing reflows. */
+.bmi-guide-toc-list a {
+  position: relative;
+}
+
+.bmi-guide-toc-list a[aria-current="location"] {
+  color: var(--green);
+}
+
+.bmi-guide-toc-list a[aria-current="location"]::before {
+  content: "";
+  position: absolute;
+  left: calc(-0.85rem - 2px);
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--green);
+}
+
 .bmi-guide-prose h2 {
   margin-top: var(--bmi-space-5);
 }

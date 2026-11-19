@@ -1175,6 +1175,37 @@
     window.addEventListener("resize", updateProgress);
   }
 
+  /* Contents lists (blog posts, BMI and BMR guides): mark the section being read with
+     aria-current="location". A section is current once its heading passes just under the
+     sticky header; at the very bottom of the page the last section is current. */
+  function trackTocLinks(links) {
+    if (!links.length) return;
+    const ids = links.map(function (link) {
+      return (link.getAttribute("href") || "").replace(/^#/, "");
+    });
+    function setActive(id) {
+      links.forEach(function (link) {
+        if ((link.getAttribute("href") || "") === "#" + id) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    }
+    function update() {
+      const bar = document.querySelector(".site-header");
+      const line = (bar ? bar.getBoundingClientRect().height : 84) + 12;
+      let current = ids[0];
+      ids.forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      });
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom && document.getElementById(ids[ids.length - 1])) current = ids[ids.length - 1];
+      setActive(current);
+    }
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+  }
+
   const toc = document.querySelector(".post-toc");
   if (toc) {
     const toggle = toc.querySelector(".post-toc-toggle");
@@ -1203,34 +1234,11 @@
         toc.classList.toggle("is-collapsed", open);
       });
     }
-    if (tocLinks.length) {
-      const tocIds = tocLinks.map(function (link) {
-        return (link.getAttribute("href") || "").replace(/^#/, "");
-      });
-      function setActiveToc(id) {
-        tocLinks.forEach(function (link) {
-          const on = (link.getAttribute("href") || "") === "#" + id;
-          if (on) link.setAttribute("aria-current", "location");
-          else link.removeAttribute("aria-current");
-        });
-      }
-      function updateActiveToc() {
-        const bar = document.querySelector(".site-header");
-        const header = bar ? bar.getBoundingClientRect().height : 84;
-        const line = header + 12;
-        let current = tocIds[0];
-        tocIds.forEach(function (id) {
-          const el = document.getElementById(id);
-          if (!el) return;
-          if (el.getBoundingClientRect().top <= line) current = id;
-        });
-        setActiveToc(current);
-      }
-      updateActiveToc();
-      window.addEventListener("scroll", updateActiveToc, { passive: true });
-      window.addEventListener("resize", updateActiveToc);
-    }
+    trackTocLinks(tocLinks);
   }
+
+  /* BMI and BMR guide contents: same current-section highlight as blog posts. */
+  trackTocLinks(Array.from(document.querySelectorAll(".bmi-guide-toc-list a")));
 
   const categorySelect = document.getElementById("blog-category");
   if (categorySelect) {
