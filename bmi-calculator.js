@@ -9,14 +9,12 @@ import relatedData from "./content/bmi/related.json";
   "use strict";
 
   const BMI_FORM_ENDPOINT = "https://formspree.io/f/maeywvbo";
-  const MIN_TIME_MS = 3000;
   const CM_PER_IN = 2.54;
   const KG_PER_LB = 0.45359237;
 
   /** Unit preference lives in memory only for this page visit. */
   let units = "metric";
   let lastResult = null;
-  const openedAt = Date.now();
 
   const form = document.getElementById("bmi-form");
   if (!form) return;
@@ -829,10 +827,16 @@ import relatedData from "./content/bmi/related.json";
   }
 
   if (contactForm) {
-    const honeypot = contactForm.querySelector('[name="_gotcha"]');
     const success = document.getElementById("bmi-form-success");
     const errorBox = document.getElementById("bmi-form-error");
     const alertBox = document.getElementById("bmi-form-alert");
+    /* Shared honeypot + minimum-time check from script.js (loaded first on this page). */
+    const spamCheck =
+      typeof window.siteSpamGuard === "function"
+        ? window.siteSpamGuard(contactForm, alertBox)
+        : function () {
+            return "ok";
+          };
     const consent = document.getElementById("bmi-consent");
     const ageConfirm = document.getElementById("bmi-age-confirm");
     const nameInput = document.getElementById("bmi-contact-name");
@@ -878,7 +882,8 @@ import relatedData from "./content/bmi/related.json";
         return;
       }
 
-      if (honeypot && honeypot.value) {
+      const verdict = spamCheck();
+      if (verdict === "spam") {
         contactForm.hidden = true;
         if (success) {
           success.hidden = false;
@@ -886,15 +891,7 @@ import relatedData from "./content/bmi/related.json";
         }
         return;
       }
-
-      if (Date.now() - openedAt < MIN_TIME_MS) {
-        if (alertBox) {
-          alertBox.textContent = "Please wait a moment, then send it again.";
-          alertBox.hidden = false;
-          alertBox.focus();
-        }
-        return;
-      }
+      if (verdict === "wait") return;
 
       updateSummaryField();
       if (submitBtn) submitBtn.disabled = true;

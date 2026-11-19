@@ -4559,7 +4559,8 @@ html.blog-motion .blog-card.is-inview {
   flex: 0 0 auto;
 }
 
-.feedback-hp {
+.feedback-hp,
+.form-hp {
   display: none;
 }
 

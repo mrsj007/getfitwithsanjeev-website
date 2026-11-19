@@ -99,15 +99,62 @@
   placeFaqCards();
   window.addEventListener("resize", placeFaqCards);
 
-  /* Contact form - Formspree POST, then local success state */
+  /* Spam protection shared by every form (contact, feedback and BMI).
+     1. Honeypot: a hidden field named _gotcha. People never see it; bots fill it in,
+        and Formspree treats a filled _gotcha as spam. A filled form is dropped
+        quietly and the visitor sees the normal thank-you state.
+     2. Minimum time: a form sent less than FORM_MIN_TIME_MS after the page loaded
+        is held back with a gentle "please wait" message in the form's alert box.
+     check() returns "ok", "spam" or "wait". The BMI page uses it through
+     window.siteSpamGuard (script.min.js loads before bmi-calculator.min.js). */
+  const FORM_MIN_TIME_MS = 3000;
+  const FORM_WAIT_MESSAGE = "Please wait a moment, then send it again.";
+
+  function createSpamGuard(formEl, alertBox) {
+    const openedAt = Date.now();
+    const honeypot = formEl.querySelector('[name="_gotcha"]');
+    return function check() {
+      if (honeypot && honeypot.value) return "spam";
+      if (Date.now() - openedAt < FORM_MIN_TIME_MS) {
+        if (alertBox) {
+          alertBox.textContent = FORM_WAIT_MESSAGE;
+          alertBox.hidden = false;
+          alertBox.focus();
+        }
+        return "wait";
+      }
+      return "ok";
+    };
+  }
+
+  window.siteSpamGuard = createSpamGuard;
+
+  /* Contact form (Home and About) - Formspree POST, then local success state */
   const form = document.getElementById("contact-form");
   const success = document.getElementById("form-success");
   const errorBox = document.getElementById("form-error");
 
   if (form && success && errorBox) {
+    const alertBox = document.getElementById("form-alert");
+    const spamCheck = createSpamGuard(form, alertBox);
+
+    function showSent() {
+      form.classList.add("is-sent");
+      success.hidden = false;
+      form.reset();
+    }
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       errorBox.hidden = true;
+      if (alertBox) alertBox.hidden = true;
+
+      const verdict = spamCheck();
+      if (verdict === "spam") {
+        showSent();
+        return;
+      }
+      if (verdict === "wait") return;
 
       const endpoint = form.getAttribute("action");
       const submitBtn = form.querySelector('button[type="submit"]');
@@ -122,9 +169,7 @@
           if (!response.ok) {
             throw new Error("Formspree request failed");
           }
-          form.classList.add("is-sent");
-          success.hidden = false;
-          form.reset();
+          showSent();
         })
         .catch(function () {
           errorBox.hidden = false;
@@ -141,14 +186,9 @@
      free-plan allowance (about 50 submissions a month for the project).
      To use a separate form, paste its URL here and in the action on feedback.html. */
   const FEEDBACK_FORM_ENDPOINT = "https://formspree.io/f/maeywvbo";
-  /* BMI calculator lead form (handled in bmi-calculator.js). Keep in sync with that file. */
-  const BMI_FORM_ENDPOINT = "https://formspree.io/f/maeywvbo";
-  void BMI_FORM_ENDPOINT;
   const feedbackForm = document.getElementById("feedback-form");
 
   if (feedbackForm) {
-    const MIN_TIME_MS = 3000;
-    const openedAt = Date.now();
     const topic = document.getElementById("feedback-topic");
     const pageField = document.getElementById("feedback-page");
     const message = document.getElementById("feedback-message");
@@ -163,7 +203,7 @@
     const replyTo = document.getElementById("feedback-replyto");
     const emailReq = document.getElementById("feedback-email-req");
     const emailOpt = document.getElementById("feedback-email-opt");
-    const honeypot = feedbackForm.querySelector('[name="_gotcha"]');
+    const spamCheck = createSpamGuard(feedbackForm, alertBox);
     const submitBtn = feedbackForm.querySelector('button[type="submit"]');
     const submitLabel = submitBtn ? submitBtn.textContent : "Send feedback";
 
@@ -294,19 +334,12 @@
       if (submitBtn && submitBtn.disabled) return;
       if (!validate()) return;
 
-      if (honeypot && honeypot.value) {
+      const verdict = spamCheck();
+      if (verdict === "spam") {
         showSuccess();
         return;
       }
-
-      if (Date.now() - openedAt < MIN_TIME_MS) {
-        if (alertBox) {
-          alertBox.textContent = "Please wait a moment, then send it again.";
-          alertBox.hidden = false;
-          alertBox.focus();
-        }
-        return;
-      }
+      if (verdict === "wait") return;
 
       if (subject && topic) {
         const selected = topic.options[topic.selectedIndex];
